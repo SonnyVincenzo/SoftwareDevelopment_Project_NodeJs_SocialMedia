@@ -15,7 +15,7 @@ This is a project in the software development course at Jönköping University. 
 - Zaid Yassir Sultan
   - Github : 
 - Leo Jönnerstig
-  - Github :
+  - Github : LJkiller
 
 ### Plan 
 
