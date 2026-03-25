@@ -1,4 +1,4 @@
-# SoftwareDevelopment_Unity_Project_TDS
+# SoftwareDevelopment_Project
 This is a project in the software development course at Jönköping University.
 ### Participants
 |Name|Github Handle|
