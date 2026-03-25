@@ -31,3 +31,5 @@ I, Yuze Xu, declare that I am the sole author of the content I add to this repos
 I, Nasra Abdirahman, declare that I am the sole author of the content I add to this repository.
 
 I, Jennifer Taylor, declare that I am the sole author of the content I add to this repository.
+
+I, Josef Norling, declare that I am the sole author of the content I add to this repository.
