@@ -1,3 +1,26 @@
 # SoftwareDevelopment_Unity_Project_TDS
-This is a project in the software development course in Jönköping University. It is a top down shooter game in the Unity game engine.
-test
+
+This is a project in the software development course at Jönköping University. It is a top down shooter game in the game engine Unity.
+
+- Nasra Abdirahman
+  - Github : nasraabdirahman
+- Jennifer Taylor
+  - Github : JenTay22
+- Yuze Xu
+  - Github : xX_DarkLorD_Xx
+- Berkant Resyul Hasan
+  - Github : Berkiba
+- Josef Norling
+  - Github : 
+- Zaid Yassir Sultan
+  - Github : 
+- Leo Jönnerstig
+  - Github : LJkiller
+
+### Plan 
+
+Programming Language: C#
+Build System: 
+Workflow: 
+
+> ## Declaration
