@@ -11,7 +11,7 @@ This is a project in the software development course at Jönköping University. 
 - Berkant Resyul Hasan
   - Github : Berkiba
 - Josef Norling
-  - Github : 
+  - Github : SonnyVincenzo
 - Zaid Yassir Sultan
   - Github : 
 - Leo Jönnerstig
