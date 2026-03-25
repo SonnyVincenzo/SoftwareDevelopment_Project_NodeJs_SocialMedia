@@ -25,5 +25,7 @@ Workflow:
 
 > ## Declaration
 I, Firstname1 Lastname1, declare that I am the sole author of the content I add to this repository.
+
 I, Yuze Xu, declare that I am the sole author of the content I add to this repository.
+
 I, Nasra Abdirahman, declare that I am the sole author of the content I add to this repository.
