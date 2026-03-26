@@ -1,5 +1,7 @@
 # SoftwareDevelopment_Project
-This is a project in the software development course at Jönköping University.
+This is a project in the software development course at Jönköping University. 
+We are developing a social media website in Node.js with the React/Vite framework. 
+We will have MySQL for the website's database. 
 ### Participants
 |Name|Github Handle|
 |-|-|
@@ -11,9 +13,9 @@ This is a project in the software development course at Jönköping University.
 |Zaid Yassir Sultan|zySULTAN|
 |Leo Jönnerstig|LJkiller|
 ### Plan 
-Programming Language: Guys what did we decide lol (i have never coded in python fyi)-berk
-Build System: not unity at least -berk
-Workflow: idk whatever works -berk
+Programming Language: Javascript, MySQL
+Build System: React/Vite, Node.js
+Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
 > ## Declaration
 > I, Firstname1 Lastname1, declare that I am the sole author of the content I add to this repository.
 >
