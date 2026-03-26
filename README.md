@@ -13,9 +13,9 @@ We will have MySQL for the website's database.
 |Zaid Yassir Sultan|zySULTAN|
 |Leo Jönnerstig|LJkiller|
 ### Plan 
-Programming Language: Javascript, MySQL
-Build System: React, Node.js
-Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
+- Programming Language: Javascript, MySQL
+- Build System: React, Node.js
+- Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
 > ## Declaration
 > I, Firstname1 Lastname1, declare that I am the sole author of the content I add to this repository.
 >
