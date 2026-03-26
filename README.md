@@ -30,3 +30,5 @@ We will have MySQL for the website's database.
 > I, Josef Norling, declare that I am the sole author of the content I add to this repository.
 >
 > I, Zaid-Yassir Sultan, declare that I am the sole author of the content I add to this repository.
+>
+> I, Leo Jönnerstig, declare that I am the sole author of the content I add to this repository.
