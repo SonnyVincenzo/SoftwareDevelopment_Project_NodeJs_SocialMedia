@@ -1,0 +1,107 @@
+html,body{
+    margin: 0px;
+    width: 100% ;
+  }
+
+  html{
+    background-color: rgb(43, 42, 43);
+  }
+.container {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(43, 42, 43);
+  border-width: 2px;
+  border-color: blueviolet;
+  border-radius: 5px;
+  color: white;
+  border-style: solid;
+  margin-top: 70px;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.title{
+  font-weight: bold ;
+  font-size: 20px;
+  
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+.mainBody{
+  font-style: italic ;
+  font-size: 16px;
+  
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-right:20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left:20px;
+  padding-right: 20px;
+
+}
+
+.standardButton{
+    background-color: rgb(43, 42, 43);
+    border-width: 2px;
+    border-color: blueviolet;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    
+    margin-right: 10px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+  }
+
+  .standardButton:hover{
+    background: linear-gradient(to right, rgba(189, 133, 241, 1), rgba(110, 110, 243, 1));
+    border-width: 2px;
+    border-color:  rgb(43, 42, 43);
+    color: rgb(0, 0, 0);
+    opacity: 0.8
+  }
+  .header{
+    background: linear-gradient(to right, blueviolet, rgba(1, 200, 250, 0.8));
+    border-width: 3px;
+    border-radius: 5px;
+    border-color: rgb(43, 42, 43) ;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    }
+
+  .text{
+    display: inline-block;
+    font-weight: bold;
+    font-size: 35px;
+    color: rgb(0, 0, 0);
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-left: 20px;
+  }
+  .exit {
+    text-align: right;
+    font-weight: bold;
+    font-size: 35px;
+    color: rgb(0, 0, 0);
+    padding-bottom: 0px;
+    padding-top: 0px;
+    margin-left: 85%;
+    margin-right: 5px;
+    background-color: transparent;
+    border-width: 0px;
+    cursor: pointer;
+  }
