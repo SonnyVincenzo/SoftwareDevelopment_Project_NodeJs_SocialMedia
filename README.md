@@ -10,8 +10,7 @@ We will have MySQL for the website's database.
 - Users will be able to add each other as friends. 
 - Users can chat with each other privately. 
 - The data of the users and posts will be stored in a MySQL database 
-
-
+### [KanBan Board](https://github.com/users/SonnyVincenzo/projects/1)
 ### Participants
 |Name|Github Handle|
 |-|-|
