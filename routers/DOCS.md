@@ -15,11 +15,16 @@ Following routers needs:
 Implementation:
 ```js
 import express from 'express';
-import { handleEndpoint, handleEndpointPost } from '../routeHandlers/endpointHandler.js';
+import { 
+    handleEndpoint, 
+    handleEndpointPost, 
+    handleMoreEndpoints 
+} from '../routeHandlers/endpointHandler.js';
 
 const router = express.Router();
 router.get('/specific-endpoint', handleEndpoint);
 router.post('/specific-endpoint', handleEndpointPost);
+router.get(['/more','/than','/one','/endpoint'], handleMoreEndpoints);
 export default router;
 ```
 
