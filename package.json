@@ -1,0 +1,23 @@
+{
+  "name": "softwaredevelopment_project",
+  "version": "1.0.0",
+  "description": "This is a project in the software development course at Jönköping University. \r We are developing a social media website in Node.js for the backend and React for the frontend. \r We will have MySQL for the website's database.",
+  "homepage": "https://github.com/SonnyVincenzo/SoftwareDevelopment_Project#readme",
+  "bugs": {
+    "url": "https://github.com/SonnyVincenzo/SoftwareDevelopment_Project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SonnyVincenzo/SoftwareDevelopment_Project.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}
