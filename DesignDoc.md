@@ -18,7 +18,7 @@ Text Style:
 Colours:
   - Accent Colours:
     - Blueviolet
-    - rgba(1, 200, 250, 0.8)
+    - rgba(74, 190, 219, 0.8)
   - Background: 
     - rgb(43, 42, 43)
   - Text:
