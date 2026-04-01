@@ -1,0 +1,114 @@
+
+html{
+    background-color: rgb(43, 42, 43);
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png"); /*Background Texture found online*/
+}
+.container {
+  display:flex;
+  width: 30%;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(43, 42, 43);
+  border-width: 2px;
+  border-color: blueviolet;
+  border-radius: 5px;
+  color: white;
+  border-style: solid;
+  margin-top: 70px;
+  margin-left: 35%;
+  margin-right: 35%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.title{
+  font-weight: bold ;
+  font-size: 20px;
+  font-family: Tektur;
+  
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+}
+.mainBody{
+  font-size: 18px;
+  font-family: Josefin Sans;
+  font-weight: bold ;
+  width: 300px;
+  height: 100px;
+  
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-right:20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left:20px;
+  padding-right: 20px;
+
+}
+
+.standardButton{
+    background-color: rgb(43, 42, 43);
+    border-width: 2px;
+    border-color: blueviolet;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: Tektur;
+    
+    margin-right: 10px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+  }
+
+  .standardButton:hover{
+    background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 200, 250, 0.8));
+    background-color: white;
+    border-width: 2px;
+    color:  black;
+    border-color: rgb(255, 255, 255);
+    opacity: 0.8
+  }
+  .header{
+    background: linear-gradient(to right, rgba(138, 43, 226, 0.9), rgba(1, 200, 250, 0.8));
+    background-color: white;
+    border-width: 3px;
+    border-radius: 5px;
+    border-color: rgb(43, 42, 43) ;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    align-items: horizontal;
+    }
+
+  .username{
+    display: inline-block;
+    font-weight: bold;
+    font-family: Tektur;
+    font-size: 35px;
+    color: rgb(0, 0, 0);
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-left: 20px;
+  }
+  .exit {
+    text-align: right;
+    font-weight: bold;
+    font-size: 35px;
+    color: rgb(0, 0, 0);
+    padding-bottom: 0px;
+    padding-top: 0px;
+    margin-left: 65%;
+    margin-right: 5px;
+    background-color: transparent;
+    border-width: 0px;
+    cursor: pointer;
+  }
