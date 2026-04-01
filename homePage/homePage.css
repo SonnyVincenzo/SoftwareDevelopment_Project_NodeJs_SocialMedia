@@ -28,7 +28,7 @@ html{
 .standardButton{
     background-color: rgb(43, 42, 43);
     border-width: 2px;
-    border-color: Black;
+    border-color: blueviolet;
     border-radius: 5px;
     color: white;
     cursor: pointer;

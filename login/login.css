@@ -1,14 +1,21 @@
 body {
-    background-color: rgb(43, 42, 51);
+    background-color: rgb(43, 42, 43);
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
     color: white;
-    font-family: Arial;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: Tektur;
+    font-size: 18px;
+    font-weight: bold;;
 }
 
 #loginBox {
-    border: 1px solid violet;
+    border: 1px solid purple;
+    background-color: rgb(43, 42, 43);;
     padding: 20px;
     border-radius: 8px;
+    font-family: Tektur;
+    font-size: 18px;
+    font-weight: bold;;
 }
