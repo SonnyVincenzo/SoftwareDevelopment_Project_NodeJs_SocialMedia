@@ -47,6 +47,10 @@ build/Release
 node_modules/
 jspm_packages/
 
+# OS files
+.DS_Store
+Thumbs.db
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -73,6 +77,8 @@ web_modules/
 
 # Environment Variables
 .env
+
+test.*.html
 .env.*
 !.env.example
 
@@ -131,6 +137,9 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# VS Code settings
+.vscode/
 
 # pnpm
 .pnpm-store

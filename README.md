@@ -52,6 +52,15 @@ Depending on your [```SERVER_PORT```](./.env-sample) the webapplication would di
 |Zaid Yassir Sultan|zySULTAN|
 |Leo Jönnerstig|LJkiller|
 
+### Plan 
+- Programming Language: HTML, CSS, Javascript, MySQL
+- Build System: React, Node.js
+- Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
+### How to compile code
+- Install code runner on visual studio code
+- Right click an html file and press Open with Live Server button
+- See the website on your browser
+
 > ## Declaration
 >
 > I, Berkant Hasan, declare that I am the sole author of the content I add to this repository.
