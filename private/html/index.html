@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <style>
+        /* This is a temporary/quick style css!
+        This should never exist!
+        Do not mix CSS and JS into HTML files, there's a reason to create seperate files.        
+        */
+
+        nav {
+            display: flex;
+            flex-direction: column;
+        }
+        nav>a {
+            background-color: rgba(255,255,255);
+        }
+        nav>a:hover {
+            background-color: rgba(200,200,200);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hello world, I am speaking from index!</h1>
+    </header>
+
+    <main>
+        <p>All possible endpoints:</p>
+        <nav>
+            <a href="/">/</a>
+            <a href="/index">/index</a>
+            <a href="/home">/home</a>
+            <a href="/post">/post</a>
+            <a href="/post?id=1234">/post?id=1234</a>
+            <a href="/about">/about</a>
+            <a href="/auth/login">/auth/login</a>
+            <a href="/auth/signup">/auth/signup</a>
+            <a href="/user/usernames">/user/usernames</a>
+        </nav>
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>
