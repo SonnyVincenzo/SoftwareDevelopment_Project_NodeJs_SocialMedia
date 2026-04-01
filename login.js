@@ -1,9 +1,10 @@
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn"); 
 
-//login
+//login - sckika information till mysqlserver
 loginBtn.onclick = async function()
 {
+    //let formData = ;
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
@@ -24,6 +25,7 @@ loginBtn.onclick = async function()
         alert(data.error);
     }
 }
+
 //registerBtn
 registerBtn.onclick = async function()
 {
