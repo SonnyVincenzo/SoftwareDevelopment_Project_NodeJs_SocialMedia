@@ -23,15 +23,17 @@
     </button>
   </div>
   <div class="container">
-    <input class="title" type="text" spellcheck="true" maxlength="100"
+    <input id="title" class="title" type="text" spellcheck="true" maxlength="100"
     placeholder="Post - Title">
     <textarea 
+      id="mainBody"
       class="mainBody" 
       type="text" 
       spellcheck="true"
       placeholder="Post - Text" 
-      maxlength="300"></textarea>
-    <button class="standardButton">
+      maxlength="300"
+      style="resize:none"></textarea>
+    <button id="shareButton" class="standardButton">
       Share
     </button>
   </div>
