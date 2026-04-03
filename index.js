@@ -4,7 +4,7 @@ import 'dotenv/config'; // Environment variables.
 // Routers:
 import pageRouter from './routers/pageRouter.js';
 import authRouter from './routers/authRouter.js';
-import userRouter from './routers/userRouter.js'
+import userRouter from './routers/userRouter.js';
 
 const app = express();
 const port = process.env.SERVER_PORT;
@@ -13,6 +13,7 @@ const port = process.env.SERVER_PORT;
 app.use(express.static('public'));
 
 // Send web request to routes and nestled routes.
+app.use('/public', express.static('public'));
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
