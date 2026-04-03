@@ -9,14 +9,11 @@ import userRouter from './routers/userRouter.js';
 const app = express();
 const port = process.env.SERVER_PORT;
 
-// Static files. (CSS+JS)
-app.use(express.static('public'));
-
 // Send web request to routes and nestled routes.
-app.use('/public', express.static('public'));
-app.use('/', pageRouter);
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
+app.use('/public', express.static('public')); // Static files (CSS+JS)
+app.use('/', pageRouter); // Router for endpoints within first order.
+app.use('/auth', authRouter); // Router for nestled endpoints within second order of auth (/auth/login).
+app.use('/user', userRouter); // Router for nestled endpoints within second order of user (/user/username).
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}.`);

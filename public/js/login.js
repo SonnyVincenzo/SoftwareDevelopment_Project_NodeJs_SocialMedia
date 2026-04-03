@@ -1,3 +1,6 @@
+// Potential use of frontend login implementation (I question necessity) -LJ.
+
+
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn"); 
 

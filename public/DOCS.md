@@ -33,8 +33,11 @@ HTML files within [templates](../private/templates) are regarded as- of course t
 The linking for different files in HTML, such as: JS or CSS in the ```<head>``` element's attribute href or src follows the root directory pathing for the files, except no relational pathing (no "./" in the beginning).
 
 - CSS: ```<link rel="stylesheet" href="/public/css/file-name.css">```
-- JS: ```<script src="/public/js/fileName.js"></script>``` (do not have any js within the script element)
+- JS: ```<script defer src="/public/js/fileName.js"></script>``` (do not have any js within the script element)
+
+Why include the attribute ```defer```? It ensures that the JavaScript is run after all elements have been rendered thus full document accessibility.
 
 To write provided code above faster in VSCode; write and follow up with autocomplete with the TAB key:
 - CSS: link:css + [TAB]
 - JS: script:src + [TAB]
+For js: include ```defer``` until proven otherwise.
