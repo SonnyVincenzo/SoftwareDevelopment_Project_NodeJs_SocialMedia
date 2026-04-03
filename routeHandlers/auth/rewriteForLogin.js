@@ -1,3 +1,5 @@
+// Possible rewrite for login script - LJ.
+
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");

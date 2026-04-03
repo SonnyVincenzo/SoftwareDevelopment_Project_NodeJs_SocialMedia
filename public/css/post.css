@@ -1,7 +1,10 @@
 
 html{
     background-color: rgb(43, 42, 43);
-    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png"); /*Background Texture found online*/
+    background-image: url("../assets/img/asfalt-light.png"); /*Background Texture found online*/
+    /* May need to credit the creator - LJ 
+    org url: https://www.transparenttextures.com/patterns/asfalt-light.png
+    */
 }
 .container {
   display:flex;
