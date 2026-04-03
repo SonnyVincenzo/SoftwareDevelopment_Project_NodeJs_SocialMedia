@@ -45,6 +45,7 @@ Be in the working directory: [root](./).
 In the terminal write: ```node .```
 
 Depending on your [```SERVER_PORT```](./.env-sample) the webapplication would display on either: ```localhost:SERVER_PORT``` or ```127.0.0.1:SERVER_PORT```.
+Recommended ```SERVER_PORT``` is ```3000``` or ```8080```, port 3000 already provided in [.env-sample](./env-sample).
 
 ## Participants
 |Name|Github Handle|
