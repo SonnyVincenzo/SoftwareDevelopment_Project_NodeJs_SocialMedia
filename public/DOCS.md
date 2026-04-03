@@ -25,3 +25,16 @@ Colours:
     - Black
     - White
     - rgb(43, 42, 43)
+
+# HTML - Templates
+HTML files within [templates](../private/templates) are regarded as- of course templates before being manipulated/inserted content prodivded from database fetches to display correct content of any kind.
+
+## File linking
+The linking for different files in HTML, such as: JS or CSS in the ```<head>``` element's attribute href or src follows the root directory pathing for the files, except no relational pathing (no "./" in the beginning).
+
+- CSS: ```<link rel="stylesheet" href="/public/css/file-name.css">```
+- JS: ```<script src="/public/js/fileName.js"></script>``` (do not have any js within the script element)
+
+To write provided code above faster in VSCode; write and follow up with autocomplete with the TAB key:
+- CSS: link:css + [TAB]
+- JS: script:src + [TAB]
