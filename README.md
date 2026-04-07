@@ -12,8 +12,8 @@ We will have MySQL for the website's database.
 - The data of the users and posts will be stored in a MySQL database 
 
 ## Plan 
-- Programming Language: HTML, CSS, Javascript, MySQL
-- Build System: React, Node.js
+- Programming Language: HTML, CSS, Javascript, MySQL.
+- Build System: React, Node.js, Express.
 - Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
 
 ## [KanBan Board](https://github.com/users/SonnyVincenzo/projects/1)
@@ -26,20 +26,28 @@ Software:
 Dependencies:
 1. Express
 2. Dotenv
-3. MySQL
+3. MySQL2
 
 ### How to install
 For dependencies: Express, Dotenv, MySQL:
 Write following command into a terminal where ```npm --version``` is able to display version;
 - Express: ```npm install express```
 - DotEnv: ```npm install dotenv```
-- MySQL: ```npm install mysql```
+- MySQL: ```npm install mysql2```
 
-## How to run the server
-Be in the working directory: [root](./).
-In the terminal write: ```node .```
+### How to run the server
+1. Be in the working directory: [root](./).
+2. Change the name of provided file ```.env-sample``` to ```.env```.
+3. In the terminal write: ```node .```
 
 Depending on your [```SERVER_PORT```](./.env-sample) the webapplication would display on either: ```localhost:SERVER_PORT``` or ```127.0.0.1:SERVER_PORT```.
+Recommended ```SERVER_PORT``` is ```3000``` or ```8080```, port 3000 already provided in ```.env-sample``` file.
+
+**Alternatively** you can install the VSCode extension "Live Server":
+- Right click an html file and press Open with Live Server button.
+- See the website on your browser.
+
+This alternative offers easy support to view the website, but the **full functionailty** lies in the server provided in node.js: [index.js](./index.js) with ```node .``` method.
 
 ## Participants
 |Name|Github Handle|
@@ -51,15 +59,6 @@ Depending on your [```SERVER_PORT```](./.env-sample) the webapplication would di
 |Josef Norling|SonnyVincenzo|
 |Zaid Yassir Sultan|zySULTAN|
 |Leo Jönnerstig|LJkiller|
-
-### Plan 
-- Programming Language: HTML, CSS, Javascript, MySQL
-- Build System: React, Node.js
-- Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
-### How to compile code
-- Install code runner on visual studio code
-- Right click an html file and press Open with Live Server button
-- See the website on your browser
 
 > ## Declaration
 >

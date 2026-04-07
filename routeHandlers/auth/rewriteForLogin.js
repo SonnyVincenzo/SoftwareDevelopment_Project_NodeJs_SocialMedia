@@ -1,10 +1,10 @@
+
 import dotenv from "dotenv";
 dotenv.config();
 import express, { json } from "express";
 import cors from "cors";
 import { createConnection } from "mysql2";
 import { hash as _hash } from "bcrypt";
-
 // Possible rewrite for login script - LJ.
 
 const express = require("express");

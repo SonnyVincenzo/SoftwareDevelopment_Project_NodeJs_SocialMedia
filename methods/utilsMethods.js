@@ -8,6 +8,6 @@ import path from 'path';
  * @returns {HTMLDocument} - File's html content.
  */
 export async function loadHtml(fileName) {
-    const filePath = path.resolve(`private/html/${fileName}`);
+    const filePath = path.resolve(`private/templates/${fileName}`);
     return await fs.readFile(filePath, 'utf-8');
 }
