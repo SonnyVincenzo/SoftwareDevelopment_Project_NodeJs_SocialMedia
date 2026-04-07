@@ -10,7 +10,7 @@ registerBtn.addEventListener("click", async() => {
 
     try {
         //sends data to backend
-        const response = await fetch("http://localhost:5000/register", {
+        const response = await fetch("http://localhost:3000/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -47,7 +47,7 @@ loginBtn.addEventListener("click", async() => {
     try 
     {
         //sends data to backend
-        const response = await fetch("http://localhost:5000/login", {
+        const response = await fetch("http://localhost:3000/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
