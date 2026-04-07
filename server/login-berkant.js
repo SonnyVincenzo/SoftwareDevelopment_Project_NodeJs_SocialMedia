@@ -3,7 +3,7 @@ dotenv.config();
 import express, { json } from "express";
 import cors from "cors";
 import { createConnection } from "mysql2";
-import { hash as _hash } from "bcrypt";
+import { hash as _hash, compare } from "bcrypt";
 
 // Possible rewrite for login script - LJ.
 
@@ -86,6 +86,37 @@ app.post("/register", (req, res) => {
           }
         );
       })
+    }
+  );
+});
+app.post("/login", (req, res) => {
+  //gets input from the frontend
+  const {username, password} = req.body;
+  //looks if the user exist in the database
+  db.query(
+    "SELECT * FROM users WHERE username = ?",
+    [username],
+    async (err, result) => {
+      if(err) {
+        //something went wrong internally
+        return res.status(500).json({error: "Database error"});
+      }
+      if(result.length === 0)
+      {
+        return res.status(400).json({error: "User not found"});
+      }
+      //get the user
+      const user = result[0];
+      //compare the hashed password with the other one given by user
+      const match = await compare(password, user.password);
+      if(!match)
+      {
+        return res.status(400).json({error: "Wrong password"});
+      }
+      res.json({
+        message: "Login Successful",
+        userID: user.id
+      });
     }
   );
 });
