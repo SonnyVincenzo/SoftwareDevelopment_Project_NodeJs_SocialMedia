@@ -19,10 +19,9 @@ app.use(json());
 
 //DB-connection
 const db = createConnection({
-  host: "localhost",
-  user: "root",
-  password: "1234",
-  database: "social_test"
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD
 });
 
 app.use("/profile", profileRoutes(db));

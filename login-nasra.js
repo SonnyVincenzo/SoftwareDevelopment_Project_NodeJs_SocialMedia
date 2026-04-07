@@ -25,7 +25,7 @@ registerBtn.addEventListener("click", async() => {
     const data = await response.json();
     if(response.ok) {
         {
-            alert("User created! ID: " + data.userId);
+            alert("User created! ID: " + data.userID);
         }
     }
     else 
@@ -65,7 +65,7 @@ loginBtn.addEventListener("click", async() => {
         {
 
             {
-                alert("Login successful! User ID: " + data.userId);
+                alert("Login successful! User ID: " + data.userID);
             }
         }
         else 
