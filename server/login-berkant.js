@@ -7,10 +7,6 @@ import { hash as _hash } from "bcrypt";
 
 // Possible rewrite for login script - LJ.
 
-const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql2");
-const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
 
