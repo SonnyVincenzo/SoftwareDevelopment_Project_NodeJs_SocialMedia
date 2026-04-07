@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
+import profileRoutes from "./routes/profile.js";
 dotenv.config();
 import express, { json } from "express";
 import cors from "cors";
 import { createConnection } from "mysql2";
 import { hash as _hash, compare } from "bcrypt";
+
 
 // Possible rewrite for login script - LJ.
 
@@ -19,9 +21,11 @@ app.use(json());
 const db = createConnection({
   host: "localhost",
   user: "root",
-  password: "Nasra123",
+  password: "1234",
   database: "social_test"
 });
+
+app.use("/profile", profileRoutes(db));
 
 db.connect((err) => {
   if (err) {
