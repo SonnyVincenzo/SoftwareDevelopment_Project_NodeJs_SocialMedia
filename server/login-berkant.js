@@ -21,7 +21,8 @@ app.use(json());
 const db = createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
 });
 
 app.use("/profile", profileRoutes(db));
@@ -93,8 +94,10 @@ app.post("/register", (req, res) => {
   );
 });
 app.post("/login", (req, res) => {
+
   //gets input from the frontend
   const {username, password} = req.body;
+
   //looks if the user exist in the database
   db.query(
     "SELECT * FROM users WHERE username = ?",
@@ -108,10 +111,13 @@ app.post("/login", (req, res) => {
       {
         return res.status(400).json({error: "User not found"});
       }
+
       //get the user
       const user = result[0];
+
       //compare the hashed password with the other one given by user
       const match = await compare(password, user.password);
+
       if(!match)
       {
         return res.status(400).json({error: "Wrong password"});
@@ -123,7 +129,9 @@ app.post("/login", (req, res) => {
     }
   );
 });
+
 const PORT = process.env.SERVER_PORT || 3000
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
