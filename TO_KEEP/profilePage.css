@@ -1,0 +1,73 @@
+:root {
+    --primary-color: rgb(43, 42, 43);
+    --secondary-color: rgb(138, 43, 226);
+    --accent-color: rgb(1, 200, 250); 
+}
+
+body {
+    background-color: var(--primary-color);
+    color: white;
+    margin: 0;
+    font-family: Tektur, sans-serif;
+}
+
+nav {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.profile-column {
+    flex: 1;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-right: 1px solid var(--secondary-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.posts-column {
+    flex: 3;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+}
+
+.standardButton{
+    background-color: rgb(43, 42, 43);
+    border-width: 2px;
+    border-color: violet;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: Tektur;
+    font-size: 18px;
+    
+    margin-right: 0px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+  }
+  
+  .standardButton:hover{
+    background: linear-gradient((to right, var(--secondary-color)), rgba(1, 199, 249, 0.8));
+    background-color: white;
+    border-width: 2px;
+    color:  black;
+    border-color: rgb(255, 255, 255);
+    opacity: 0.8
+  }
