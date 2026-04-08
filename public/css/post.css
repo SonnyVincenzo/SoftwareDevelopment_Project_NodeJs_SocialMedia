@@ -1,11 +1,12 @@
 
 html{
     background-color: rgb(43, 42, 43);
-    background-image: url("../assets/img/asfalt-light.png"); /*Background Texture found online*/
+    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png"); /*Background Texture found online*/
     /* May need to credit the creator - LJ 
     org url: https://www.transparenttextures.com/patterns/asfalt-light.png
     */
 }
+
 .container {
   display:flex;
   width: 30%;
@@ -100,18 +101,21 @@ html{
     color: rgb(0, 0, 0);
     padding-bottom: 0px;
     padding-top: 0px;
-    padding-left: 20px;
+    padding-left: 10px;
   }
   .exit {
-    text-align: right;
     font-weight: bold;
     font-size: 35px;
     color: rgb(0, 0, 0);
     padding-bottom: 0px;
     padding-top: 0px;
-    margin-left: 65%;
+    margin-left: 1100px;
     margin-right: 5px;
     background-color: transparent;
     border-width: 0px;
     cursor: pointer;
+  }
+
+  .exit:hover{
+    color: rgb(255, 255, 255);
   }
