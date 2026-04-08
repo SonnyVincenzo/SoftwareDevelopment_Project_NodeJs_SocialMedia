@@ -19,9 +19,11 @@
     <p class="username">
       New Post - Username
     </p>
-    <button class="exit" onclick=""> <!--ADD LINK-->
-      &#10006;
-    </button>
+    <form action="/home">
+      <button id="exit" onclick=""> <!--ADD LINK-->
+        &#10006;
+      </button>
+    </form>
   </header>
   <div class="container">
     <input id="title" type="text" spellcheck="true" maxlength="100"
@@ -33,7 +35,7 @@
       placeholder="Post - Text" 
       maxlength="300"
       style="resize:none"></textarea>
-    <button id="standardButton" onclick="shareButtonFunction()"> <!--ADD LINK-->
+    <button id="standardButton"> <!--ADD LINK-->
       Share
     </button>
   </div>

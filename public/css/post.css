@@ -57,65 +57,67 @@ html{
 }
 
 #standardButton{
-    background-color: rgb(43, 42, 43);
-    border-width: 2px;
-    border-color: blueviolet;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    font-family: Tektur;
-    
-    margin-right: 10px;
-    margin-top: 20px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-weight: bold;
-  }
+  background-color: rgb(43, 42, 43);
+  border-width: 2px;
+  border-color: blueviolet;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: Tektur;
+  
+  margin-right: 10px;
+  margin-top: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: bold;
+}
 
-  #standardButton:hover{
-    background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 200, 250, 0.8));
-    background-color: white;
-    border-width: 2px;
-    color:  black;
-    border-color: rgb(255, 255, 255);
-    opacity: 0.8
-  }
-  .header{
-    background: linear-gradient(to right, rgba(138, 43, 226, 0.9), rgba(1, 200, 250, 0.8));
-    background-color: white;
-    border-width: 3px;
-    border-radius: 5px;
-    border-color: rgb(43, 42, 43) ;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    align-items: horizontal;
-    }
+#standardButton:hover{
+  background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 200, 250, 0.8));
+  background-color: white;
+  border-width: 2px;
+  color:  black;
+  border-color: rgb(255, 255, 255);
+  opacity: 0.8
+}
+.header{
+  display: flex;
+  background: linear-gradient(to right, rgba(138, 43, 226, 0.9), rgba(1, 200, 250, 0.8));
+  background-color: white;
+  border-width: 3px;
+  border-radius: 5px;
+  border-color: rgb(43, 42, 43) ;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  align-items: center;
+}
 
-  .username{
-    display: inline-block;
-    font-weight: bold;
-    font-family: Tektur;
-    font-size: 35px;
-    color: rgb(0, 0, 0);
-    padding-bottom: 0px;
-    padding-top: 0px;
-    padding-left: 10px;
-  }
-  .exit {
-    font-weight: bold;
-    font-size: 35px;
-    color: rgb(0, 0, 0);
-    padding-bottom: 0px;
-    padding-top: 0px;
-    margin-left: 1100px;
-    margin-right: 5px;
-    background-color: transparent;
-    border-width: 0px;
-    cursor: pointer;
-  }
+.username{
+  display: inline-block;
+  font-weight: bold;
+  font-family: Tektur;
+  font-size: 35px;
+  color: rgb(0, 0, 0);
+  padding-bottom: 0px;
+  padding-top: 0px;
+  padding-left: 20px;
+}
+#exit {
+  display: flex;
+  font-weight: bold;
+  font-size: 35px;
+  color: rgb(0, 0, 0);
+  padding-bottom: 0px;
+  padding-top: 0px;
+  margin-left: 1100px;
+  margin-right: 5px;
+  background-color: transparent;
+  border-width: 0px;
+  cursor: pointer;
+}
 
-  .exit:hover{
-    color: rgb(255, 255, 255);
-  }
+#exit:hover{
+  color: rgb(255, 255, 255);
+}
