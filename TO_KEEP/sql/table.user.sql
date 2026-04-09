@@ -1,6 +1,7 @@
-CREATE TABLE `test_data_base`.`user` (
-  `id` INT UNSIGNED NOT NULL,
+USE `database`;
+CREATE TABLE `User` (
   `username` CHAR(10) NOT NULL,
   `password` CHAR(20) NOT NULL,
   `joinDate` TIME NOT NULL,
-  PRIMARY KEY (`id`));
+  PRIMARY KEY (`username`)
+);
