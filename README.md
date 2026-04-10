@@ -27,17 +27,26 @@ Dependencies:
 1. Express
 2. Dotenv
 3. MySQL2
+4. Shx
 
 ### How to install
+
+#### Automatic
+Write following command into a terminal where ```npm --version``` is able to display version:
+```npm run setup```.
+
+It installs all dependencies alongside creates a copy of ```.env-sample``` and renames it into ```.env```, thus an automatic setup. 
+
+#### Manual
 For dependencies: Express, Dotenv, MySQL:
-Write following command into a terminal where ```npm --version``` is able to display version;
+Write following command into a terminal where ```npm --version``` is able to display version:
 - Express: ```npm install express```
 - DotEnv: ```npm install dotenv```
 - MySQL: ```npm install mysql2```
 
 ### How to run the server
 1. Be in the working directory: [root](./).
-2. Change the name of provided file ```.env-sample``` to ```.env```.
+2. Change the name of provided file ```.env-sample``` to ```.env```, if not already done.
 3. In the terminal write: ```node .```
 
 Depending on your [```SERVER_PORT```](./.env-sample) the webapplication would display on either: ```localhost:SERVER_PORT``` or ```127.0.0.1:SERVER_PORT```.
