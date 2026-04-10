@@ -8,14 +8,13 @@ import { loadHtml } from "../methods/utilsMethods.js";
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handlePost(req, res) {
+export async function handlePostGet(req, res) {
     try {
         const postId = req.query.id; // Query search.
 
         if (postId) { // Do db logic to fetch post from query id.
-            let template = await loadHtml('post.html');
-            template = template.replaceAll('post', `postId : ${postId}`);
-
+            let template = await loadHtml('post-view.html');
+            template = template.replace('%%post%%', `postId : ${postId}`);
 
             sendWebResponse(res, 200, 'text/html', template);
         } else {
@@ -24,7 +23,7 @@ export async function handlePost(req, res) {
             sendWebResponse(res, 200, 'text/html', template);
         }
     } catch (error) {
-        console.error('Post error:', error);
+        console.error('Post GET error:', error);
         sendWebResponse(res);
     }
 }
@@ -38,11 +37,10 @@ export async function handlePost(req, res) {
  */
 export async function handlePostPost(req, res) { // Post-ception.
     try {
-        const { postHeader, postText } = req.body; // form data
-
-        // Insert data into db for posts.
-
-        sendWebResponse(res, 201, 'text/plain', 'Post successful!');
+        const { postHeader, postText } = req.body; // Form data.
+        let generatedPostId = 1; // Backend: generate post id (probably do a number and find the next readily available iteration) - LJ.
+        
+        res.redirect(`/post?id=${generatedPostId}`); // Redirection to newly created post.
     } catch (error) {
         console.error('Post POST error:', error); // Post-ception strikes again.
         sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');

@@ -2,11 +2,11 @@
 
 import express from 'express';
 
-import { handleUser } from '../routeHandlers/user/userHandler.js';
+import { handleUserGet } from '../routeHandlers/user/userHandler.js';
 
 const userRouter = express.Router();
 
 // Set endpoints. ("/:username": allowing "user/someonesUsername")
-userRouter.get('/:username', handleUser);
+userRouter.get('/:username', handleUserGet);
 
 export default userRouter;

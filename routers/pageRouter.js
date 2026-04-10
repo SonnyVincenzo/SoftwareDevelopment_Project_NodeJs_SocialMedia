@@ -2,18 +2,18 @@
 
 import express from 'express';
 
-import { handleIndex } from '../routeHandlers/indexHandler.js';
-import { handleAbout } from '../routeHandlers/aboutHandler.js';
-import { handleHome } from '../routeHandlers/homeHandler.js';
-import { handlePost, handlePostPost } from '../routeHandlers/postHandler.js';
+import { handleIndexGet } from '../routeHandlers/indexHandler.js';
+import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
+import { handleHomeGet } from '../routeHandlers/homeHandler.js';
+import { handlePostGet, handlePostPost } from '../routeHandlers/postHandler.js';
 
 const pageRouter = express.Router();
 
 // Set endpoints.
-pageRouter.get(['/', '/index'], handleIndex);
-pageRouter.get('/about', handleAbout);
-pageRouter.get('/home', handleHome);
-pageRouter.get('/post', handlePost);
+pageRouter.get(['/', '/index'], handleIndexGet);
+pageRouter.get('/about', handleAboutGet);
+pageRouter.get('/home', handleHomeGet);
+pageRouter.get('/post', handlePostGet);
 
 pageRouter.post('/post', handlePostPost)
 
