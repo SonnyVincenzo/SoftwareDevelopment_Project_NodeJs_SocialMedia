@@ -8,12 +8,12 @@ import { loadHtml } from '../methods/utilsMethods.js';
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handleAbout(req, res) {
+export async function handleAboutGet(req, res) {
     try {
         const template = await loadHtml('about.html');
         sendWebResponse(res, 200, 'text/html', template);
     } catch (error) {
-        console.error('About error:', error);
+        console.error('About GET error:', error);
         sendWebResponse(res);
     }
 }

@@ -8,12 +8,12 @@ import { loadHtml } from '../../methods/utilsMethods.js';
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handleLogin(req, res) {
+export async function handleLoginGet(req, res) {
     try {
         const template = await loadHtml('login.html');
         sendWebResponse(res, 200, 'text/html', template);
     } catch (error) {
-        console.error('Login error:', error);
+        console.error('Login GET error:', error);
         sendWebResponse(res);
     }
 }
@@ -27,9 +27,9 @@ export async function handleLogin(req, res) {
  */
 export async function handleLoginPost(req, res) {
     try {
-        const { username, password } = req.body; // form data.
+        const { username, password } = req.body; // Form data.
 
-        // sendWebResponse(res, 200, 'text/plain', `Welcome, ${username}!`);
+        res.redirect(`/user/${username}`); // Should it be username or uuid?
         // sendWebResponse(res, 401, 'text/plain', 'Invalid username or password');
     } catch (error) {
         console.error('Login POST error:', error);

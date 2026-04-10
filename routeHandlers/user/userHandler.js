@@ -8,7 +8,7 @@ import { loadHtml } from '../../methods/utilsMethods.js';
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handleUser(req, res) {
+export async function handleUserGet(req, res) {
     const { username } = req.params;
 
     try {
@@ -21,7 +21,7 @@ export async function handleUser(req, res) {
         template = template.replace('<h1>User</h1>', `User: ${username}`);
         sendWebResponse(res, 200, 'text/html', template);
     } catch (error) {
-        console.error('User error:', error);
+        console.error('User GET error:', error);
         sendWebResponse(res);
     }
 }

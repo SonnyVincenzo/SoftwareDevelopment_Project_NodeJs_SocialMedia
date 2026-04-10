@@ -2,14 +2,14 @@
 
 import express from 'express';
 
-import { handleLogin, handleLoginPost } from '../routeHandlers/auth/loginHandler.js';
-import { handleSignup, handleSignupPost } from '../routeHandlers/auth/signupHandler.js';
+import { handleLoginGet, handleLoginPost } from '../routeHandlers/auth/loginHandler.js';
+import { handleSignupGet, handleSignupPost } from '../routeHandlers/auth/signupHandler.js';
 
 const authRouter = express.Router();
 
 // Set endpoints.
-authRouter.get('/login', handleLogin);
-authRouter.get('/signup', handleSignup);
+authRouter.get('/login', handleLoginGet);
+authRouter.get('/signup', handleSignupGet);
 
 // For form and db:
 authRouter.post('/login', handleLoginPost);

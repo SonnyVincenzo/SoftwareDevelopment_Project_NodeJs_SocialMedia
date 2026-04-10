@@ -8,12 +8,12 @@ import { loadHtml } from '../methods/utilsMethods.js';
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handleIndex(req, res) {
+export async function handleIndexGet(req, res) {
     try {
         const template = await loadHtml('index.html');
         sendWebResponse(res, 200, 'text/html', template);
     } catch (error) {
-        console.error('index error:', error);
+        console.error('index GET error:', error);
         sendWebResponse(res);
     }
 }
