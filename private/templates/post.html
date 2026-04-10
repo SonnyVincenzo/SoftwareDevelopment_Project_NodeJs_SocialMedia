@@ -16,9 +16,7 @@
 
 <body>
   <header class="header">
-    <p class="username">
-      New Post - Username
-    </p>
+    <p class="username">New Post - Username</p> <!-- Change element into a h1, and make the username be p as seperate element-->
     <form action="/home">
       <button id="exit" onclick=""> <!--ADD LINK-->
         &#10006;
@@ -27,17 +25,11 @@
   </header>
   <form class="container" method="post" action="/post">
     <input id="title" type="text" spellcheck="true" maxlength="100"
-    placeholder="Post - Title">
-    <textarea 
-      id="mainBody" 
-      type="text" 
-      spellcheck="true"
-      placeholder="Post - Text" 
-      maxlength="300"
-      style="resize:none"></textarea>
-    <button id="standardButton"> <!--ADD LINK-->
-      Share
-    </button>
+    placeholder="Post - Title" name="postHeader">
+    <textarea
+      id="mainBody" type="text" spellcheck="true" style="resize:none" name="postText" 
+      placeholder="Post - Text" maxlength="300"></textarea> <!-- questioning use of "style" as that is a css attribute-->
+    <button type="submit" id="standardButton">Share</button>
   </form>
 </body>
 </html>

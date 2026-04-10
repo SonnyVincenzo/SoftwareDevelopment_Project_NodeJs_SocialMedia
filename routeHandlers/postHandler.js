@@ -39,10 +39,10 @@ export async function handlePost(req, res) {
 export async function handlePostPost(req, res) { // Post-ception.
     try {
         const { postHeader, postText } = req.body; // form data
-
-        // Insert data into db for posts.
+        let generateedPostId = 0;
 
         sendWebResponse(res, 201, 'text/plain', 'Post successful!');
+        res.redirect(`/post?id=${generatedPostId}`);
     } catch (error) {
         console.error('Post POST error:', error); // Post-ception strikes again.
         sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
