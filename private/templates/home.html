@@ -13,21 +13,28 @@
     <title>Document</title>
 </head>
 <body>
+  <header class="topRow">
+    <input class="search" type="text" spellcheck="true" maxlength="100"
+    placeholder="Search">
+    <form action="/user/this_guy">
+      <button id="standardButton" onclick=""> 
+        Username
+      </button>
+    </form>
+    <a href="/user/this_guy"> 
+      <div class="profile"></div>
+    </a>
+  </header>
   <main>
-    <header class="topRow">
-      <input class="search" type="text" spellcheck="true" maxlength="100"
-      placeholder="Search">
-      <form action="/user/this_guy">
-        <button id="standardButton" onclick=""> 
-          Username
-        </button>
-      </form>
-      <a href="/user/this_guy"> 
-        <div class="profile"></div>
-      </a>
-    </header>
+    
   </main>
-  <footer>
+  <footer class="footer">
+    <p class="info">
+      Contact
+    </p>
+    <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
+      Github
+    </a>
   </footer>
 </body>
 </html>
