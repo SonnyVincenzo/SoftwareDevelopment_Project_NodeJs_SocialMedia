@@ -1,3 +1,13 @@
+## 13/04/2026
+* Nasra: unitest for backend profile
+* Yuze: unitest for frontend postFeed
+* Berkant: unitest for backend login
+* Josef: unitest for backend post
+* Jeniffer: unitest for front home
+* Leo: tutor sensei
+* Sultan: Sultan är bäst på cs2
+
+
 ## 09/04/2026
 * Nasra: go through the checklist, complete some issues.
 * Yuze: complete sql script.
