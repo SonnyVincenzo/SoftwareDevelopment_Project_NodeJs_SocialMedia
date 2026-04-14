@@ -1,5 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+const rotaionFactor = 1/75;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -8,6 +9,12 @@ class Vec2 {
     constructor(x,y){
         this.x = x;
         this.y = y;
+    }
+    static Magnitude(v){
+        const px = Math.pow(v.x,2);
+        const py = Math.pow(v.y,2);
+        const magnitude = Math.sqrt(px+py);
+        return magnitude;
     }
 }
 
@@ -26,6 +33,32 @@ class Vec3 {
         const newY = v.y/magnitude;
         const newZ = v.z/magnitude;
         return new Vec3(newX,newY,newZ);
+    }
+    static Delta(vMinuend, vSubtrahend) {
+        // probably wont be needed
+        const dx = vMinuend.x - vSubtrahend.x;
+        const dy = vMinuend.y - vSubtrahend.y;
+        const dz = vMinuend.z - vSubtrahend.z;
+        return new Vec3(dx,dy,dz);
+    }
+    static CrossProduct(v1,v2) {
+        const nx = v1.y * v2.z - v1.z * v2.y;
+        const ny = - v1.x * v2.z + v1.z * v2.x;
+        const nz = v1.y * v2.x - v1.x * v2.y;
+        return new Vec3(nx,ny,nz);
+    }
+    static DotProduct(v1,v2){
+        const mx = v1.x * v2.x;
+        const my = v1.y * v2.y;
+        const mz = v1.z * v2.z;
+        return mx + my + mz;
+    }
+    static Magnitude(v){
+        const px = Math.pow(v.x,2);
+        const py = Math.pow(v.y,2);
+        const pz = Math.pow(v.z,2);
+        const magnitude = Math.sqrt(px+py+pz);
+        return magnitude;
     }
 }
 
@@ -164,6 +197,34 @@ function ViewVertex(vertex, zShift) {
     return new Vec3(vertex.x,vertex.y,vertex.z + zShift);
 }
 
+function TrackBallRotation(dx,dy,array,size){
+    // prevent flatten arbitrary axis
+    const vDelta2d = new Vec2(dx, dy);
+    if (Vec2.Magnitude(vDelta2d) > 0){
+
+        // trackball rotation initialization
+        const vInitTrackball = new Vec3(0,0,-1);
+        const vFinishTrackball = new Vec3(mouse.dx, mouse.dy, -1);
+        // normal vector of the 2d plane acts as axis
+        const vArbitraryAxis = Vec3.CrossProduct(vInitTrackball, vFinishTrackball);
+        const vNormalizedArbitraryAxis = Vec3.Normalize(vArbitraryAxis);
+        // calculate rotation angle around that arbitrary axis
+        // cos(phi) = dot / magnitudeX / magnitudeY
+        const dotProductTrackball = Vec3.DotProduct(vInitTrackball, vFinishTrackball);
+        const magInitTrackball = Vec3.Magnitude(vInitTrackball);
+        const magFinishTrackball = Vec3.Magnitude(vFinishTrackball);
+        const cosPhi = dotProductTrackball / magInitTrackball / magFinishTrackball;
+        const radianRotation = Math.acos(cosPhi) * rotaionFactor;
+        // get quaternion
+        const quaternion = new Quaternion(0,0,0,0,vNormalizedArbitraryAxis, radianRotation);
+
+        // apply rotation
+        for (let i = 0; i < size; i++){
+            array[i] = Quaternion.Rotate(array[i], quaternion);
+        }
+    }
+}
+
 function Draw(){
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -171,28 +232,7 @@ function Draw(){
     // rotate only when draging with the mouse
     if (mouse.leftClick === true && mouse.leftHandled === false) {
         mouse.leftHandled = true;
-        
-        // probably the compose part that does the jaggy
-        // probably the compose part that does the jaggy
-        // probably the compose part that does the jaggy
-        // probably the compose part that does the jaggy
-        // probably the compose part that does the jaggy
-        // probably the compose part that does the jaggy
-        // probably the compose part that does the jaggy
-        const pitchRadian = -Math.sin(mouse.dx) / 100;
-        const yawRadian = Math.sin(mouse.dy) / 100;
-
-        const yAxis = new Vec3(0,1,0);
-        const xAxis = new Vec3(1,0,0);
-
-        const yQuat = new Quaternion(0,0,0,0,yAxis, pitchRadian);
-        const xQuat = new Quaternion(0,0,0,0,xAxis, yawRadian);
-
-        const composedQuat = Quaternion.HamiltonProduct(yQuat, xQuat);
-
-        for (let i = 0; i < 8; i++){
-            vertices[i] = Quaternion.Rotate(vertices[i], composedQuat);
-        }
+        TrackBallRotation(mouse.dx, mouse.dy, vertices, 8);
     }
     
 
@@ -210,7 +250,6 @@ function Draw(){
         const canoncialToScreen =  new Vec2(projected.x * halfWidth, -projected.y * halfHeight);
         const moveToCenter = new Vec2(canoncialToScreen.x + halfWidth, -canoncialToScreen.y + halfHeight)
         projectedVertices[i] = moveToCenter;
-        
     }
 
     // draw edges
