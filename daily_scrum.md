@@ -1,3 +1,8 @@
+## 14/04/2026
+* TOO_KEEP folder shall be applied, Leo will help us to manage this.
+* Checklist 6 shall be done ASAP, everyone write done the requiment part in the issue.
+
+
 ## 13/04/2026
 * Nasra: unitest for backend profile
 * Yuze: unitest for frontend postFeed
