@@ -1,6 +1,11 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const rotaionFactor = 1/75;
+const ROTATION_FACTOR = 1/75;
+const MAX_EXISTING_POST = 20;
+const POST_MINIMUM_WIDTH_SHIFT = -500;
+const POST_MAXIMUM_WIDTH_SHIFT = -POST_MINIMUM_WIDTH_SHIFT;
+const POST_MINIMUM_HEIGHT_SHIFT = -30;
+const POST_MAXIMUM_HEIGHT_SHIFT = -POST_MINIMUM_HEIGHT_SHIFT;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -231,7 +236,7 @@ function TrackBallRotation(dx,dy,array,size){
         const magInitTrackball = Vec3.Magnitude(vInitTrackball);
         const magFinishTrackball = Vec3.Magnitude(vFinishTrackball);
         const cosPhi = dotProductTrackball / magInitTrackball / magFinishTrackball;
-        const radianRotation = Math.acos(cosPhi) * rotaionFactor;
+        const radianRotation = Math.acos(cosPhi) * ROTATION_FACTOR;
         // get quaternion
         const quaternion = new Quaternion(0,0,0,0,vNormalizedArbitraryAxis, radianRotation);
 
@@ -248,7 +253,9 @@ function Draw(){
 
     // rotate only when draging with the mouse
     if (mouse.leftClick === true && mouse.leftHandled === false) {
-        mouse.leftHandled = true;
+        // handled shall set to true on the last function that reads it
+        // so not here
+        // mouse.leftHandled = true;
         TrackBallRotation(mouse.dx, mouse.dy, vertices, 8);
     }
     
@@ -308,3 +315,67 @@ animate();
 *============================================================
 *============================================================
 ___________________________________________________________*/
+
+const posts = [];
+
+for (let i = 0; i < MAX_EXISTING_POST; i++) {
+    const maxWidth = canvas.width;
+    const maxHeight = canvas.height;
+    const element = document.createElement("span");
+    element.style.position = "fixed";
+    element.style.zIndex = "9999";
+    element.style.top = (Math.random() * (maxHeight + POST_MAXIMUM_HEIGHT_SHIFT) - POST_MAXIMUM_HEIGHT_SHIFT / 2) + "px";
+    element.style.left = (Math.random() * (maxWidth + POST_MAXIMUM_WIDTH_SHIFT) - POST_MAXIMUM_WIDTH_SHIFT / 2) + "px";
+    element.style.speed = (Math.random() * 0.5 + 0.5) + "px";
+    element.style.color = "white";
+    element.style.backgroundColor = "transparent";
+    element.style.fontSize = "30px";
+    element.style.userSelect = "none"; // prevent marking 
+    element.style.whiteSpace = "nowrap"; // no warp
+
+    element.textContent  = "test post:" + (Math.random() + 1).toString(36).substring(7);
+    posts.push(element);
+    document.body.appendChild(element);
+}
+
+
+function ShiftRight(elements, amountPixel) {
+    for (let i = 0; i < elements.length; i++){
+        const currentLeft = parseFloat(elements[i].style.left);
+        const currentSpeed = parseFloat(elements[i].style.speed);
+        const randomizedAmountPixel = amountPixel * currentSpeed; 
+        let newPos = currentLeft + randomizedAmountPixel;
+        if (newPos > canvas.width + POST_MAXIMUM_WIDTH_SHIFT) newPos = 0 + POST_MINIMUM_WIDTH_SHIFT;
+        if (newPos < 0 + POST_MINIMUM_WIDTH_SHIFT) newPos = canvas.width + POST_MAXIMUM_WIDTH_SHIFT;
+        elements[i].style.left = (newPos) + "px";
+    }
+}
+
+function ShiftUp(elements, amountPixel) {
+    for (let i = 0; i < elements.length; i++){
+        const currentTop = parseFloat(elements[i].style.top);
+        const currentSpeed = parseFloat(elements[i].style.speed);
+        const randomizedAmountPixel = amountPixel * currentSpeed; 
+        let newPos = currentTop - randomizedAmountPixel;
+        if (newPos > canvas.height + POST_MAXIMUM_HEIGHT_SHIFT) newPos = 0 + POST_MINIMUM_HEIGHT_SHIFT;
+        if (newPos < 0 + POST_MINIMUM_HEIGHT_SHIFT) newPos = canvas.height + POST_MAXIMUM_HEIGHT_SHIFT;
+        elements[i].style.top = (newPos) + "px";
+    }
+}
+
+function DrawPost(){
+    // shift only when draging with the mouse
+    if (mouse.leftClick === true && mouse.leftHandled === false) {
+        mouse.leftHandled = true;
+        const dx = mouse.dx;
+        const dy = mouse.dy;
+        ShiftRight(posts, dx );
+        ShiftUp(posts, -dy );
+    }
+}
+
+function animatePosts() {
+    DrawPost();
+    requestAnimationFrame(animatePosts);
+}
+animatePosts();
