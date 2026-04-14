@@ -7,14 +7,16 @@ import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
 import { handleHomeGet } from '../routeHandlers/homeHandler.js';
 import { handlePostGet, handlePostPost } from '../routeHandlers/postHandler.js';
 
-const pageRouter = express.Router();
+//Changed pageRouter so that it has access to the MySQL database
+export default function pageRouter(db){
+    const pageRouter = express.Router();
 
-// Set endpoints.
-pageRouter.get(['/', '/index'], handleIndexGet);
-pageRouter.get('/about', handleAboutGet);
-pageRouter.get('/home', handleHomeGet);
-pageRouter.get('/post', handlePostGet);
+    // Set endpoints.
+    pageRouter.get(['/', '/index'], handleIndexGet);
+    pageRouter.get('/about', handleAboutGet);
+    pageRouter.get('/home', handleHomeGet);
+    pageRouter.get('/post', handlePostGet(db));
+    pageRouter.post('/post', handlePostPost(db));
 
-pageRouter.post('/post', handlePostPost)
-
-export default pageRouter;
+    return pageRouter
+}
