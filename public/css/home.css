@@ -77,33 +77,64 @@ html{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 60%;
+  justify-content: space-evenly;
+  margin:auto;
 }
-#post{
+
+.post{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   padding: 10px;
+  margin: 5px;
   border-style: inset;
   border-width: 5px;
   border-color: rgba(1, 199, 249, 1);
   border-radius: 10px;
   background-color:rgb(43, 42, 43);
-  justify-content: space-between;
 }
-#like{
+
+.like{
   color: rgb(43, 42, 43);
   background-color:rgb(43, 42, 43);
-  font-size: 18px;
+  font-size: 22px;
   border: none;
 }
   
-#like:hover{
+.like:hover{
   color:  blueviolet;
 }
-#like:active{
-  color:rgba(1, 199, 249, 1);
+
+.title{
+  color: white;
+  font-family: Tektur;
+  text-decoration: none;
+  padding-bottom: 0px;
+  font-weight: 600;
+  font-size:24px ;
+  margin-bottom: 0px ;
+  padding-left: 5px;
+  margin-top: 10px;
 }
 
+.text{
+  color: white;
+  font-family: Josefin Sans;
+  font-size: 14px;
+  margin: 5px;
+  padding-top: 5px;
+}
+
+.by-line{
+  color: white;
+  font-family: Josefin Sans;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0px;
+  padding-top: 0px;
+  padding-left: 5px;
+}
 
 .footer{
   display: flex;
@@ -117,11 +148,7 @@ html{
   height: 90px;
   border-top: 1px rgba(125, 124, 124, 0.933) solid;
 }
-.info{
-  color: white;
-  font-family: Tektur;
-  text-decoration: none;
-}
+
 .github{
   color: white;
   font-size: 16px;

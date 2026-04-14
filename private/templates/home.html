@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/home.css">
+    <script defer src="/public/js/like.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -27,24 +28,48 @@
   </header>
   <main>
     <article class="post-board">
-      <article id=post>
-        <h2 class="info"> Title 
-        </h2>
-        <h3 class="info"> By:
-          <a class="info" href="/user/username">
+      <article class="post">
+        <p class="title"> Title 
+        </p>
+        <p class="by-line"> By:
+          <a class="by-line" href="/user/username">
             Username
           </a>
-        </h3>
-        <form>
-          <button id="like" onclick="focus">
-            &#10084;
-          </button>
-        </form>
+        </p>
+        <p class="text">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+          Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+          natoque penatibus et magnis dis parturient montes, nascetur 
+          ridiculus mus. Donec quam felis, ultricies nec, pellentesque 
+          eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
+        </p>
+        <button class="like">
+          &#10084;
+        </button>
+      </article>
+      <article class="post">
+        <h2 class="title"> Title 
+        </h2>
+        <p class="by-line"> By:
+          <a class="by-line" href="/user/username">
+            Username
+          </a>
+        </p>
+        <p class="text">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+          Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+          natoque penatibus et magnis dis parturient montes, nascetur 
+          ridiculus mus. Donec quam felis, ultricies nec, pellentesque 
+          eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
+        </p>
+        <button class="like">
+          &#10084;
+        </button>
       </article>
     </article>
   </main>
   <footer class="footer">
-    <h2 class="info">
+    <h2 class="title">
       Contact
     </h2>
     <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
