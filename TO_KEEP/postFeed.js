@@ -6,6 +6,7 @@ const POST_MINIMUM_WIDTH_SHIFT = -500;
 const POST_MAXIMUM_WIDTH_SHIFT = -POST_MINIMUM_WIDTH_SHIFT;
 const POST_MINIMUM_HEIGHT_SHIFT = -30;
 const POST_MAXIMUM_HEIGHT_SHIFT = -POST_MINIMUM_HEIGHT_SHIFT;
+const POST_TRANSPARENCY_FACTOR = 6;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -20,6 +21,11 @@ class Vec2 {
         const py = Math.pow(v.y,2);
         const magnitude = Math.sqrt(px+py);
         return magnitude;
+    }
+    static Delta(vMinuend,vSubtrahend){
+        const dx = vMinuend.x - vSubtrahend.x;
+        const dy = vMinuend.y - vSubtrahend.y;
+        return new Vec2(dx,dy);
     }
 }
 
@@ -145,6 +151,8 @@ class Mouse {
         this.y = 0;
         this.dx = 0;
         this.dy = 0;
+        this.velocityX = 20;
+        this.velocityY = 0;
         this.leftClick = false;
         this.leftHandled = false;
         // reserved for right click
@@ -154,12 +162,29 @@ class Mouse {
 }
 let mouse = new Mouse();
 
+function DecreaseVelocity(mouse){
+    mouse.velocityX *= 0.09;
+    mouse.velocityY *= 0.09;
+}
+
+function UpdateMomentum() {
+    DecreaseVelocity(mouse);
+    requestAnimationFrame(UpdateMomentum);
+}
+
 document.addEventListener('mousemove', (event) => {
     // only track when holding the left button
     if (mouse.leftClick === true) {
         mouse.dx = (event.clientX - mouse.x);
         mouse.dy = (event.clientY - mouse.y);
         mouse.leftHandled = false;
+
+        if (Math.abs(mouse.dx) > Math.abs(mouse.velocityX)) {
+            mouse.velocityX = mouse.dx;
+        }
+        if (Math.abs(mouse.dy) > Math.abs(mouse.velocityY)) {
+            mouse.velocityY = mouse.dy;
+        }
     }
     mouse.x = event.clientX;
     mouse.y = event.clientY;
@@ -257,6 +282,9 @@ function Draw(){
         // so not here
         // mouse.leftHandled = true;
         TrackBallRotation(mouse.dx, mouse.dy, vertices, 8);
+    }
+    else {
+        // TrackBallRotation(mouse.velocityX, mouse.velocityY, vertices, 8);
     }
     
 
@@ -363,6 +391,17 @@ function ShiftUp(elements, amountPixel) {
     }
 }
 
+function AdjustTransparencyByRange(elements, v, radius){
+    for (let i = 0; i < elements.length; i++){
+        const currentLeft = parseFloat(elements[i].style.left);
+        const currentTop = parseFloat(elements[i].style.top);
+        const vE = new Vec2(currentLeft, currentTop);
+        const vDelta = Vec2.Delta(vE, v);
+        const range = Vec2.Magnitude(vDelta);
+        elements[i].style.opacity = range/radius;
+    }
+}
+
 function DrawPost(){
     // shift only when draging with the mouse
     if (mouse.leftClick === true && mouse.leftHandled === false) {
@@ -371,6 +410,8 @@ function DrawPost(){
         const dy = mouse.dy;
         ShiftRight(posts, dx );
         ShiftUp(posts, -dy );
+        const centerScreen = new Vec2(canvas.width / 2, canvas.height / 2);
+        AdjustTransparencyByRange(posts, centerScreen, 100 * POST_TRANSPARENCY_FACTOR);
     }
 }
 
