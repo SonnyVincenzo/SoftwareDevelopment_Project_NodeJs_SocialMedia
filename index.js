@@ -1,31 +1,14 @@
 import express from 'express';
 import 'dotenv/config'; // Environment variables.
-import mysql from 'mysql2';
+import db from './private/db/connection.js';
 
 // Routers:
-import pageRouter from './routers/pageRouter.js';
-import authRouter from './routers/authRouter.js';
-import userRouter from './routers/userRouter.js';
+import pageRouter from './private/routers/pageRouter.js';
+import authRouter from './private/routers/authRouter.js';
+import userRouter from './private/routers/userRouter.js';
 
 const app = express();
 const port = process.env.SERVER_PORT;
-
-//db connection
-const db = mysql.createConnection
-({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
-
-db.connect((err) => {
-    if (err) {
-        console.error('Database connection error:', err);
-    } else {
-        console.log('Connected to MySQL');
-    }
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
