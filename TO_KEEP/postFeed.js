@@ -7,6 +7,9 @@ const POST_MAXIMUM_WIDTH_SHIFT = -POST_MINIMUM_WIDTH_SHIFT;
 const POST_MINIMUM_HEIGHT_SHIFT = -30;
 const POST_MAXIMUM_HEIGHT_SHIFT = -POST_MINIMUM_HEIGHT_SHIFT;
 const POST_TRANSPARENCY_FACTOR = 6;
+const ROTATION_SLOWNESS_FACTOR = 0.985;
+const ROTATION_INITIAL_MOMENTUM_HORIZONTAL = 20;
+const ROTATION_INITIAL_MOMENTUM_VERTICAL = 0;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -151,8 +154,8 @@ class Mouse {
         this.y = 0;
         this.dx = 0;
         this.dy = 0;
-        this.velocityX = 20;
-        this.velocityY = 0;
+        this.velocityX = ROTATION_INITIAL_MOMENTUM_HORIZONTAL;
+        this.velocityY = ROTATION_INITIAL_MOMENTUM_VERTICAL;
         this.leftClick = false;
         this.leftHandled = false;
         // reserved for right click
@@ -163,14 +166,21 @@ class Mouse {
 let mouse = new Mouse();
 
 function DecreaseVelocity(mouse){
-    mouse.velocityX *= 0.09;
-    mouse.velocityY *= 0.09;
+    mouse.velocityX *= ROTATION_SLOWNESS_FACTOR;
+    mouse.velocityY *= ROTATION_SLOWNESS_FACTOR;
+    if (Math.abs(mouse.velocityX) < 0.001){
+        mouse.velocityX = 0;
+    }
+    if (Math.abs(mouse.velocityY) < 0.001){
+        mouse.velocityY = 0;
+    }
 }
 
 function UpdateMomentum() {
     DecreaseVelocity(mouse);
     requestAnimationFrame(UpdateMomentum);
 }
+UpdateMomentum();
 
 document.addEventListener('mousemove', (event) => {
     // only track when holding the left button
@@ -251,7 +261,7 @@ function TrackBallRotation(dx,dy,array,size){
 
         // trackball rotation initialization
         const vInitTrackball = new Vec3(0,0,-1);
-        const vFinishTrackball = new Vec3(mouse.dx, mouse.dy, -1);
+        const vFinishTrackball = new Vec3(dx, dy, -1);
         // normal vector of the 2d plane acts as axis
         const vArbitraryAxis = Vec3.CrossProduct(vInitTrackball, vFinishTrackball);
         const vNormalizedArbitraryAxis = Vec3.Normalize(vArbitraryAxis);
@@ -284,7 +294,7 @@ function Draw(){
         TrackBallRotation(mouse.dx, mouse.dy, vertices, 8);
     }
     else {
-        // TrackBallRotation(mouse.velocityX, mouse.velocityY, vertices, 8);
+        TrackBallRotation(mouse.velocityX, mouse.velocityY, vertices, 8);
     }
     
 
@@ -408,6 +418,14 @@ function DrawPost(){
         mouse.leftHandled = true;
         const dx = mouse.dx;
         const dy = mouse.dy;
+        ShiftRight(posts, dx );
+        ShiftUp(posts, -dy );
+        const centerScreen = new Vec2(canvas.width / 2, canvas.height / 2);
+        AdjustTransparencyByRange(posts, centerScreen, 100 * POST_TRANSPARENCY_FACTOR);
+    }
+    else {
+        const dx = mouse.velocityX;
+        const dy = mouse.velocityY;
         ShiftRight(posts, dx );
         ShiftUp(posts, -dy );
         const centerScreen = new Vec2(canvas.width / 2, canvas.height / 2);
