@@ -35,12 +35,22 @@ export async function handlePostGet(req, res) {
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handlePostPost(req, res) { // Post-ception.
+export async function handlePostPost(req, res, db) { // Post-ception.
     try {
         const { postHeader, postText } = req.body; // Form data.
-        let generatedPostId = 1; // Backend: generate post id (probably do a number and find the next readily available iteration) - LJ.
-        
-        res.redirect(`/post?id=${generatedPostId}`); // Redirection to newly created post.
+        db.query (
+            "INSERT INTO posts (header, content) VALUES (?,?)",
+            [postHeader, postText],
+            (err, result) => {
+                if(err) {
+                    console.error(err);
+                    return res.status(500).send("Database error");
+                }
+                let generatedPostId = result.insertId;
+                
+                res.redirect(`/post?id=${generatedPostId}`); // Redirection to newly created post.
+            }
+        );
     } catch (error) {
         console.error('Post POST error:', error); // Post-ception strikes again.
         sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');

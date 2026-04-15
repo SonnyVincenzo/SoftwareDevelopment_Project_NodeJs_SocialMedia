@@ -1,4 +1,4 @@
-//checks if the data was saved in database
+//i will not use a real database for this
 import {describe, it} from 'node:test';
 import assert from 'node:assert';
 import { handlePostPost } from '../private/routeHandlers/postHandler.js'
@@ -21,8 +21,14 @@ describe ('handlePostPost', () => {
                 redirectedTo = url;
             }
         };
+        //fake db
+        const mockDb = {
+            query: (sql, values, callback) => {
+                callback(null, {insertId: 1}); // simulating db for success
+            }
+        }
         //run the function
-        await handlePostPost(req, res);
+        await handlePostPost(req, res, mockDb);
 
         //check result
         assert.strictEqual(redirectedTo, '/post?id=1');
