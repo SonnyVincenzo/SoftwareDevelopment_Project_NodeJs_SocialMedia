@@ -188,7 +188,7 @@ let isMouseStopMoving = true;
 document.addEventListener('mousemove', (event) => {
     // if mouse stops moving while still holding the left button
     // then we reset the velocity value so the rotation will not be triggerd
-    // 10 ms
+    // 5 ms
     clearTimeout(mouseStopTimeout);
      mouseStopTimeout = setTimeout(() => {
         if (mouse.leftClick === true) {
