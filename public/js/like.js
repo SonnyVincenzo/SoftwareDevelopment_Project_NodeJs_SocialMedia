@@ -5,6 +5,7 @@ for (let i = 0; i < button.length; i++) {
   let currLikes = likes[i];
   currButton.addEventListener("click", () => {
     currButton.style.color = "rgba(1, 199, 249, 1)";
+    currButton.style.webkitTextStroke = "2px rgba(1, 199, 249, 1)";
     value = parseInt(currLikes.getAttribute('value')) + 1;
     currLikes.setAttribute('value', value)
     currLikes.innerHTML = value;
@@ -18,6 +19,7 @@ for (let i = 0; i < button.length; i++) {
   let currDislikes = dislikes[i];
   currDislikeButton.addEventListener("click", () => {
     currDislikeButton.style.color = "rgba(1, 199, 249, 1)";
+    currDislikeButton.style.webkitTextStroke = "2px rgba(1, 199, 249, 1)";
     value = parseInt(currDislikes.getAttribute('value')) + 1;
     currDislikes.setAttribute('value', value)
     currDislikes.innerHTML = value;

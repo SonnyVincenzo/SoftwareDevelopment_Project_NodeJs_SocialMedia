@@ -77,9 +77,9 @@ html{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
   justify-content: space-evenly;
   margin:auto;
+  width: 60%;
 }
 
 .post{
@@ -116,6 +116,7 @@ html{
   background-color:rgb(43, 42, 43);
   font-size: 28px;
   border: none;
+  -webkit-text-stroke: 2px blueviolet;
 }
 
 .dislike:hover,
