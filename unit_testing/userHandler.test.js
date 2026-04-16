@@ -1,10 +1,9 @@
 
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { handleUserGet } from '../private/routeHandlers/user/userHandler.js';
-import db from '../private/db/connection.js';
+import { createUserGetHandler } from '../private/routeHandlers/user/userHandler.js';
 
-describe('handleUserGet', () => {
+describe('createUserGetHandler', () => {
     it('should return a user profile page as HTML', async () => {
         //fake profile page request with testuser
         const req = { params: {username: 'testuser' }};
@@ -20,9 +19,10 @@ describe('handleUserGet', () => {
             end: () => {}
         };
     
-    try{
+
         //run the handler
-        await handleUserGet(req, res);
+        const handler = createUserGetHandler({});
+        await handler(req, res);
         
         //check that the handler returned what's expected
         assert.strictEqual(statusCode, 200);
@@ -30,10 +30,6 @@ describe('handleUserGet', () => {
         assert.ok(body.includes('<title>Profile Page</title>'));
         assert.ok(body.includes('<h2>Posts</h2>'));
         
-    } finally {
-        //Close MySQL connection 
-        db.end();
-        }
     });
 });
 
