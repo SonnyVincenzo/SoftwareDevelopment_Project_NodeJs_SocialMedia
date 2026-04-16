@@ -23,49 +23,59 @@ export async function handleSignupGet(req, res) {
 }
 
 /**
- * Handles signup form into db (POST /auth/signup).
- *
- * @async
- * @param {import('express').Request} req - Input from browser; ex: url, query.
- * @param {import('express').Response} res - Output from browser; ex: text/html.
+ * Creates User handler for GET.
+ * Wrapper function to enable db content handling. 
+ * 
+ * @param {import('mysql2'.Connection)} db - Database.
+ * @returns 
  */
-export async function handleSignupPost(req, res) {
-    try {
-        const { username, password } = req.body; // form data
+export function createSignupPostHandler(db) {
 
-        // check if user already exists
-        db.query(
-            'SELECT username FROM User WHERE username = ?',
-            [username],
-            async (err, result) => {
-                if (err) {
-                    console.error('Signup query error:', err);
-                    return sendWebResponse(res);
-                }
+    /**
+     * Handles signup form into db (POST /auth/signup).
+     *
+     * @async
+     * @param {import('express').Request} req - Input from browser; ex: url, query.
+     * @param {import('express').Response} res - Output from browser; ex: text/html.
+     */
+    return async function handleSignupPost(req, res) {
+        try {
+            const { username, password } = req.body; // form data
 
-                if (result.length > 0) {
-                    return sendWebResponse(res, 400, 'text/plain', 'Username already taken');
-                }
-
-                // hash before storing
-                const hash = await bcrypt.hash(password, saltRounds);
-
-                db.query(
-                    'INSERT INTO User (username, password, joinDate) VALUES (?, ?, NOW())',
-                    [username, hash],
-                    (err) => {
-                        if (err) {
-                            console.error('Signup insert error:', err);
-                            return sendWebResponse(res);
-                        }
-
-                        sendWebResponse(res, 201, 'text/plain', `User ${username} created successfully!`);
+            // check if user already exists
+            db.query(
+                'SELECT username FROM User WHERE username = ?',
+                [username],
+                async (err, result) => {
+                    if (err) {
+                        console.error('Signup query error:', err);
+                        return sendWebResponse(res);
                     }
-                );
-            }
-        );
-    } catch (error) {
-        console.error('Signup POST error:', error);
-        sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
+
+                    if (result.length > 0) {
+                        return sendWebResponse(res, 400, 'text/plain', 'Username already taken');
+                    }
+
+                    // hash before storing
+                    const hash = await bcrypt.hash(password, saltRounds);
+
+                    db.query(
+                        'INSERT INTO User (username, password, joinDate) VALUES (?, ?, NOW())',
+                        [username, hash],
+                        (err) => {
+                            if (err) {
+                                console.error('Signup insert error:', err);
+                                return sendWebResponse(res);
+                            }
+
+                            sendWebResponse(res, 201, 'text/plain', `User ${username} created successfully!`);
+                        }
+                    );
+                }
+            );
+        } catch (error) {
+            console.error('Signup POST error:', error);
+            sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
+        }
     }
 }

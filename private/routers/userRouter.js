@@ -2,11 +2,12 @@
 
 import express from 'express';
 
-import { handleUserGet } from '../routeHandlers/user/userHandler.js';
+import { createUserGetHandler } from '../routeHandlers/user/userHandler.js';
 
-const userRouter = express.Router();
+export default function createUserRouter(db) {
+    const router = express.Router();
 
-// Set endpoints. ("/:username": allowing "user/someonesUsername")
-userRouter.get('/:username', handleUserGet);
-
-export default userRouter;
+    // Set endpoints. ("/:username": allowing "user/someonesUsername")
+    router.get('/:username', createUserGetHandler(db));
+    return router;
+}

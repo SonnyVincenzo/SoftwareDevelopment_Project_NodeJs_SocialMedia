@@ -1,5 +1,5 @@
 SET @queryName = "blob";
-USE `database`;
+USE `social_test`;
 SELECT  `id`, 
         `postTitle`,
         `postBody`,
