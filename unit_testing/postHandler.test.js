@@ -1,7 +1,7 @@
 //i will not use a real database for this
 import {describe, it} from 'node:test';
 import assert from 'node:assert';
-import { handlePostPost } from '../private/routeHandlers/postHandler.js'
+import { createPostPostHandler } from '../private/routeHandlers/postHandler.js'
 
 describe ('handlePostPost', () => {
     it('should redirect to /post?id=1', async() => {
@@ -27,8 +27,9 @@ describe ('handlePostPost', () => {
                 callback(null, {insertId: 1}); // simulating db for success
             }
         }
-        //run the function
-        await handlePostPost(req, res, mockDb);
+
+        const handler = createPostPostHandler(mockDb);
+        await handler(req, res);
 
         //check result
         assert.strictEqual(redirectedTo, '/post?id=1');

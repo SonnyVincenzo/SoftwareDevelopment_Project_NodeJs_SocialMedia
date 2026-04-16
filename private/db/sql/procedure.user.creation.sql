@@ -3,7 +3,7 @@
 -- CALL AddUser(name, pass, @isSuccess);
 -- if @isSuccess IS 1 ...
 
-USE database;
+USE `social_test`;
 DELIMITER $$
 CREATE PROCEDURE AddUser
 (

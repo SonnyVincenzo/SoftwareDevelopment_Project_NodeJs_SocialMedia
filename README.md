@@ -1,3 +1,5 @@
+[![CI status](https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia/actions/workflows/node.js.yml/badge.svg)](https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia/actions/workflows/node.js.yml)
+
 # SoftwareDevelopment_Project_NodeJs_SocialMedia
 This is a project in the software development course at Jönköping University. 
 We are developing a social media website in Node.js for the backend and React for the frontend. 
@@ -29,37 +31,48 @@ Dependencies:
 3. MySQL2
 4. Shx
 
-### How to install
+### How to install & setup
 
-#### Automatic
-Write following command into a terminal where ```npm --version``` is able to display version:
-```npm run setup```.
+#### Dependencies
 
-It installs all dependencies alongside creates a copy of ```.env-sample``` and renames it into ```.env```, thus an automatic setup. 
+##### Automatic
+Write following command into a terminal where `npm --version` is able to display version:
+`npm run setup`.
 
-#### Manual
+It installs all dependencies alongside creates a copy of `.env-sample` and renames it into `.env`, thus an automatic setup. 
+**NOTE:** the current manner of copying `.env-sample` and changing name into `.env` replaces all existing content if you already have an `.env` file.
+
+##### Manual
 For dependencies: Express, Dotenv, MySQL:
-Write following command into a terminal where ```npm --version``` is able to display version:
-- Express: ```npm install express```
-- DotEnv: ```npm install dotenv```
-- MySQL: ```npm install mysql2```
+Write following command into a terminal where `npm --version` is able to display version:
+- Express: `npm install express`
+- DotEnv: `npm install dotenv`
+- MySQL: `npm install mysql2`
+
+#### Database
+Provided from the [`.env-sample`](./env-sample) we base of that the working database to be called: `social_test`, thus go into your server based MySQL terminal and write: `CREATE DATABASE social_test;`.
+
+Once you've created your database please head into [SQL schemas](./private/db/sql/) and copy following file's content into the terminal (CTRL A + CTRL C -> [TERMINAL] CTRL + V):
+- [user.sql](./private/db/sql/table.user.sql)
+- [posts.sql](./private/db/sql/table.posts.sql)
+
 
 ### How to run the server
 1. Be in the working directory: [root](./).
-2. Change the name of provided file ```.env-sample``` to ```.env```, if not already done.
-3. In the terminal write: ```node .```
+2. Change the name of provided file `.env-sample` to `.env`, if not already done.
+3. In the terminal write: `node .`
 
-Depending on your [```SERVER_PORT```](./.env-sample) the webapplication would display on either: ```localhost:SERVER_PORT``` or ```127.0.0.1:SERVER_PORT```.
-Recommended ```SERVER_PORT``` is ```3000``` or ```8080```, port 3000 already provided in ```.env-sample``` file.
+Depending on your [`SERVER_PORT`](./.env-sample) the webapplication would display on either: `localhost:SERVER_PORT` or `127.0.0.1:SERVER_PORT`.
+Recommended `SERVER_PORT` is `3000` or `8080`, port 3000 already provided in `.env-sample` file.
 
 **Alternatively** you can install the VSCode extension "Live Server":
 - Right click an html file and press Open with Live Server button.
 - See the website on your browser.
 
-This alternative offers easy support to view the website, but the **full functionailty** lies in the server provided in node.js: [index.js](./index.js) with ```node .``` method.
+This alternative offers easy support to view the website, but the **full functionailty** lies in the server provided in node.js: [index.js](./index.js) with `node .` method.
 
-## Instructions of how to generate code coverage information for your unit tests
-- Write node --test on your terminal
+## Generating code coverage for unit tests
+- Write `node --test` on your terminal.
 
 ## Participants
 |Name|Github Handle|

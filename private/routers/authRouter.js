@@ -2,17 +2,19 @@
 
 import express from 'express';
 
-import { handleLoginGet, handleLoginPost } from '../routeHandlers/auth/loginHandler.js';
-import { handleSignupGet, handleSignupPost } from '../routeHandlers/auth/signupHandler.js';
+import { handleLoginGet, createLoginPostHandler } from '../routeHandlers/auth/loginHandler.js';
+import { handleSignupGet, createSignupPostHandler } from '../routeHandlers/auth/signupHandler.js';
 
-const authRouter = express.Router();
+export default function createAuthRouter(db) {
+    const router = express.Router();
+    
+    // Set endpoints.
+    router.get('/login', handleLoginGet);
+    router.get('/signup', handleSignupGet);
 
-// Set endpoints.
-authRouter.get('/login', handleLoginGet);
-authRouter.get('/signup', handleSignupGet);
+    // For form and db:
+    router.post('/login', createLoginPostHandler(db));
+    router.post('/signup', createSignupPostHandler(db));
 
-// For form and db:
-authRouter.post('/login', handleLoginPost);
-authRouter.post('/signup', handleSignupPost);
-
-export default authRouter;
+    return router;
+}

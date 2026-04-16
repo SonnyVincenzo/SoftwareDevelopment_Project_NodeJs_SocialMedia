@@ -29,30 +29,40 @@ export async function handlePostGet(req, res) {
 }
 
 /**
- * Handles post form into db (POST /post).
+ * Creates Post handler for POST.
+ * Wrapper function to enable db content handling.
  * 
- * @async
- * @param {import('express').Request} req - Input from browser; ex: url, query.
- * @param {import('express').Response} res - Output from browser; ex: text/html.
+ * @param {import('mysql2'.Connection)} db - Database.
+ * @returns 
  */
-export async function handlePostPost(req, res, db) { // Post-ception.
-    try {
-        const { postHeader, postText } = req.body; // Form data.
-        db.query (
-            "INSERT INTO posts (header, content) VALUES (?,?)",
-            [postHeader, postText],
-            (err, result) => {
-                if(err) {
-                    console.error(err);
-                    return res.status(500).send("Database error");
+export function createPostPostHandler(db) {
+
+    /**
+     * Handles post form into db (POST /post).
+     * 
+     * @async
+     * @param {import('express').Request} req - Input from browser; ex: url, query.
+     * @param {import('express').Response} res - Output from browser; ex: text/html.
+     */
+    return async function handlePostPost(req, res) { // Post-ception.
+        try {
+            const { postHeader, postText } = req.body; // Form data.
+            db.query(
+                "INSERT INTO posts (header, content) VALUES (?,?)",
+                [postHeader, postText],
+                (err, result) => {
+                    if (err) {
+                        console.error('Post POST error:', err); // Post-ception strikes again.
+                        sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error: Database');
+                    }
+                    let generatedPostId = result.insertId;
+
+                    res.redirect(`/post?id=${generatedPostId}`); // Redirection to newly created post.
                 }
-                let generatedPostId = result.insertId;
-                
-                res.redirect(`/post?id=${generatedPostId}`); // Redirection to newly created post.
-            }
-        );
-    } catch (error) {
-        console.error('Post POST error:', error); // Post-ception strikes again.
-        sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
+            );
+        } catch (error) {
+            console.error('Post POST error:', error); // Post-ception strikes even more.
+            sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
+        }
     }
 }
