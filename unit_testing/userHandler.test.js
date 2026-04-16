@@ -21,7 +21,7 @@ describe('createUserGetHandler', () => {
     
 
         //run the handler
-        const handler = createUserGetHandler(db);
+        const handler = createUserGetHandler({});
         await handler(req, res);
         
         //check that the handler returned what's expected
