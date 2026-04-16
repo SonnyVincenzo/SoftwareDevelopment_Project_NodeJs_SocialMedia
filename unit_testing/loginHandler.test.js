@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import { createLoginPostHandler } from '../private/routeHandlers/auth/loginHandler.js';
 import db from '../private/db/connection.js';
 
-describe('Login POST handler.', () => {
+describe('Login POST handler:', () => {
     after(async () => {
         await db.end();
     });
@@ -23,7 +23,7 @@ describe('Login POST handler.', () => {
         }
     });
 
-    it('Wrong username, return 401.', async () => {
+    it('should return 401: "Invalid username"', async () => {
         const req = createReq('124', '123');
         const res = createRes({ statusCode: 401, message: 'Invalid username.' });
 
@@ -31,7 +31,7 @@ describe('Login POST handler.', () => {
         await handler(req, res);
     });
 
-    it('Wrong password, return 401.', async () => {
+    it('should return 401: "Incorrect password"', async () => {
         const req = createReq('123', '124');
         const res = createRes({ statusCode: 401, message: 'Incorrect password.' });
 
@@ -39,7 +39,7 @@ describe('Login POST handler.', () => {
         await handler(req, res);
     });
 
-    it("URL redirect to user's endpoint, login successful.", async () => {
+    it("should redirect on successful login.", async () => {
         const req = createReq('123', '123');
         let redirectedTo = null;
         const res = {
