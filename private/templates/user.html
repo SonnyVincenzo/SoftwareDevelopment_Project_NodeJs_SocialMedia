@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
     <link rel="stylesheet" href="/public/css/user.css">
+    <script defer src="/public/js/like.js"></script>
+    <title>Profile Page</title>
 </head>
 
 <body>
     <nav>
-        <a href="#">Home</a>
-        <span>|</span>
-        <a href="#">Profile</a>
+        <button class="standardButton">Home</button>
     </nav>
 
     <div class="mainContainer">
         
         <div class="profile-column">
-            <div class="profileName">
+            <div class="profile"></div> <div class="profileName">
                 <h1>Full Name</h1>
                 <h5>@Username</h5>
 
                 <div class="profileDescription">
-                    <p>Description bla bla bla</p>
-                    <button class="standardButton">Edit Profile</button>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. </p>
                 </div>
 
                 <div class="profileButtons">
@@ -35,18 +37,82 @@
         </div>
 
         <div class="posts-column">
-            <div class="post">
+            <div class="post-header">
                 <h2>Posts</h2>
                 <button class="standardButton">New Post</button>
             </div>
-            <div class="posts">
-                <p>Post 1</p>
-                <p>Post 2</p>
-            </div>
+
+            <article class="post-board">
+                <article class="post">
+                    <p class="title">Title #1</p>
+                    <p class="by-line"> By:
+                        <a class="by-line" href="/user/username">Username</a>
+                    </p>
+                    <p class="text">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                        Aenean commodo ligula eget dolor. Aenean massa.
+                    </p>
+                    <div class="post-icons">
+                        <button class="like">&#10084;</button>
+                        <p class="likes" value="0"></p>
+                        <button class="dislike">&#10006;</button>
+                        <p class="dislikes" value="0"></p>
+                    </div>
+                </article>
+
+                <article class="post">
+                    <p class="title">Title #2</p>
+                    <p class="by-line"> By:
+                        <a class="by-line" href="/user/username">Username</a>
+                    </p>
+                    <p class="text">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                        Aenean commodo ligula eget dolor.
+                    </p>
+                    <div class="post-icons">
+                        <button class="like">&#10084;</button>
+                        <p class="likes" value="0"></p>
+                        <button class="dislike">&#10006;</button>
+                        <p class="dislikes" value="0"></p>
+                    </div>
+                </article>
+
+                                <article class="post">
+                    <p class="title">Title #3</p>
+                    <p class="by-line"> By:
+                        <a class="by-line" href="/user/username">Username</a>
+                    </p>
+                    <p class="text">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                        Aenean commodo ligula eget dolor.
+                    </p>
+                    <div class="post-icons">
+                        <button class="like">&#10084;</button>
+                        <p class="likes" value="0"></p>
+                        <button class="dislike">&#10006;</button>
+                        <p class="dislikes" value="0"></p>
+                    </div>
+                </article>
+
+                                <article class="post">
+                    <p class="title">Title #4</p>
+                    <p class="by-line"> By:
+                        <a class="by-line" href="/user/username">Username</a>
+                    </p>
+                    <p class="text">
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+                        Aenean commodo ligula eget dolor.
+                    </p>
+                    <div class="post-icons">
+                        <button class="like">&#10084;</button>
+                        <p class="likes" value="0"></p>
+                        <button class="dislike">&#10006;</button>
+                        <p class="dislikes" value="0"></p>
+                    </div>
+                </article>
+            </article>
         </div>
 
     </div> 
-
-
 </body>
 </html>
