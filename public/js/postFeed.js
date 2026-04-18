@@ -245,6 +245,9 @@ ___________________________________________________________*/
 const posts = [];
 
 for (let i = 0; i < MAX_EXISTING_POST; i++) {
+    const response = await fetch('/postFeed'); // adjust URL to your endpoint
+    const postData = await response.json();
+
     const maxWidth = canvas.width;
     const maxHeight = canvas.height;
     const element = document.createElement("span");
@@ -258,7 +261,8 @@ for (let i = 0; i < MAX_EXISTING_POST; i++) {
     element.style.userSelect = "none"; // prevent marking 
     element.style.whiteSpace = "nowrap"; // no warp
 
-    element.textContent  = "test post:" + (Math.random() + 1).toString(36).substring(7);
+    // element.textContent  = "test post:" + (Math.random() + 1).toString(36).substring(7);
+    element.textContent = postData[i].postTitle;
     posts.push(element);
     document.body.appendChild(element);
 }
