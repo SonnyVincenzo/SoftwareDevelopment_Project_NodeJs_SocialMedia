@@ -16,7 +16,8 @@ export default function createPageRouter(db) {
     router.get('/about', handleAboutGet);
     router.get('/home', handleHomeGet);
     router.get('/post', handlePostGet);
-    router.get('/postFeed', createPostFeedHandler(db))
+    router.get('/postFeed', handlePostFeedGet)
+    router.get('/postFeed/snapshot', createPostFeedHandler(db))
 
     router.post('/post', createPostPostHandler(db));
 

@@ -243,10 +243,10 @@ animate();
 ___________________________________________________________*/
 
 const posts = [];
-
-for (let i = 0; i < MAX_EXISTING_POST; i++) {
-    const response = await fetch('/postFeed'); // adjust URL to your endpoint
-    const postData = await response.json();
+const response = await fetch('/postFeed/snapshot'); // adjust URL to your endpoint
+const postData = await response.json();
+// MAX_EXISTING_POST not using for the limit
+for (let i = 0; i < postData.length; i++) {
 
     const maxWidth = canvas.width;
     const maxHeight = canvas.height;
@@ -260,6 +260,7 @@ for (let i = 0; i < MAX_EXISTING_POST; i++) {
     element.style.fontSize = "30px";
     element.style.userSelect = "none"; // prevent marking 
     element.style.whiteSpace = "nowrap"; // no warp
+    
 
     // element.textContent  = "test post:" + (Math.random() + 1).toString(36).substring(7);
     element.textContent = postData[i].postTitle;
