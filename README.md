@@ -1,4 +1,4 @@
-[![CI status](https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia/actions/workflows/node.js.yml/badge.svg)](https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia/actions/workflows/node.js.yml/badge.svg)](https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia/actions/workflows/node.js.yml)
 
 # SoftwareDevelopment_Project_NodeJs_SocialMedia
 This is a project in the software development course at Jönköping University. 
