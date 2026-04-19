@@ -7,6 +7,7 @@ import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
 import { handleHomeGet } from '../routeHandlers/homeHandler.js';
 import { handlePostGet, createPostPostHandler } from '../routeHandlers/postHandler.js';
 import { handlePostFeedGet, createPostFeedHandler } from '../routeHandlers/postFeedHandler.js';
+import { handlePostGet, createPostPostHandler, createPostGetHandler, createCommentPostHandler } from '../routeHandlers/postHandler.js';
 
 export default function createPageRouter(db) {
     const router = express.Router();
@@ -15,11 +16,12 @@ export default function createPageRouter(db) {
     router.get(['/', '/index'], handleIndexGet);
     router.get('/about', handleAboutGet);
     router.get('/home', handleHomeGet);
-    router.get('/post', handlePostGet);
-    router.get('/postFeed', handlePostFeedGet);
-    router.get('/postFeed/snapshot', createPostFeedHandler(db));
+    router.get('/post', createPostGetHandler(db));
+    router.get('/postFeed', handlePostFeedGet)
+    router.get('/postFeed/snapshot', createPostFeedHandler(db))
 
     router.post('/post', createPostPostHandler(db));
+    
 
     return router;
 }

@@ -66,3 +66,30 @@ export function createPostPostHandler(db) {
         }
     }
 }
+export function createPostGetHandler(db) {
+    return async function (req, res) {
+        try {
+            const postId = req.query.id;
+            if (postId) {
+                let commentsHtml = "<p>No comments yet.</p>";
+                await new Promise(resolve => {
+                    db.query("SELECT content FROM comments WHERE postId = ? ORDER BY createdAt DESC", [postId], (err, results) => {
+                        if (!err && results.length > 0) {
+                            commentsHtml = results.map(c => `<p>${c.content}</p>`).join('');
+                        }
+                        resolve();
+                    });
+                });
+                let template = await loadHtml('post-view.html');
+                template = template.replace('%%post%%', `postId : ${postId}`).replace('%%postId%%', postId).replace('%%comments%%', commentsHtml);
+                sendWebResponse(res, 200, 'text/html', template);
+            } else {
+                const template = await loadHtml('post.html');
+                sendWebResponse(res, 200, 'text/html', template);
+            }
+        } catch (error) {
+            console.error('Post GET error:', error);
+            sendWebResponse(res);
+        }
+    };
+}
