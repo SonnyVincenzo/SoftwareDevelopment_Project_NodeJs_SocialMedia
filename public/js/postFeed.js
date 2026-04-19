@@ -280,8 +280,28 @@ const posts = [];
 const response = await fetch('/postFeed/snapshot');
 const postData = await response.json();
 console.log("Got " + postData.length + " posts.");
-// MAX_EXISTING_POST not using for the limit
 
+// display something when no data retrieved from the database
+if (postData.length === 0){
+    const maxWidth = canvas.width;
+    const maxHeight = canvas.height;
+    const element = document.createElement("span");
+    element.style.position = "fixed";
+    element.style.fontSize = "100px";
+    element.style.color = "white";
+    element.style.backgroundColor = "transparent";
+    element.style.top = 100 + "px";
+    element.style.left = 0 + "px";
+    element.style.speed = 0.125 + "px";
+    element.style.userSelect = "none"; // prevent marking 
+    element.style.whiteSpace = "nowrap"; // no warp
+    element.textContent = "Read the console for more informations.";
+    posts.push(element);
+    document.body.appendChild(element);
+    console.error("please make sure the database contain the table for the user posts and it is not empty, modify the .env-sample for having correct name alias.");
+}
+
+// MAX_EXISTING_POST not using for the limit
 for (let i = 0; i < postData.length; i++) {
     const maxWidth = canvas.width;
     const maxHeight = canvas.height;
