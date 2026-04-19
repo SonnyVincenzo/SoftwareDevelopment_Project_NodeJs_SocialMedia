@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/index.css">
-    <!-- <script defer src="/public/js/index.js"></script> -->
+    <script defer src="/public/js/indexSearchBar.js"></script> 
     <title>Welcome!</title>
 
 </head>
@@ -20,8 +20,8 @@
   <main>
     <section class="searchBar">
       <p class="searchText">Search |</p>
-      <input class="search" type="text" spellcheck="true" maxlength="80">
-      <p class="searchText">&#x1F50E;&#xFE0E;</p>
+      <input id="searchInput" type="text" spellcheck="true" maxlength="80">
+      <span class="icon" onclick="clearInput()"></span>
     </section>
 		<div class="standardButton">
       <a class="text" href="/auth/login">Login</a>

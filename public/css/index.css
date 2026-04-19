@@ -58,11 +58,12 @@ html{
   font-size: 24px;
   width: 60%;
   height: 120px;
-  border-width: 5px;
   border-style: inset;
+  border-width: 5px;
   border-color: rgb(1, 200, 250);
   border-radius: 10px;
 }
+
 .searchText{
   color: rgb(255, 255, 255);
   font-family: Tektur;
@@ -71,7 +72,7 @@ html{
   padding-left: 20px;
 }
 
-.search{
+.searchBar input {
   width: 70%;
   height:75px;
   border-style: none;
@@ -84,9 +85,22 @@ html{
   margin-left: 10px;
 }
 
-.search:focus{
-  background-color: rgba(43, 42, 43, 0.9);
-  outline:none;
+.icon{
+  color: rgb(255, 255, 255);
+  font-size: 32px;
+  padding-left: 20px;
+}
+
+.icon::before{
+  content: "\1F50E \FE0E";
+}
+
+.searchBar:focus-within .icon::before{
+  content: "\2716";
+}
+
+.searchBar:focus-within{
+  border-style: outset;
 }
 
 
@@ -117,9 +131,9 @@ html{
   margin:auto;
   width: 40%;
   
-  
-  padding-bottom: 10px;
-  padding-top: 10px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+  padding-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
   font-weight: bold;
@@ -128,7 +142,8 @@ html{
 .standardButton:hover{
   background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 200, 250, 0.8));
   background-color: white;
-  border-width: 2px;
+  border-width: 5px;
+  border-style: outset;
   color:  black;
   border-color: rgb(255, 255, 255);
   opacity: 0.8
