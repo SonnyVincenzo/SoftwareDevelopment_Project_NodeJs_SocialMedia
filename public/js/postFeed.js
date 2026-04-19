@@ -188,28 +188,62 @@ function Draw(){
 
     // apply view matrix + projection matrix + scale + translate
     const projectedVertices = [];
+    const depth = [];
     const fov = 90;
     const aspectRatio = canvas.width / canvas.height;
     const nearPlane = 0;
     const farPlane = 100;
+    const forwarShiftAmount = 4;
     for (let i = 0; i < 8; i++){
         const halfWidth = canvas.width / 2;
         const halfHeight = canvas.height / 2;
-        const viewed = ViewVertex(vertices[i], 4);
+        const viewed = ViewVertex(vertices[i], forwarShiftAmount);
         const projected = ProjectVertex(viewed, fov, aspectRatio, nearPlane, farPlane);
         const canoncialToScreen =  new Vec2(projected.x * halfWidth, -projected.y * halfHeight);
         const moveToCenter = new Vec2(canoncialToScreen.x + halfWidth, -canoncialToScreen.y + halfHeight)
-        projectedVertices[i] = moveToCenter;
+        // also stores the depth value
+        projectedVertices[i] = moveToCenter; 
+        depth[i] = viewed.z;
     }
 
+    
+    // prevent overlapping of the edges
+    // bubble sort
+    // the less depth value, the lower priority of drawing
+    let sortedEdge = edges;
+    let sorted = true;
+    for (let i = 0; i < sortedEdge.length; i++){
+        for (let u = 0; u < sortedEdge.length - i - 1; u++){
+            let average_1 = depth[sortedEdge[u][0]] + depth[sortedEdge[u][1]];
+            let average_2 = depth[sortedEdge[u + 1][0]] + depth[sortedEdge[u + 1][1]];
+            if (average_1 < average_2){
+                sorted = false;
+                const temp = sortedEdge[u + 1];
+                sortedEdge[u + 1] = sortedEdge[u];
+                sortedEdge[u] = temp;
+            }
+        }
+        if (sorted === true){
+            break;
+        }
+        sorted = true;
+    }
+
+
     // draw edges
-    // reminder: understand how this works
     ctx.strokeStyle = 'white';
     ctx.lineWidth = 2;
-    
-    for (let edge of edges){
+    const edgeTransparencyFactor = 2/3;
+    for (let edge of sortedEdge){
         const p1 = projectedVertices[edge[0]];
         const p2 = projectedVertices[edge[1]];
+        const z1 = depth[edge[0]];
+        const z2 = depth[edge[1]];
+
+        const avgDepth = (z1 - forwarShiftAmount + 1 + z2 - forwarShiftAmount + 1) / 2;
+        const normalized = Math.max(0, Math.min(1, avgDepth - nearPlane));
+        const brightness = Math.floor(255 * (1 - normalized * edgeTransparencyFactor));
+        ctx.strokeStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
         
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
