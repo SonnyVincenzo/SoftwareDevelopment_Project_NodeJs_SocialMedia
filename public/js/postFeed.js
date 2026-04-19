@@ -188,28 +188,62 @@ function Draw(){
 
     // apply view matrix + projection matrix + scale + translate
     const projectedVertices = [];
+    const depth = [];
     const fov = 90;
     const aspectRatio = canvas.width / canvas.height;
     const nearPlane = 0;
     const farPlane = 100;
+    const forwarShiftAmount = 4;
     for (let i = 0; i < 8; i++){
         const halfWidth = canvas.width / 2;
         const halfHeight = canvas.height / 2;
-        const viewed = ViewVertex(vertices[i], 4);
+        const viewed = ViewVertex(vertices[i], forwarShiftAmount);
         const projected = ProjectVertex(viewed, fov, aspectRatio, nearPlane, farPlane);
         const canoncialToScreen =  new Vec2(projected.x * halfWidth, -projected.y * halfHeight);
         const moveToCenter = new Vec2(canoncialToScreen.x + halfWidth, -canoncialToScreen.y + halfHeight)
-        projectedVertices[i] = moveToCenter;
+        // also stores the depth value
+        projectedVertices[i] = moveToCenter; 
+        depth[i] = viewed.z;
     }
 
+    
+    // prevent overlapping of the edges
+    // bubble sort
+    // the less depth value, the lower priority of drawing
+    let sortedEdge = edges;
+    let sorted = true;
+    for (let i = 0; i < sortedEdge.length; i++){
+        for (let u = 0; u < sortedEdge.length - i - 1; u++){
+            let average_1 = depth[sortedEdge[u][0]] + depth[sortedEdge[u][1]];
+            let average_2 = depth[sortedEdge[u + 1][0]] + depth[sortedEdge[u + 1][1]];
+            if (average_1 < average_2){
+                sorted = false;
+                const temp = sortedEdge[u + 1];
+                sortedEdge[u + 1] = sortedEdge[u];
+                sortedEdge[u] = temp;
+            }
+        }
+        if (sorted === true){
+            break;
+        }
+        sorted = true;
+    }
+
+
     // draw edges
-    // reminder: understand how this works
     ctx.strokeStyle = 'white';
     ctx.lineWidth = 2;
-    
-    for (let edge of edges){
+    const edgeTransparencyFactor = 2/3;
+    for (let edge of sortedEdge){
         const p1 = projectedVertices[edge[0]];
         const p2 = projectedVertices[edge[1]];
+        const z1 = depth[edge[0]];
+        const z2 = depth[edge[1]];
+
+        const avgDepth = (z1 - forwarShiftAmount + 1 + z2 - forwarShiftAmount + 1) / 2;
+        const normalized = Math.max(0, Math.min(1, avgDepth - nearPlane));
+        const brightness = Math.floor(255 * (1 - normalized * edgeTransparencyFactor));
+        ctx.strokeStyle = `rgb(${brightness}, ${brightness}, ${brightness})`;
         
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
@@ -243,11 +277,32 @@ animate();
 ___________________________________________________________*/
 
 const posts = [];
-const response = await fetch('/postFeed/snapshot'); // adjust URL to your endpoint
+const response = await fetch('/postFeed/snapshot');
 const postData = await response.json();
+console.log("Got " + postData.length + " posts.");
+
+// display something when no data retrieved from the database
+if (postData.length === 0){
+    const maxWidth = canvas.width;
+    const maxHeight = canvas.height;
+    const element = document.createElement("span");
+    element.style.position = "fixed";
+    element.style.fontSize = "100px";
+    element.style.color = "white";
+    element.style.backgroundColor = "transparent";
+    element.style.top = 100 + "px";
+    element.style.left = 0 + "px";
+    element.style.speed = 0.125 + "px";
+    element.style.userSelect = "none"; // prevent marking 
+    element.style.whiteSpace = "nowrap"; // no warp
+    element.textContent = "Read the console for more informations.";
+    posts.push(element);
+    document.body.appendChild(element);
+    console.error("please make sure the database contain the table for the user posts and it is not empty, modify the .env-sample for having correct name alias.");
+}
+
 // MAX_EXISTING_POST not using for the limit
 for (let i = 0; i < postData.length; i++) {
-
     const maxWidth = canvas.width;
     const maxHeight = canvas.height;
     const element = document.createElement("span");
@@ -260,8 +315,7 @@ for (let i = 0; i < postData.length; i++) {
     element.style.fontSize = "30px";
     element.style.userSelect = "none"; // prevent marking 
     element.style.whiteSpace = "nowrap"; // no warp
-    // const username = postData[i].username;
-    const username = "usernames";
+    const username = postData[i].name;
     const url = `/user/${username}`;
     element.addEventListener("click", (e) => {
         if (mouse.velocityX < 0.1 && mouse.velocityY < 0.1){
@@ -276,7 +330,7 @@ for (let i = 0; i < postData.length; i++) {
     });
 
     // element.textContent  = "test post:" + (Math.random() + 1).toString(36).substring(7);
-    element.textContent = postData[i].postTitle;
+    element.textContent = postData[i].title + " --" + postData[i].name;
     posts.push(element);
     document.body.appendChild(element);
 }
@@ -308,7 +362,7 @@ function ShiftUp(elements, amountPixel) {
 
 function AdjustTransparencyByRange(elements, v, radius){
     for (let i = 0; i < elements.length; i++){
-        const currentLeft = parseFloat(elements[i].style.left);
+        const currentLeft = parseFloat(elements[i].style.left) + elements[i].textContent.length * 6;
         const currentTop = parseFloat(elements[i].style.top);
         const vE = new Vec2(currentLeft, currentTop);
         const vDelta = Vec2.Delta(vE, v);
