@@ -260,11 +260,19 @@ for (let i = 0; i < postData.length; i++) {
     element.style.fontSize = "30px";
     element.style.userSelect = "none"; // prevent marking 
     element.style.whiteSpace = "nowrap"; // no warp
-    element.onclick = () => {
+    element.addEventListener("mousedown", (e) => {
         // const username = postData[i].username;
         const username = "usernames";
-        window.location.href = `/user/${username}`;
-    };
+        const url = `/user/${username}`;
+        
+        if (e.button === 1) {
+            // middle
+            window.open(url, "_blank");
+        } else if (e.button === 0) {
+            // left
+            window.location.href = url;
+        }
+    });
 
     // element.textContent  = "test post:" + (Math.random() + 1).toString(36).substring(7);
     element.textContent = postData[i].postTitle;
