@@ -1,10 +1,14 @@
 USE `social_test`;
 CREATE TABLE `Posts` (
-  `id` INT UNSIGNED NOT NULL,
-  `username` CHAR(10) NOT NULL,
-  `postTitle` CHAR(20) NOT NULL,
-  `postBody` CHAR(20) NOT NULL,
-  `postDate` TIME NOT NULL,
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(30) NOT NULL,
+  `postHeader` VARCHAR(80) NOT NULL,
+  `postText` VARCHAR(500) NOT NULL,
+  `postDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`username`) REFERENCES `User`(`username`)
+  -- foreign key rule between user and posts table
+  CONSTRAINT `FK_posts_users`
+    FOREIGN KEY (`username`) REFERENCES `User`(`username`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );

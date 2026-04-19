@@ -40,7 +40,23 @@ export function createSignupPostHandler(db) {
      */
     return async function handleSignupPost(req, res) {
         try {
-            const { username, password } = req.body; // form data
+            //Trim the username and password so there are no leading spaces, " Sonny " becomes "Sonny"
+            //leave password exactly as it was entered and makes sure it is a string
+            const plainUsername = req.body.username;
+            const plainPassword = req.body.password;
+
+            const username = typeof plainUsername == "string" ? plainUsername.trim(): "";
+            const password = typeof plainPassword == "string" ? plainPassword : "";
+
+            if(!username || !password){
+                return sendWebResponse(res, 400,"text/plain", "username and password are required");
+            }
+            if(username.length > 30){
+                return sendWebResponse(res,400, "text/plain", "username has to be max 30 characters");
+            }
+            if(password.length > 72){
+                return sendWebResponse(res, 400, "text/plain", "password has to be max 72 characters");
+            }
 
             // check if user already exists
             db.query(
@@ -55,7 +71,7 @@ export function createSignupPostHandler(db) {
                     if (result.length > 0) {
                         return sendWebResponse(res, 400, 'text/plain', 'Username already taken');
                     }
-
+                    
                     // hash before storing
                     const hash = await bcrypt.hash(password, saltRounds);
 

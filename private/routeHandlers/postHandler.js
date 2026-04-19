@@ -17,11 +17,13 @@ export async function handlePostGet(req, res) {
             template = template.replace('%%post%%', `postId : ${postId}`);
 
             sendWebResponse(res, 200, 'text/html', template);
-        } else {
-            // Show post form.
-            const template = await loadHtml('post.html');
-            sendWebResponse(res, 200, 'text/html', template);
-        }
+            return;
+        } 
+
+        // Show post form.
+        const template = await loadHtml('post.html');
+        sendWebResponse(res, 200, 'text/html', template);
+        
     } catch (error) {
         console.error('Post GET error:', error);
         sendWebResponse(res);
@@ -47,17 +49,31 @@ export function createPostPostHandler(db) {
     return async function handlePostPost(req, res) { // Post-ception.
         try {
             const { postHeader, postText } = req.body; // Form data.
+
+            if(!postHeader || !postText){
+                return sendWebResponse(res,400, "text/plain", "Title and content is required");
+            }
+            if(postHeader.length > 80){
+                return sendWebResponse(res, 400, "text/plain", "Title has to be max 80 characters");
+            }
+            if(postText.length > 500){
+                return sendWebResponse(res, 400, "text/plain", "Post has to be max 500 characters");
+            }
+
+            //temp fallback until login is handled right
+            const username = "blob";
+
             db.query(
-                "INSERT INTO posts (header, content) VALUES (?,?)",
-                [postHeader, postText],
+                `INSERT INTO Posts (username, postHeader, postText, postDate) VALUES (?,?,?,NOW())`,
+                [username, postHeader, postText],
                 (err, result) => {
                     if (err) {
                         console.error('Post POST error:', err); // Post-ception strikes again.
                         sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error: Database');
+                        return;
                     }
-                    let generatedPostId = result.insertId;
 
-                    res.redirect(`/post?id=${generatedPostId}`); // Redirection to newly created post.
+                    res.redirect(`/post?id=${result.insertId}`); // Redirection to newly created post.
                 }
             );
         } catch (error) {

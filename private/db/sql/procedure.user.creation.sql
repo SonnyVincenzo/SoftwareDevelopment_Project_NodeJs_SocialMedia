@@ -4,11 +4,13 @@
 -- if @isSuccess IS 1 ...
 
 USE `social_test`;
+-- Stops duplicate usernames
+DROP PROCEDURE IF EXISTS Adduser;
 DELIMITER $$
 CREATE PROCEDURE AddUser
 (
-	IN newUserName CHAR(20),
-	IN newUserPass CHAR(20),
+	IN newUserName CHAR(30),
+	IN newUserPass CHAR(300),
 	OUT isSuccess BOOLEAN
 )
 BEGIN
@@ -16,19 +18,17 @@ BEGIN
     -- we use username as PK
 	IF EXISTS
   	(
-		SELECT username 
-		FROM User 
-		WHERE newUserName = username
+		SELECT 1 
+		FROM `User`
+		WHERE `username` = newUserName
 	)
 	THEN	
 	    SET isSuccess = 0;
 	ELSE
-	    SET isSuccess = 1;
-        INSERT INTO User(username, password, joinDate)
-        SELECT 
-            newUserName,
-            newUserPass,
-            CURRENT_TIMESTAMP();
+        INSERT INTO `User` (`username`, `password`, `joinDate`)
+        VALUES (newUserName, newUserPass, CURRENT_TIMESTAMP);
+
+		SET isSuccess = 1;
 	END IF;
 END $$
 DELIMITER ;

@@ -1,8 +1,9 @@
 SET @queryName = "blob";
 USE `social_test`;
 SELECT  `id`, 
-        `postTitle`,
-        `postBody`,
+        `username`,
+        `postHeader`,
+        `postText`,
         `postDate`
-FROM `Post`
-WHERE @queryName = `username`;
+FROM `Posts`
+WHERE `username` = @queryName ;
