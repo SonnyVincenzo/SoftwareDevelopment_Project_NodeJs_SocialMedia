@@ -37,7 +37,15 @@ export function createLoginPostHandler(db) {
      * @param {import('express').Response} res - Output from browser; ex: text/html.
      */
     return async function handleLoginPost(req, res) {
+        const { username, password } = req.body; // Form data.
+
+        if (!username || !password) {
+            let message = !username ? 'Username required!' : 'Password required!';
+            return sendWebResponse(res, 400, 'text/plain', message);
+        }
+
         try {
+<<<<<<< HEAD
     
             const plainUsername = req.body.username;
             const plainPassword = req.body.password;
@@ -78,8 +86,26 @@ export function createLoginPostHandler(db) {
                 }        
             );
 
+=======
+            const [rows] = await db.execute(
+                'SELECT username, password FROM User WHERE username = ?',
+                [username]
+            );
+
+            if (rows.length === 0) { // No user found.
+                return sendWebResponse(res, 401, 'text/plain', 'Invalid username.');
+            }
+
+            const user = rows[0];
+
+            if (password !== user.password) {
+                return sendWebResponse(res, 401, 'text/plain', 'Incorrect password.');
+            }
+
+            res.redirect(`/user/${user.username}`); // Should it be username or uuid?
+>>>>>>> origin/main
         } catch (error) {
-            console.error('Login POST error:', error);
+            console.error('Login POST error:', error); // Log error for debugging
             sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
         }
     }
