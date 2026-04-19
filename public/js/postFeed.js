@@ -243,11 +243,12 @@ animate();
 ___________________________________________________________*/
 
 const posts = [];
-const response = await fetch('/postFeed/snapshot'); // adjust URL to your endpoint
+const response = await fetch('/postFeed/snapshot');
 const postData = await response.json();
+console.log("Got " + postData.length + " posts.");
 // MAX_EXISTING_POST not using for the limit
+console.log(postData);
 for (let i = 0; i < postData.length; i++) {
-
     const maxWidth = canvas.width;
     const maxHeight = canvas.height;
     const element = document.createElement("span");
@@ -260,8 +261,7 @@ for (let i = 0; i < postData.length; i++) {
     element.style.fontSize = "30px";
     element.style.userSelect = "none"; // prevent marking 
     element.style.whiteSpace = "nowrap"; // no warp
-    // const username = postData[i].username;
-    const username = "usernames";
+    const username = postData[i].name;
     const url = `/user/${username}`;
     element.addEventListener("click", (e) => {
         if (mouse.velocityX < 0.1 && mouse.velocityY < 0.1){
@@ -276,7 +276,7 @@ for (let i = 0; i < postData.length; i++) {
     });
 
     // element.textContent  = "test post:" + (Math.random() + 1).toString(36).substring(7);
-    element.textContent = postData[i].postTitle;
+    element.textContent = postData[i].title + " --" + postData[i].name;
     posts.push(element);
     document.body.appendChild(element);
 }

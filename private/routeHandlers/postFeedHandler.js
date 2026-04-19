@@ -11,8 +11,21 @@ import { loadHtml } from '../methods/utilsMethods.js';
  */
 export function createPostFeedHandler(db) {
     return async (req, res) => {
-        const [rows] = await db.query('SELECT postTitle FROM Post LIMIT 20');
-        res.json(rows);
+        try {
+            const table = process.env.DB_TABLE_POST;
+            const element1 = process.env.DB_ELEMENT_POST_TITLE;
+            const element2 = process.env.DB_ELEMENT_USER_NAME;
+            const [rows] = await db.query(
+                `SELECT ?? as title, ?? as name FROM ?? LIMIT 20;`,
+                [element1, element2, table]
+            );
+            res.json(rows);
+        }
+        catch (error){
+            console.error('failed to recieve data from the mysql server:', error);
+            sendWebResponse(res);
+        }
+        
     };
 }
 
