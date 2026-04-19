@@ -281,7 +281,7 @@ const response = await fetch('/postFeed/snapshot');
 const postData = await response.json();
 console.log("Got " + postData.length + " posts.");
 // MAX_EXISTING_POST not using for the limit
-console.log(postData);
+
 for (let i = 0; i < postData.length; i++) {
     const maxWidth = canvas.width;
     const maxHeight = canvas.height;
