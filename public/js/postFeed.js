@@ -308,7 +308,7 @@ function ShiftUp(elements, amountPixel) {
 
 function AdjustTransparencyByRange(elements, v, radius){
     for (let i = 0; i < elements.length; i++){
-        const currentLeft = parseFloat(elements[i].style.left);
+        const currentLeft = parseFloat(elements[i].style.left) + elements[i].textContent.length * 6;
         const currentTop = parseFloat(elements[i].style.top);
         const vE = new Vec2(currentLeft, currentTop);
         const vDelta = Vec2.Delta(vE, v);
