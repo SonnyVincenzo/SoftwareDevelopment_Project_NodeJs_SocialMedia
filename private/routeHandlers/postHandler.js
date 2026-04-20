@@ -66,3 +66,36 @@ export function createPostPostHandler(db) {
         }
     }
 }
+export function createCommentPostHandler(db) {
+    return async function handleCommentPost(req, res) {
+        try {
+            const { postId, commentText } = req.body;
+
+            if (!isValidComment(commentText)) {
+                return sendWebResponse(res, 400, 'text/plain', 'Invalid comment');
+            }
+
+            db.query(
+                "INSERT INTO comments (post_id, content) VALUES (?, ?)",
+                [postId, commentText],
+                (err) => {
+                    if (err) {
+                        console.error('Comment POST error:', err);
+                        return sendWebResponse(res, 500, 'text/plain', 'Database error');
+                    }
+
+                    res.redirect(`/post?id=${postId}`);
+                }
+            );
+        } catch (error) {
+            console.error('Comment POST error:', error);
+            sendWebResponse(res, 500, 'text/plain', 'Server error');
+        }
+    }
+}
+
+export function isValidComment(commentText) {
+    if (!commentText) return false;
+    if (commentText.trim() === "") return false;
+    return true;
+}

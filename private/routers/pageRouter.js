@@ -5,6 +5,7 @@ import express from 'express';
 import { handleIndexGet } from '../routeHandlers/indexHandler.js';
 import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
 import { handleHomeGet } from '../routeHandlers/homeHandler.js';
+import { createCommentPostHandler, handlePostGet, createPostPostHandler } from '../routeHandlers/postHandler.js';
 import { handlePostGet, createPostPostHandler } from '../routeHandlers/postHandler.js';
 import { handlePostFeedGet, createPostFeedHandler } from '../routeHandlers/postFeedHandler.js';
 
@@ -20,6 +21,7 @@ export default function createPageRouter(db) {
     router.get('/postFeed/snapshot', createPostFeedHandler(db));
 
     router.post('/post', createPostPostHandler(db));
+    router.post('/comment', createCommentPostHandler(db));
 
     return router;
 }
