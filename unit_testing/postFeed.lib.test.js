@@ -1,6 +1,6 @@
 import {describe, it} from 'node:test';
 import assert from 'node:assert';
-import {Vec2, Vec3, Quaternion, ProjectVertex, ViewVertex} from "../TO_KEEP/postFeed.lib.js";
+import {Vec2, Vec3, Quaternion, ProjectVertex, ViewVertex} from "../public/js/postFeed.lib.js";
 import { verify } from 'node:crypto';
 const t_x = 234 + 100 * Math.random();
 const t_y = 6754 + 100 * Math.random();
