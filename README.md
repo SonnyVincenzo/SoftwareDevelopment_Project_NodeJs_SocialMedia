@@ -72,7 +72,7 @@ Recommended `SERVER_PORT` is `3000` or `8080`, port 3000 already provided in `.e
 This alternative offers easy support to view the website, but the **full functionailty** lies in the server provided in node.js: [index.js](./index.js) with `node .` method.
 
 ## Generating code coverage for unit tests
-- Write `node --test` on your terminal.
+- Write `node --experimental-test-coverage --test` on your terminal, `node --test` for just unit tests.
 
 ## Participants
 |Name|Github Handle|
