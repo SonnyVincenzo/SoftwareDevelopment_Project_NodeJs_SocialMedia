@@ -1,2 +1,188 @@
+html, body {
+  height: 100% ;
+}
+html{
+    background-color: rgb(43, 42, 43);
+    background-image: linear-gradient(to bottom, rgba(138, 43, 226, 1) 5%, rgba(138, 43, 226, 0.5) 20%, rgba(1, 199, 249, 0.5) 50%,  rgba(43, 42, 43, 0.2) 65%,  rgba(43, 42, 43, 0.2) 100%);
+    background-repeat: no-repeat;
+    /*background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png"); /*Background Texture found online*/
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+main{
+  flex: 1;
+}
 
-/*CSS content for index.html*/
+.header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  position:relative;
+  padding-top: 5px;
+  margin: 0px;
+  background-color: rgba(43, 42, 43, 0.9);
+  height: 100px;
+  border-bottom: 2px rgba(125, 124, 124, 0.933) solid;
+  border-radius: 20px;
+}
+
+.homeButton{
+  padding: 30px;
+  margin-left: auto;
+  color: white;
+  font-family: Tektur;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 32px;
+}
+
+.title{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-family: Tektur;
+  text-decoration: none;
+  font-weight: 600;
+  font-size:50px ;
+  margin: 0px ;
+  position:center ;
+}
+
+.searchBar{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: rgba(43, 42, 43, 0.9);
+  margin: auto ;
+  margin-top: 22% ; 
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 24px;
+  width: 60%;
+  height: 90px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(1, 200, 250);
+  border-radius: 10px;
+}
+.searchBar:focus-within{
+  box-shadow: 2px 4px 6px rgb(1, 200, 250) ;
+}
+
+.searchText{
+  color: rgb(255, 255, 255);
+  font-family: Tektur;
+  font-weight: 500;
+  font-size: 32px;
+  padding-left: 20px;
+}
+
+.searchBar input {
+  width: 70%;
+  height:75px;
+  border-style: none;
+  color: rgb(255, 255, 255);
+  font-family: Tektur;
+  font-weight: 400;
+  font-size: 28px;
+  background-color: transparent;
+  opacity: 0.8;
+  outline:none;
+  margin-left: 10px;
+}
+
+.icon{
+  color: rgb(255, 255, 255);
+  font-size: 32px;
+  padding-left: 20px;
+}
+
+.icon::before{
+  content: "\1F50E \FE0E";
+}
+
+.searchBar:focus-within .icon::before{
+  content: "\2716";
+}
+
+.text{
+  color: white;
+  font-family: Tektur;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 26px;
+  margin: 0px;
+  padding-top: 0px;
+  padding-left: 5px;
+}
+
+.standardButton{
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(43, 42, 43, 0.9);
+  border-width: 2px;
+  border-color: blueviolet;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  font-family: Tektur;
+  font-size: 26px;
+  align-items: center;
+  justify-content: space-evenly;
+  margin:auto;
+  width: 40%;
+  
+  margin-top: 10px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: bold;
+  transition: box-shadow 0.15s;
+}
+
+.standardButton:hover{
+  background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 200, 250, 0.8));
+  background-color: white;
+  box-shadow: 2px 3px 7px rgb(255, 255, 255);
+  border-width: 1px;
+  border-style: solid;
+  color:  black;
+  border-color: rgb(255, 255, 255);
+  opacity: 0.8
+}
+
+.footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  margin: 0px;
+  background-color: rgba(48, 47, 48, 0.8);
+  height: 90px;
+  border-top: 1px rgba(125, 124, 124, 0.933) solid;
+  border-top-right-radius:20px;
+  border-top-left-radius:20px;
+}
+
+.footerTitle{
+  color: white;
+  font-family: Tektur;
+  font-weight: 600;
+  font-size:24px ;
+  margin-bottom: 0px ;
+  margin-top: 10px;
+  padding: 0px;
+}
+
+.github{
+  color: white;
+  font-size: 16px;
+  font-family: Tektur;
+}

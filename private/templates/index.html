@@ -1,52 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Taken from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/index.css">
+    <script defer src="/public/js/indexSearchBar.js"></script> 
+    <title>Welcome!</title>
 
-
-    <style>
-        /* This is a temporary/quick style css!
-        This should never exist!
-        Do not mix CSS and JS into HTML files, there's a reason to create seperate files.        
-        */
-
-        nav {
-            display: flex;
-            flex-direction: column;
-        }
-        nav>a {
-            background-color: rgba(255,255,255);
-        }
-        nav>a:hover {
-            background-color: rgba(200,200,200);
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>Hello world, I am speaking from index!</h1>
-    </header>
+  <header class="header">
+		<h1 class="title"> The Name of This Thing </h1>
+		<a class="homeButton"  href="/auth/login">Home</a>
+  </header>
 
-    <main>
-        <p>All possible endpoints:</p>
-        <nav>
-            <a href="/">/</a>
-            <a href="/index">/index</a>
-            <a href="/home">/home</a>
-            <a href="/post">/post</a>
-            <a href="/post?id=1234">/post?id=1234</a>
-            <a href="/postFeed">/postFeed</a>
-            <a href="/about">/about</a>
-            <a href="/auth/login">/auth/login</a>
-            <a href="/auth/signup">/auth/signup</a>
-            <a href="/user/usernames">/user/usernames</a>
-        </nav>
-    </main>
+  <main>
+    <section class="searchBar">
+      <p class="searchText">Search |</p>
+      <input id="searchInput" type="text" spellcheck="true" maxlength="80">
+      <span class="icon" onclick="clearInput()"></span>
+    </section>
+		<div class="standardButton">
+      <a class="text" href="/auth/login">Login</a>
+      <span>  <p class="text"> | </p> </span>
+      <a class="text" href="/auth/signup">Create Account</a>
+		</div>
+      
+  </main>
 
-    <footer>
-
-    </footer>
+   <footer class="footer">
+    <h2 class="footerTitle">
+      Contact
+    </h2>
+    <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
+      Github
+    </a>
+  </footer>
 </body>
 </html>
