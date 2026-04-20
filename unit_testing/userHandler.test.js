@@ -44,7 +44,7 @@ describe('createUserGetHandler', () => {
         }
 
         //run the handler
-        const handler = createUserGetHandler({});
+        const handler = createUserGetHandler(mock_db);
         await handler(req, res);
         
         //check that the handler returned what's expected

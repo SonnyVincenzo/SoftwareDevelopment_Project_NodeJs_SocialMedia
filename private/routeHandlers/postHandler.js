@@ -71,16 +71,17 @@ export function createPostPostHandler(db) {
             const plainHeader = req.body.postHeader;
             const plainText = req.body.postText;
 
-            let postheader = "";
+            let postHeader = "";
             if (typeof plainHeader === "string"){
-                postheader = plainHeader.trim();
+                postHeader = plainHeader.trim();
             }
 
             let postText = "";
             if (typeof plainText === "string"){
-                postheader = plainText.trim();
+                postText = plainText.trim();
             }
 
+            //character restrictions for posts
             if(!postHeader || !postText){
                 return sendWebResponse(res,400, "text/plain", "Title and content is required");
             }
