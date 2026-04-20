@@ -1,6 +1,5 @@
 import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
-import db from '../../db/connection.js';
 import bcrypt from 'bcrypt';
 
 const saltRounds = 10;
