@@ -25,12 +25,14 @@ html{
   font-size: 16px;
   width: 200px;
   height: 45px;
-  border-width: 5px;
+  border-width: 1px;
   border-color: rgba(1, 199, 249, 1);
+  box-shadow: 1px 1px 2px rgba(1, 199, 249, 1);
   border-radius: 10px;
 }
 .search:focus{
   border-color: blueviolet;
+  box-shadow: 2px 4px 6px blueviolet ;
   outline:none;
 }
 
@@ -88,8 +90,8 @@ html{
   align-items: left;
   padding: 10px;
   margin: 5px;
-  border-style: inset;
-  border-width: 5px;
+  border-style: solid;
+  border-width: 2px;
   border-color: rgba(1, 199, 249, 1);
   border-radius: 10px;
   background-color:rgb(43, 42, 43);
