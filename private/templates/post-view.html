@@ -15,4 +15,14 @@
         -->
     <p>Post content design for existing posts (from query search, ex: /post?id=123, and design appropiate template for general posts).</p>
 </body>
+<hr>
+<h2>Comments</h2>
+%%comments%%
+<hr>
+<h3>Add Comment</h3>
+<form method="POST" action="/comment">
+<input type="hidden" name="postId" value="%%postId%%">
+<textarea name="commentText" required></textarea>
+<button type="submit">Post Comment</button>
+</form>
 </html>
