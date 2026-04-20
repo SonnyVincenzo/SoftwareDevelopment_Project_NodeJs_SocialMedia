@@ -1,7 +1,7 @@
 USE `social_test`;
 CREATE TABLE `User` (
-  `username` CHAR(10) NOT NULL,
-  `password` CHAR(20) NOT NULL,
-  `joinDate` TIME NOT NULL,
+  `username` VARCHAR(30) NOT NULL,
+  `password` VARCHAR(300) NOT NULL,
+  `joinDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`username`)
 );

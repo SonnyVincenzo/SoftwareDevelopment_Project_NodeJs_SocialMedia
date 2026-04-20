@@ -1,6 +1,7 @@
 SET @queryName = "blob";
 USE `social_test`;
-SELECT  `password`, 
+SELECT  `username`,
+        `password`, 
         `joinDate` 
 FROM `User`
-WHERE @queryName = `username`;
+WHERE `username` = @queryName;
