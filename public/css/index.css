@@ -156,6 +156,12 @@ main{
   opacity: 0.8
 }
 
+.footers-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  
+}
+
 .footer{
   display: flex;
   flex-direction: column;
@@ -169,6 +175,14 @@ main{
   border-top: 1px rgba(125, 124, 124, 0.933) solid;
   border-top-right-radius:20px;
   border-top-left-radius:20px;
+}
+
+/* remove radius from inner edges */
+.footer:first-child {
+  border-top-right-radius: 0;
+}
+.footer:last-child {
+  border-top-left-radius: 0;
 }
 
 .footerTitle{
