@@ -23,8 +23,8 @@ function mysqlQueryFix(db, sql, params = []){
 /**
  * Checks if provided commentText contains any letters.
  * 
- * @param {*} commentText 
- * @returns 
+ * @param {string} commentText - Content to check if it contains text or not.
+ * @returns True or false, if it's a valid comment or not.
  */
 export function isValidComment(commentText) {
     if (!commentText) return false;
