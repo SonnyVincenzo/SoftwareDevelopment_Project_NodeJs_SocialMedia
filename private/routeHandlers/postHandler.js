@@ -21,6 +21,19 @@ function mysqlQueryFix(db, sql, params = []){
 }
 
 /**
+ * Checks if provided commentText contains any letters.
+ * 
+ * @param {*} commentText 
+ * @returns 
+ */
+export function isValidComment(commentText) {
+    if (!commentText) return false;
+    if (commentText.trim() === "") return false;
+    return true;
+}
+
+
+/**
  * Handles post page request (GET /post).
  *
  * @async
@@ -107,6 +120,8 @@ export function createPostPostHandler(db) {
         }
     }
 }
+
+// Questioning use, may be best as a seperate function inside /methods. - LJ.
 export function createCommentPostHandler(db) {
     return async function handleCommentPost(req, res) {
         try {
@@ -133,10 +148,4 @@ export function createCommentPostHandler(db) {
             sendWebResponse(res, 500, 'text/plain', 'Server error');
         }
     }
-}
-
-export function isValidComment(commentText) {
-    if (!commentText) return false;
-    if (commentText.trim() === "") return false;
-    return true;
 }
