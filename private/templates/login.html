@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/signup.css">
     <title>Login</title>
-    <link rel="stylesheet" href="/public/css/login.css">
 </head>
 
-<!-- Elements displayed on the website should never be outside <body> -LJ -->
-<nav>
-    <a href="#">Home</a>
-    <span>|</span>
-    <a href="#">Login</a><br><br>
-</nav>
-
 <body>
-    <div id="loginBox">
-        <h1>Login or Register</h1>
-        <form action="/auth/login" method="post" autocomplete="on">
-            <div>
-                <label for="user-field">Username:</label><br>
-                <input type="text" id="user-field" name="username" required><br><br>
+    <nav>
+        <button class="standardButton">Home</button>
+    </nav>
 
-                <label for="pass-field">Password:</label><br>
-                <input type="password" id="pass-field" name="password" required><br><br>
-
-                <button type="submit">Submit</button>
-                <span>|</span>
-                <button>Create User</button> <!-- Could be changed into an anchor element (<a></a>) to redirect to sign up-->
+    <div class="signup-container">
+        <form>
+            <div class="username">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
             </div>
+            
+            <div class="password">
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password" required>
+            </div>
+
+            <button class="standardButton">Login</button>
+
         </form>
     </div>
-</body>
 
-<footer>
-    <h6 style="color: white;">Zaid-Yassir Sultan är bäst</h6>
-</footer>
+</body>
 </html>
