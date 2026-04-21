@@ -17,7 +17,7 @@
     </nav>
 
     <div class="signup-container">
-        <form>
+        <form method="post" action="/auth/login">
             <div class="username">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
@@ -28,7 +28,7 @@
                 <input type="text" id="password" name="password" required>
             </div>
 
-            <button class="standardButton">Login</button>
+            <button class="standardButton" type="submit">Login</button>
 
         </form>
     </div>
