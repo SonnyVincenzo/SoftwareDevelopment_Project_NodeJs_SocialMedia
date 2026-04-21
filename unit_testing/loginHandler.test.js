@@ -1,11 +1,28 @@
-import { describe, it, after } from 'node:test';
+import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert';
 import { createLoginPostHandler } from '../private/routeHandlers/auth/loginHandler.js';
-import db from '../private/db/connection.js';
 
 describe('Login POST handler:', () => {
+    let mockDb;
+
+    before(() => {
+        mockDb = {
+            end: () => Promise.resolve(),
+            execute: (query, params) => {
+                if (query === 'SELECT username, password FROM User WHERE username = ?') {
+                    if (params[0] === '123') {
+                        return Promise.resolve([[{ username: '123', password: '123' }]]);
+                    } else if (params[0] === '124') {
+                        return Promise.resolve([]);
+                    }
+                }
+                return Promise.reject(new Error('Unknown query'));
+            }
+        };
+    });
+
     after(async () => {
-        await db.end();
+        await mockDb.end();
     });
 
     const createReq = (username, password) => ({
@@ -19,27 +36,26 @@ describe('Login POST handler:', () => {
         write: (message) => {
             assert.strictEqual(message, expectation.message);
         },
-        end: () => {
-        }
+        end: () => {}
     });
 
-    it('should return 401: "Invalid username"', async () => {
+    it('should return 401: "Invalid username".', async () => {
         const req = createReq('124', '123');
         const res = createRes({ statusCode: 401, message: 'Invalid username.' });
 
-        const handler = createLoginPostHandler(db);
+        const handler = createLoginPostHandler(mockDb);
         await handler(req, res);
     });
 
-    it('should return 401: "Incorrect password"', async () => {
+    it('should return 401: "Incorrect password".', async () => {
         const req = createReq('123', '124');
         const res = createRes({ statusCode: 401, message: 'Incorrect password.' });
 
-        const handler = createLoginPostHandler(db);
+        const handler = createLoginPostHandler(mockDb);
         await handler(req, res);
     });
 
-    it("should redirect on successful login.", async () => {
+    it('should redirect on successful login.', async () => {
         const req = createReq('123', '123');
         let redirectedTo = null;
         const res = {
@@ -48,16 +64,9 @@ describe('Login POST handler:', () => {
             }
         };
 
-        db.execute = (query, params) => {
-            assert.strictEqual(query, 'SELECT username, password FROM User WHERE username = ?');
-            assert.deepStrictEqual(params, ['123']);
-            return Promise.resolve([[{ username: '123', password: '123' }]]);
-        };
-
-        const handler = createLoginPostHandler(db);
+        const handler = createLoginPostHandler(mockDb);
         await handler(req, res);
 
         assert.strictEqual(redirectedTo, '/user/123');
     });
-
 });

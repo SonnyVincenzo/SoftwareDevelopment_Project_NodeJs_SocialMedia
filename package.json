@@ -15,7 +15,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "node --test",
+    "coverage": "node --experimental-test-coverage --test",
     "setup": "npm install && shx cp .env-sample .env"
   },
   "dependencies": {
