@@ -138,6 +138,11 @@ main{
   padding-left: 5px;
 }
 
+.text:hover{
+  text-decoration: none;
+  color:rgb(43, 42, 43);
+}
+
 .standardButton{
   display: flex;
   flex-direction: row;

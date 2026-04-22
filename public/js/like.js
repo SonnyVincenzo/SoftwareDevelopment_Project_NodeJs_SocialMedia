@@ -14,6 +14,7 @@ for (let i = 0; i < button.length; i++) {
       body: JSON.stringify({postId})
     });
     const data = await res.json();
+    
     currLikes.innerHTML = data.likes;
     currLikes.setAttribute('value', data.likes);
     
