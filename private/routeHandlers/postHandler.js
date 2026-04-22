@@ -83,6 +83,7 @@ export function createPostPostHandler(db) {
             //Trim post header and post text 
             const plainHeader = req.body.postHeader;
             const plainText = req.body.postText;
+            const username = req.body.postUser; // Workaround, remove later - LJ.
 
             let postHeader = "";
             if (typeof plainHeader === "string"){
@@ -106,7 +107,7 @@ export function createPostPostHandler(db) {
             }
 
             //temp fallback until login is handled right
-            const username = "blob";
+            // const username = "blob";
 
             const result = await mysqlQueryFix(
                 db,
