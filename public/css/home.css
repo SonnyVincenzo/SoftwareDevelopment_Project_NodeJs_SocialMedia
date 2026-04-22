@@ -1,4 +1,5 @@
 html, body {
+  height: 100% ;
   margin: 0px
 }
 
@@ -6,6 +7,29 @@ html{
     background-color: rgb(43, 42, 43);
     background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png"); /*Background Texture found online*/
 }
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+main{
+  flex: 1;
+}
+.josefin-sans-mainTextFont {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.tektur-titleFont {
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
 
 .topRow{
   display: flex;
