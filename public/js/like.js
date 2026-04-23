@@ -5,17 +5,22 @@ for (let i = 0; i < button.length; i++) {
   let currLikes = likes[i];
   currButton.addEventListener("click", async () => {
     
-    currLikes.innerHTML = data.likes;
-    currLikes.setAttribute('value', data.likes);
-    
-    if(currButton.userReaction === 'like') {
-      currButton.classList.add('active')
-      currButton.style.color = "rgba(1, 199, 249, 1)";
-      currButton.style.webkitTextStroke = "2px rgba(1, 199, 249, 1)";
+    if(currButton.dataset.userReaction === 'like') {
+      currButton.dataset.userReaction = 'none';
+      let value = parseInt(currLikes.getAttribute('value')) - 1;
+        currLikes.setAttribute('value', value)
+        currLikes.innerHTML = value;
+        currButton.classList.remove('active');
+        currButton.style.color = "" ;
+        currButton.style.webkitTextStroke = "2px blueviolet";
     } else {
-      currButton.classList.remove('active');
-      currButton.style.color = "" ;
-      currButton.style.webkitTextStroke = "2px blueviolet";
+      currButton.dataset.userReaction = 'like'
+      currButton.classList.add('active')
+      let value = parseInt(currLikes.getAttribute('value')) + 1;
+        currLikes.setAttribute('value', value)
+        currLikes.innerHTML = value;
+        currButton.style.color = "rgba(1, 199, 249, 1)";
+        currButton.style.webkitTextStroke = "2px rgba(1, 199, 249, 1)";
     }
   }); 
 }
@@ -33,3 +38,25 @@ for (let i = 0; i < dislikeButton.length; i++) {
     currDislikes.innerHTML = value;
   });
 }
+
+
+/*const postId = currButton.dataset.postId;
+    const res = await fetch("/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({postId})
+    });
+    const data = await res.json();
+
+    const postId = currDislikeButton.dataset.postId;
+    const rest = await fetch("/dislike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({postId})
+    });
+    const data = await rest.json();
+    currDislikes.innerHTML = data.likes;*/
