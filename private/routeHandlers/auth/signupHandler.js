@@ -39,39 +39,26 @@ export function createSignupPostHandler(db) {
      */
     return async function handleSignupPost(req, res) {
         try {
-            const { username, password } = req.body; // form data
+            const { username, password, dob } = req.body; // form data
+            console.log(username, password, dob);
 
             // check if user already exists
-            db.query(
-                'SELECT username FROM User WHERE username = ?',
-                [username],
-                async (err, result) => {
-                    if (err) {
-                        console.error('Signup query error:', err);
-                        return sendWebResponse(res);
-                    }
-
-                    if (result.length > 0) {
-                        return sendWebResponse(res, 400, 'text/plain', 'Username already taken');
-                    }
-
-                    // hash before storing
-                    const hash = await bcrypt.hash(password, saltRounds);
-
-                    db.query(
-                        'INSERT INTO User (username, password, joinDate) VALUES (?, ?, NOW())',
-                        [username, hash],
-                        (err) => {
-                            if (err) {
-                                console.error('Signup insert error:', err);
-                                return sendWebResponse(res);
-                            }
-
-                            sendWebResponse(res, 201, 'text/plain', `User ${username} created successfully!`);
-                        }
-                    );
-                }
+            let result = await db.query(
+                'SELECT username FROM `User` WHERE username = ?',
+                [username]
             );
+            if (result[0].length >= 1) {
+                return sendWebResponse(res, 400, 'text/plain', 'Username already taken');
+            }
+
+            // hash before storing
+            const hash = await bcrypt.hash(password, saltRounds);
+            let insertRes = await db.query(
+                'INSERT INTO User (username, password, joinDate) VALUES (?, ?, NOW())',
+                [username, hash]
+            );
+
+            res.redirect(`/user/${username}`);
         } catch (error) {
             console.error('Signup POST error:', error);
             sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
