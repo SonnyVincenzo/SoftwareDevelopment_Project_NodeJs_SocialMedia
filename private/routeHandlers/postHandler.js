@@ -135,13 +135,13 @@ export function createCommentPostHandler(db) {
     }
 }
 
-export function isValidComment(commentText) {
+/*export function isValidComment(commentText) {
     if (!commentText) return false;
     if (commentText.trim() === "") return false;
     return true;
 }
 
-/*const postId = currButton.dataset.postId;
+const postId = currButton.dataset.postId;
     const res = await fetch("/like", {
       method: "POST",
       headers: {
