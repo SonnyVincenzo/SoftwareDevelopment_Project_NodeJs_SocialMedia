@@ -31,11 +31,23 @@ for (let i = 0; i < dislikeButton.length; i++) {
   let currDislikeButton = dislikeButton[i];
   let currDislikes = dislikes[i];
   currDislikeButton.addEventListener("click", async () => {
-    currDislikeButton.style.color = "rgba(1, 199, 249, 1)";
-    currDislikeButton.style.webkitTextStroke = "2px rgba(1, 199, 249, 1)";
-    value = parseInt(currDislikes.getAttribute('value')) + 1;
-    currDislikes.setAttribute('value', value)
-    currDislikes.innerHTML = value;
+    if(currDislikeButton.dataset.userReaction === 'dislike') {
+      currDislikeButton.dataset.userReaction = 'none';
+      let value = parseInt(currDislikes.getAttribute('value')) - 1;
+        currDislikes.setAttribute('value', value)
+        currDislikes.innerHTML = value;
+        currDislikeButton.classList.remove('active');
+        currDislikeButton.style.color = "" ;
+        currDislikeButton.style.webkitTextStroke = "2px blueviolet";
+    } else {
+      currDislikeButton.dataset.userReaction = 'dislike'
+      currDislikeButton.classList.add('active')
+      let value = parseInt(currDislikes.getAttribute('value')) + 1;
+        currDislikes.setAttribute('value', value)
+        currDislikes.innerHTML = value;
+        currDislikeButton.style.color = "rgba(1, 199, 249, 1)";
+        currDislikeButton.style.webkitTextStroke = "2px rgba(1, 199, 249, 1)";
+    }
   });
 }
 
