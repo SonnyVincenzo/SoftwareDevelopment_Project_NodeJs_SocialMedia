@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Taken from Google Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/index.css">
-    <script defer src="/public/js/indexSearchBar.js"></script> 
-    <title>Welcome!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Taken from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Tektur:wght@400..900&display=swap"
+    rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/css/index.css">
+  <script defer src="/public/js/indexSearchBar.js"></script>
+  <title>Welcome!</title>
 
 </head>
+
 <body>
   <header class="header">
-		<h1 class="title"> The Name of This Thing </h1>
-		<a class="homeButton"  href="/auth/login">Home</a>
+    <h1 class="title"> The Name of This Thing </h1>
+    <a class="homeButton" href="/home">Home</a>
   </header>
 
   <main>
@@ -23,27 +27,30 @@
       <input id="searchInput" type="text" spellcheck="true" maxlength="80">
       <span class="icon" onclick="clearInput()"></span>
     </section>
-		<div class="standardButton">
+    <div class="standardButton">
       <a class="text" href="/auth/login">Login</a>
-      <span>  <p class="text"> | </p> </span>
+      <span>
+        <p class="text"> | </p>
+      </span>
       <a class="text" href="/auth/signup">Create Account</a>
-		</div>
-      
+    </div>
+
   </main>
 
-   <div class="footers-container">
-      <footer class="footer">
-        <h2 class="footerTitle">Contact</h2>
-        <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
-          Github
-        </a>
-      </footer>
-      <footer class="footer">
-        <h2 class="footerTitle">Easter Egg</h2>
-        <a class="github" href="/post-feed">
-          post-feed
-        </a>
-      </footer>
+  <div class="footers-container">
+    <footer class="footer">
+      <h2 class="footerTitle">Contact</h2>
+      <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
+        Github
+      </a>
+    </footer>
+    <footer class="footer">
+      <h2 class="footerTitle">Easter Egg</h2>
+      <a class="github" href="/post-feed">
+        post-feed
+      </a>
+    </footer>
   </div>
 </body>
+
 </html>

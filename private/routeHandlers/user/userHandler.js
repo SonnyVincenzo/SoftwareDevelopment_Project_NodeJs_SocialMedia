@@ -3,15 +3,15 @@ import { loadHtml } from '../../methods/utilsMethods.js';
 
 //function to make mysql queries compatible 
 //with the rest of the repository, this function is important for my sanity
-function mysqlQueryFix(db, sql, params = []){
+function mysqlQueryFix(db, sql, params = []) {
     //if the db has .execute, do mysql2/promise
-    if(typeof db.execute === "function"){
+    if (typeof db.execute === "function") {
         return db.execute(sql, params).then(([rows]) => rows);
     }
     //otherwise do db.query
     return new Promise((resolve, reject) => {
         db.query(sql, params, (err, rows) => {
-            if(err) return reject(err);
+            if (err) return reject(err);
             resolve(rows);
         });
     });
@@ -19,7 +19,7 @@ function mysqlQueryFix(db, sql, params = []){
 
 //escape html function before inserting db content into the template
 //replaces all the special html characters 
-function escHtml(value){
+function escHtml(value) {
     return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -37,7 +37,7 @@ function escHtml(value){
  * @returns 
  */
 export function createUserGetHandler(db) {
-    
+
     /**
      * Handles user page request (GET /user/username).
      *
@@ -56,7 +56,7 @@ export function createUserGetHandler(db) {
                 [username]
             );
 
-            if(!users || users.length === 0){
+            if (!users || users.length === 0) {
                 return sendWebResponse(res, 404, "text/plain", "404 user not found");
             }
 
@@ -76,20 +76,34 @@ export function createUserGetHandler(db) {
             //build posts html 
             let postHtml;
 
-            if(!posts || posts.length === 0){
+            if (!posts || posts.length === 0) {
                 postHtml = "<p>No posts yet.</p>";
             }
-            else{
-                postHtml = posts.map((post) => 
-                `<article class = "post">
-                    <p class = "title">${escHtml(post.postHeader)}</p>
-                    <p class = "by-line">By:
-                        <a class="by-line" href="/user/${encodeURIComponent(username)}">
-                            ${escHtml(username)}
-                        </a>
-                    </p>
-                    <p class="text">${escHtml(post.postText)}</p>
-                </article>`).join("");
+            else {
+                postHtml = posts.map((post) =>
+                    `
+      <article class="post">
+        <h2 class="title"> ${post.postHeader}
+        </h2>
+        <p class="by-line"> By:
+          <a class="by-line" href="/user/username">
+            ${username}
+          </a>
+        </p>
+        <p class="text">
+        ${post.postText}
+        </p>
+        <div class="post-icons">
+          <button class="like">
+            &#10084;
+          </button>
+          <p class="likes" value="0"></p>
+          <button class="dislike">
+           &#10006;
+          </button>
+          <p class="dislikes" value="0"></p>
+        </div>
+      </article>`).join("");
             }
 
             //replace backend placeholders with real values
