@@ -277,7 +277,7 @@ animate();
 ___________________________________________________________*/
 
 const posts = [];
-const response = await fetch('/postFeed/snapshot');
+const response = await fetch('/post-feed/snapshot');
 const postData = await response.json();
 console.log("Got " + postData.length + " posts.");
 
