@@ -21,6 +21,19 @@ function mysqlQueryFix(db, sql, params = []){
 }
 
 /**
+ * Checks if provided commentText contains any letters.
+ * 
+ * @param {string} commentText - Content to check if it contains text or not.
+ * @returns True or false, if it's a valid comment or not.
+ */
+export function isValidComment(commentText) {
+    if (!commentText) return false;
+    if (commentText.trim() === "") return false;
+    return true;
+}
+
+
+/**
  * Handles post page request (GET /post).
  *
  * @async
@@ -70,6 +83,7 @@ export function createPostPostHandler(db) {
             //Trim post header and post text 
             const plainHeader = req.body.postHeader;
             const plainText = req.body.postText;
+            const username = req.body.postUser; // Workaround, remove later - LJ.
 
             let postHeader = "";
             if (typeof plainHeader === "string"){
@@ -93,7 +107,7 @@ export function createPostPostHandler(db) {
             }
 
             //temp fallback until login is handled right
-            const username = "blob";
+            // const username = "blob";
 
             const result = await mysqlQueryFix(
                 db,
@@ -107,6 +121,8 @@ export function createPostPostHandler(db) {
         }
     }
 }
+
+// Questioning use, may be best as a seperate function inside /methods. - LJ.
 export function createCommentPostHandler(db) {
     return async function handleCommentPost(req, res) {
         try {

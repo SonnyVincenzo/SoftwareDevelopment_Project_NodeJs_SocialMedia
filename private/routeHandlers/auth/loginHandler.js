@@ -1,6 +1,5 @@
 import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
-import db from '../../db/connection.js';
 
 /**
  * Handles login page request (GET /auth/login).
@@ -49,7 +48,7 @@ export function createLoginPostHandler(db) {
                 [username]
             );
 
-            if (rows.length === 0) { // No user found.
+            if (!rows || rows.length === 0) { // No user found.
                 return sendWebResponse(res, 401, 'text/plain', 'Invalid username.');
             }
 
