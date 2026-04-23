@@ -140,3 +140,24 @@ export function isValidComment(commentText) {
     if (commentText.trim() === "") return false;
     return true;
 }
+
+/*const postId = currButton.dataset.postId;
+    const res = await fetch("/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({postId})
+    });
+    const data = await res.json();
+
+    const postId = currDislikeButton.dataset.postId;
+    const rest = await fetch("/dislike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({postId})
+    });
+    const data = await rest.json();
+    currDislikes.innerHTML = data.likes;*/
