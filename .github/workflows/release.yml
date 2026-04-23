@@ -21,6 +21,10 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: repo-archive.zip
+        body: 
+          https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    
 
