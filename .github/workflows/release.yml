@@ -2,7 +2,8 @@ name: AutoRelease
 
 on: 
   push:
-    tags: 'v*'
+    tags: 
+    - 'v*'
 
 jobs:
   release:
@@ -12,8 +13,7 @@ jobs:
     - name: checkout repository
       uses: actions/checkout@v4
     - name: Create zip archive
-      run:
-        zip -r repo-archive.zip . -x '*.git*'
+      run: zip -r repo-archive.zip . -x '*.git*'
 
     
     - name: Upload Release Asset
