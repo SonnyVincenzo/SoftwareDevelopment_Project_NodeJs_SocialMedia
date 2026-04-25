@@ -1,5 +1,6 @@
 import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
+import bcrypt from 'bcrypt';
 
 /**
  * Handles login page request (GET /auth/login).
@@ -48,17 +49,22 @@ export function createLoginPostHandler(db) {
                 [username]
             );
 
-            if (!rows || rows.length === 0) { // No user found.
-                return sendWebResponse(res, 401, 'text/plain', 'Invalid username.');
-            }
-
             const user = rows[0];
+            const userPassword = user ? user.password : '$2b$10$CwTycUXWue0Thq9StjUM0uJ8zFZp6V9v3gS5h9u1yF6Qe6u6Y9G6K';
+            const passMatch = await bcrypt.compare(password, userPassword);
 
-            if (password !== user.password) {
-                return sendWebResponse(res, 401, 'text/plain', 'Incorrect password.');
+            if (!user || !passMatch) {
+                return sendWebResponse(res, 401, 'text/plain', 'Invalid username or password.');
             }
 
-            res.redirect(`/user/${user.username}`); // Should it be username or uuid?
+            req.session.regenerate(err => {
+                if (err) {
+                    return sendWebResponse(res, 500, 'text/plain', 'Session error');
+                }
+
+                req.session.userId = user.username;
+                res.redirect(`/user/${user.username}`); // Should it be username or uuid?
+            });
         } catch (error) {
             console.error('Login POST error:', error); // Log error for debugging
             sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');

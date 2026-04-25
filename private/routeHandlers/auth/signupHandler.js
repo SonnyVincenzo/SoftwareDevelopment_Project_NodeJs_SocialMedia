@@ -1,8 +1,7 @@
 import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
 import bcrypt from 'bcrypt';
-
-const saltRounds = 10;
+import 'dotenv/config';
 
 /**
  * Handles signup page request (GET /auth/signup).
@@ -39,8 +38,7 @@ export function createSignupPostHandler(db) {
      */
     return async function handleSignupPost(req, res) {
         try {
-            const { username, password, dob } = req.body; // form data
-            console.log(username, password, dob);
+            const { username, password, dob } = req.body; // Form data.
 
             // check if user already exists
             let result = await db.query(
@@ -51,14 +49,15 @@ export function createSignupPostHandler(db) {
                 return sendWebResponse(res, 400, 'text/plain', 'Username already taken');
             }
 
-            // hash before storing
+            // Hash before storing.
+            const saltRounds = parseInt(process.env.SALT_ROUNDS, 10) || 10;
             const hash = await bcrypt.hash(password, saltRounds);
             let insertRes = await db.query(
                 'INSERT INTO User (username, password, joinDate) VALUES (?, ?, NOW())',
                 [username, hash]
             );
 
-            res.redirect(`/user/${username}`);
+            res.redirect(`/auth/login`);
         } catch (error) {
             console.error('Signup POST error:', error);
             sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
