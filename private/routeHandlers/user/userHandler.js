@@ -17,9 +17,14 @@ function mysqlQueryFix(db, sql, params = []) {
     });
 }
 
-//escape html function before inserting db content into the template
-//replaces all the special html characters 
-function escHtml(value) {
+
+/**
+ * Replacing potentially dangerous chars with their HTML escape code/value.
+ * 
+ * @param {String} value 
+ * @returns Parsed string.
+ */
+function replaceDangerousChars(value) {
     return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -49,71 +54,58 @@ export function createUserGetHandler(db) {
         const { username } = req.params;
 
         try {
-            //find if user actually exists
-            const users = await mysqlQueryFix(
-                db,
+            // Find if user actually exists.
+            const users = await mysqlQueryFix(db,
                 'SELECT username, joinDate FROM User WHERE username = ?',
                 [username]
             );
-
             if (!users || users.length === 0) {
                 return sendWebResponse(res, 404, "text/plain", "404 user not found");
             }
 
-            //get user's posts
-            const posts = await mysqlQueryFix(
-                db,
+            // Get user's posts.
+            const posts = await mysqlQueryFix(db,
                 `SELECT id, postHeader, postText, postDate FROM Posts WHERE username = ? ORDER BY postDate DESC`,
                 [username]
             );
 
-            //load profile html template
             let template = await loadHtml("user.html");
+            const fullName = username; // Temp fallback for fullName.
 
-            //temp fallback for fullName
-            const fullName = username;
-
-            //build posts html 
+            // Build posts html.
             let postHtml;
-
             if (!posts || posts.length === 0) {
                 postHtml = "<p>No posts yet.</p>";
             }
             else {
-                postHtml = posts.map((post) =>
-                    `
-      <article class="post">
-        <h2 class="title"> ${post.postHeader}
-        </h2>
-        <p class="by-line"> By:
-          <a class="by-line" href="/user/username">
-            ${username}
-          </a>
-        </p>
-        <p class="text">
-        ${post.postText}
-        </p>
-        <div class="post-icons">
-          <button class="like">
-            &#10084;
-          </button>
-          <p class="likes" value="0"></p>
-          <button class="dislike">
-           &#10006;
-          </button>
-          <p class="dislikes" value="0"></p>
-        </div>
-      </article>`).join("");
-            }
+                postHtml = posts.map((post) => `
+                    <article class="post">
+                        <h2 class="title">
+                            ${replaceDangerousChars(post.postHeader)}
+                        </h2>
+                        <p class="by-line">
+                            By: 
+                            <a class="by-line" href="/user/${encodeURIComponent(username)}">
+                                ${replaceDangerousChars(username)}
+                            </a>
+                        </p>
+                        <p class="text">${replaceDangerousChars(post.postText)}</p>
+                        <div class="post-icons">
+                            <button class="like">&#10084;</button>
+                            <p class="likes" value="0"></p>
+                            <button class="dislike">&#10006;</button>
+                            <p class="dislikes" value="0"></p>
+                        </div>
+                    </article>`)
+                    .join("");
+                }
 
-            //replace backend placeholders with real values
-
-            template = template.replace("%%fullName%%", escHtml(fullName));
-            template = template.replace("%%username%%", `@${escHtml(username)}`);
+            // Replace backend placeholders with real values.
+            template = template.replace("%%fullName%%", replaceDangerousChars(fullName));
+            template = template.replace("%%username%%", `@${replaceDangerousChars(username)}`);
             template = template.replace("%%posts%%", postHtml);
 
             return sendWebResponse(res, 200, "text/html", template);
-
         } catch (error) {
             console.error('User error:', error);
             sendWebResponse(res);

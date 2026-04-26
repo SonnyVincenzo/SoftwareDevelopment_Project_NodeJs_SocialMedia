@@ -11,6 +11,9 @@ describe ('handlePostPost', () => {
             body: {
                 postHeader: 'Hello',
                 postText: 'World'
+            },
+            session: {
+                userId: 'test'
             }
         };
         //variable to capture result
