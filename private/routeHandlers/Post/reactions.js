@@ -7,7 +7,7 @@ import { db } from '../db/table.likesDislikes.js'
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
 
-export async function reactions(req, res) {
+/*export async function reactions(req, res) {
     const {id, action} = req.body;
     //const username = req.user.username ;
     const username = "testUser";
@@ -51,4 +51,4 @@ export async function reactions(req, res) {
       [id]
     );
     res.json({likes, dislikes, userReaction});
-  };
+  };*/
