@@ -1,10 +1,8 @@
 import express from 'express';
-const router = express.Router();
 
-//import the database
-import db from '../db/connection.js';
-
-//runs when user goes to search
+export default function createSearchRouter(db) {
+    const router = express.Router();
+    //runs when user goes to search
 router.get('/', async(req, res) => {
     const query = req.query.q;
 
@@ -14,15 +12,20 @@ router.get('/', async(req, res) => {
     }
 
     try{
-        //search users
+        //checks if user exists
         const [users] = await db.execute(
-            "SELECT id, username FROM users WHERE username LIKE ? LIMIT 10",
-            [`%{query}%`]
+            "SELECT username FROM User WHERE username = ?",
+            [query]
         );
+        if(users.length > 0)
+        {
+            //redirect to profile page
+            return res.redirect(`/user/${query}`);
+        }
         //search posts
         const [posts] = await db.execute (
-            "SELECT id, content FROM posts WHERE content LIKE ? LIMIT 10",
-            [`%{query}%`]
+            `SELECT id, username, postHeader, postText FROM Posts where postHeader LIKE ? OR postText LIKE ? LIMIT 10`,
+            [`%${query}%`, `%${query}%`] 
         );
         //send results back
         res.json({users, posts});
@@ -32,4 +35,9 @@ router.get('/', async(req, res) => {
         res.status(500).json({error: "Search failed"});
     }
 });
-export default router;
+return router;
+}
+
+
+//this is how the url looks like for search
+// ../search?q=?

@@ -12,7 +12,7 @@ import createSearchRouter from './private/routers/searchRouter.js';
 const app = express();
 const port = process.env.SERVER_PORT;
 
-app.use('/search', createSearchRouter);
+app.use('/search', createSearchRouter(db));
 
 app.use(express.json()); // Enables json handling.
 app.use(express.urlencoded({ extended: true })); // Enables url form data.
