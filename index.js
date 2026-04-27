@@ -7,12 +7,12 @@ import session from 'express-session';
 import createPageRouter from './private/routers/pageRouter.js';
 import createAuthRouter from './private/routers/authRouter.js';
 import createUserRouter from './private/routers/userRouter.js';
-import searchRouter from './private/routers/searchRouter.js';
+import createSearchRouter from './private/routers/searchRouter.js';
 
 const app = express();
 const port = process.env.SERVER_PORT;
 
-app.use('/search', searchRouter);
+app.use('/search', createSearchRouter);
 
 app.use(express.json()); // Enables json handling.
 app.use(express.urlencoded({ extended: true })); // Enables url form data.

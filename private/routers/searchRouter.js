@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 //import the database
-import db from '../db.js';
+import db from '../db/connection.js';
 
 //runs when user goes to search
 router.get('/', async(req, res) => {
@@ -32,3 +32,4 @@ router.get('/', async(req, res) => {
         res.status(500).json({error: "Search failed"});
     }
 });
+export default router;
