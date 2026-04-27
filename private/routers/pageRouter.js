@@ -21,7 +21,7 @@ export default function createPageRouter(db) {
 
     router.post('/post', createPostPostHandler(db));
     router.post('/comment', createCommentPostHandler(db));
-    router.post('/reactions',reactions(db));
+    /*router.post('/reactions',reactions(db));*/
    
 
     return router;
