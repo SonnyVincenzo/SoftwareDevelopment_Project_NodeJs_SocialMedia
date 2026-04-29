@@ -25,7 +25,7 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
     let postHtml = "";
 
     for (const post of posts) {
-        const [rows] = await db.query(
+        const [rows] = await db.execute(
             "SELECT type FROM userLikesDislikes WHERE id = ?",
             [post.id]
         );

@@ -24,7 +24,7 @@ export function createUserGetHandler(db) {
 
         try {
             // Find if user actually exists.
-            const [users] = await db.query(
+            const [users] = await db.execute(
                 "SELECT username, joinDate FROM User WHERE username = ?",
                 [username]
             );
@@ -33,7 +33,7 @@ export function createUserGetHandler(db) {
             }
 
             // Get user's posts.
-            const [posts] = await db.query(
+            const [posts] = await db.execute(
                 "SELECT * FROM Posts WHERE username = ? ORDER BY postDate DESC",
                 [username]
             );
