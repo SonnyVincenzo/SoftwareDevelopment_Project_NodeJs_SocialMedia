@@ -14,13 +14,13 @@ jobs:
     - name: checkout repository
       uses: actions/checkout@v4
     - name: Create zip archive
-      run: zip -r repo-archive-${GITHUB_REF_NAME#v}.zip . -x '*.git*'
+      run: zip -r repo-archive-${GITHUB_REF##*/}.zip . -x '*.git*'
 
     
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
       with:
-        files: repo-archive-${GITHUB_REF_NAME#v}.zip
+        files: repo-archive-${GITHUB_REF##*/}.zip
         body: 
           https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia
       env:
