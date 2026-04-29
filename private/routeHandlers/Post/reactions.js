@@ -31,7 +31,6 @@ export function reactions(db) {
             [id , username]
           );
           userReaction = "none";
-           console.log("REACT unlike:", action);
         } else { //swap like for dislike and vice versa.
           await db.query ( 
             "UPDATE userLikesDislikes SET type = ? WHERE id = ? AND username = ?",
@@ -39,14 +38,12 @@ export function reactions(db) {
           );
           userReaction = action ;
         }
-        console.log("REACT swap:", action);
       } else { //like, Dislike
         await db.query(
           "INSERT INTO userLikesDislikes (id, username, type) VALUES (?, ?, ?)",
           [id, username, action]
         );
         userReaction = action;
-        console.log("REACT like:", action);
       }
       const [[{likes}]] = await db.query(
         "SELECT COUNT(*) AS likes FROM userLikesDislikes WHERE id = ? AND type ='like' ",
