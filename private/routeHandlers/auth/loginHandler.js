@@ -51,8 +51,7 @@ export function createLoginPostHandler(db) {
 
             const user = rows[0];
             const userPassword = user ? user.password : '$2b$10$CwTycUXWue0Thq9StjUM0uJ8zFZp6V9v3gS5h9u1yF6Qe6u6Y9G6K';
-            //const passMatch = await bcrypt.compare(password, userPassword);
-            const passMatch = user ? password === user.password : false;
+            const passMatch = await bcrypt.compare(password, userPassword);
 
             if (!user || !passMatch) {
                 return sendWebResponse(res, 401, 'text/plain', 'Invalid username or password.');
