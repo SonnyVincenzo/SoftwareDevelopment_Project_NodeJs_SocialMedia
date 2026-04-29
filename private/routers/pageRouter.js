@@ -7,6 +7,7 @@ import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
 import { handleHomeGet } from '../routeHandlers/homeHandler.js';
 import { createCommentPostHandler, createPostGetHandler, createPostPostHandler } from '../routeHandlers/postHandler.js';
 import { handlePostFeedGet, createPostFeedSnapshotHandler} from '../routeHandlers/postFeedHandler.js';
+import {reactions} from '../routeHandlers/post/reactions.js' ;
 
 export default function createPageRouter(db) {
     const router = express.Router();
@@ -21,7 +22,7 @@ export default function createPageRouter(db) {
 
     router.post('/post', createPostPostHandler(db));
     router.post('/comment', createCommentPostHandler(db));
-    /*router.post('/reactions',reactions(db));*/
+    router.post('/reactions',reactions(db));
    
 
     return router;
