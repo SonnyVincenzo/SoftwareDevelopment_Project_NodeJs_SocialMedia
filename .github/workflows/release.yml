@@ -20,11 +20,12 @@ jobs:
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
       with:
-        files: repo-archive.zip
+        files: repo-archive-"${GITHUB_REF_NAME#v}".zip
         body: 
           https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
     
     
 
