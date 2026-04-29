@@ -1,5 +1,12 @@
 import express from 'express';
+import createSearchHandler from '../routeHandlers/searchHandler.js';
 
-import {searchHandler} from '../routeHandlers/searchHandler.js'
+export default function createSearchRouter(db)
+{
+    const router = express.Router();
+    const handler = createSearchHandler(db);
 
-Router.get('/', (res, req))
+    router.get('/', handler.search);
+
+    return router;
+}
