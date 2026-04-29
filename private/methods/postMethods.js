@@ -29,12 +29,15 @@ export function formatPostToHtml(posts, tempSwitchEndpoint = 'user') {
                 <h2 class="title">
                     ${replaceDangerousChars(post.postHeader)}
                 </h2>
-                <p class="by-line">
-                    By: 
-                    <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
-                        ${replaceDangerousChars(post.username)}
-                    </a>
-                </p>
+                <div class="post-info">
+                    <p class="by-line"> By:
+                        <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
+                            ${replaceDangerousChars(post.username)}
+                        </a>
+                    </p>
+                    <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
+                    </p>
+                </div>
                 <p class="text">${replaceDangerousChars(post.postText)}</p>
                 <div class="post-icons">
                     <button class="like">&#10084;</button>
@@ -50,18 +53,22 @@ export function formatPostToHtml(posts, tempSwitchEndpoint = 'user') {
             <article class="post">
                 <p class="title"> ${replaceDangerousChars(post.postHeader)} 
                 </p>
-                <p class="by-line"> By:
-                    <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
-                        ${encodeURIComponent(post.username)}
-                    </a>
-                </p>
+                <div class="post-info">
+                    <p class="by-line"> By:
+                        <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
+                            ${replaceDangerousChars(post.username)}
+                        </a>
+                    </p>
+                    <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
+                    </p>
+                </div>
                 <p class="text">
                     ${replaceDangerousChars(post.postText)}
                 </p>
                 <div class="post-icons">
-                    <button class="like" data-user-id="" data-user-reaction="none">&#10084;</button>
+                    <button class="like" data-post-id="" data-user-reaction="none">&#10084;</button>
                     <span class="likes" value="0">0</span>
-                    <button class="dislike" data-user-id="" data-user-reaction="none">&#10006;</button>
+                    <button class="dislike" data-post-id="" data-user-reaction="none">&#10006;</button>
                     <span class="dislikes" value="0">0</span>
                 </div>
             </article>`)
