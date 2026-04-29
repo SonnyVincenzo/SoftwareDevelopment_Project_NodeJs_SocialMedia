@@ -1,5 +1,4 @@
-USE `social_test`;
-CREATE TABLE `Posts` (
+CREATE TABLE IF NOT EXISTS `Posts` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(30) NOT NULL,
   `postHeader` VARCHAR(80) NOT NULL,

@@ -1,5 +1,4 @@
-USE `social_test` ;
-CREATE TABLE `userLikesDislikes` (
+CREATE TABLE IF NOT EXISTS `userLikesDislikes` (
     `id` INT UNSIGNED NOT NULL,
     `username` VARCHAR(30) NOT NULL,
     type ENUM('like','dislike'),

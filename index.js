@@ -2,6 +2,7 @@ import express from 'express';
 import 'dotenv/config'; // Environment variables.
 import db from './private/db/connection.js';
 import session from 'express-session';
+import initializeDatabase from './private/db/init.js';
 
 // Routers:
 import createPageRouter from './private/routers/pageRouter.js';
@@ -46,6 +47,17 @@ app.use((req, res) => {
   `);
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}.`);
-});
+async function startServer() {
+  try {
+    await initializeDatabase(db);
+
+    app.listen(port, () => {
+      console.log(`Server listening on port ${port}.`);
+    });
+  } catch (err) {
+    console.error("Server failed to start:", err);
+    process.exit(1);
+  }
+}
+
+startServer();
