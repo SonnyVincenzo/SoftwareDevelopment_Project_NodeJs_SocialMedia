@@ -13,14 +13,18 @@ jobs:
     steps:
     - name: checkout repository
       uses: actions/checkout@v4
+    - name: Extract version
+      run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
     - name: Create zip archive
-      run: zip -r repo-archive.zip . -x '*.git*'
+      run: zip -r repo-archive-$VERSION.zip . -x '*.git*'
 
-    
+
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
       with:
-        files: repo-archive.zip
+        files: repo-archive-$VERSION.zip
+        name: Release ${{env.VERSION}}
+        tag_name: ${{github.ref_name}}
         body: 
           https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia
       env:

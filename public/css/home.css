@@ -40,10 +40,11 @@ main{
   background-color: rgba(53, 52, 53, 0.8);
   height: 90px;
   border-bottom: 1px rgba(125, 124, 124, 0.933) solid;
-  justify-content: space-between;
+  justify-content: right;
+
+  gap: 20px;
 }
 .search{
-  margin-left: 60%;
   padding-left: 20px;
   padding-right: 20px;
   font-size: 16px;
@@ -71,8 +72,8 @@ main{
   font-family: Tektur;
   font-size: 18px;
   
-  margin-right: 20px;
-  margin-left: 110px;
+  /* margin-right: 20px;
+  margin-left: 110px; */
   margin-top: 0px;
   padding-bottom: 10px;
   padding-top: 10px;
@@ -96,6 +97,7 @@ main{
   background-color: white;
   border-radius: 25px;
   margin: 10px;
+  margin-left: 0px;
   width: 80px;
   height: 80px;
 }
@@ -103,7 +105,7 @@ main{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   margin:auto;
   width: 60%;
 }
@@ -111,7 +113,7 @@ main{
 .post{
   display: flex;
   flex-direction: column;
-  align-items: left;
+  text-align: left;
   padding: 10px;
   margin: 5px;
   border-style: solid;
@@ -119,6 +121,7 @@ main{
   border-color: rgba(1, 199, 249, 1);
   border-radius: 10px;
   background-color:rgb(43, 42, 43);
+  width: 100%;
 }
 
 
@@ -167,6 +170,13 @@ main{
   padding-top: 5px;
 }
 
+.post-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .by-line{
   color: white;
   font-family: Josefin Sans;
@@ -175,6 +185,7 @@ main{
   margin: 0px;
   padding-top: 0px;
   padding-left: 5px;
+  padding-right: 20px;
 }
 .post-icons{
   display: flex;
