@@ -20,7 +20,7 @@ function mockResponse()
         getsendCalled: () => sendCalled
     };
 }
-//define a test case
+//define a test case. i will change the name of the output soon
 test('should return results when query exists', async() =>{
     //mock db with two calls (user + posts)
     const db = {
