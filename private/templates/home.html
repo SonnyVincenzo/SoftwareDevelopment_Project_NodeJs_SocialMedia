@@ -15,13 +15,16 @@
 </head>
 <body>
   <header class="topRow">
-    <input class="search" type="text" spellcheck="true" maxlength="100"
+    <form action="/search" method="get">
+    <input class="search" name= "q" type="text" spellcheck="true" maxlength="100"
     placeholder="Search">
     <form action="/user/username">
       <button id="standardButton" onclick=""> 
         %%Username%%
       </button>
     </form>
+    </form>
+
     <a href="/user/username"> 
       <div class="profile"></div>
     </a>

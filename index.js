@@ -7,7 +7,7 @@ import session from 'express-session';
 import createPageRouter from './private/routers/pageRouter.js';
 import createAuthRouter from './private/routers/authRouter.js';
 import createUserRouter from './private/routers/userRouter.js';
-import createSearchRouter from './private/routers/searchRouter.js';
+
 
 
 const app = express();
@@ -31,7 +31,7 @@ app.use('/public', express.static('public')); // Static files (CSS+JS)
 app.use('/', createPageRouter(db)); // Router for endpoints within first order.
 app.use('/auth', createAuthRouter(db)); // Router for nestled endpoints within second order of auth (/auth/login).
 app.use('/user', createUserRouter(db)); // Router for nestled endpoints within second order of user (/user/username).
-app.use('/search', createSearchRouter(db));
+
 
 
 // 404 status case, possibly a revamp into proper frontend status handling.
