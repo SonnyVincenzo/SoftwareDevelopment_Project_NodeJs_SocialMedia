@@ -66,7 +66,7 @@ describe('Login POST component:', () => {
         assert.strictEqual(res.text, 'Invalid username or password.');
     });
 
-    it('should return 500 when database fail.', async () => {
+    it('should return 500: database fail.', async () => {
         const originalError = console.error;
         console.error = () => { };
 
@@ -94,7 +94,7 @@ describe('Login POST component:', () => {
         assert.ok([400, 500].includes(res.statusCode));
     });
 
-    it('should redirect and set session on success', async () => {
+    it('should redirect and set session on success.', async () => {
         const res = await request(app)
             .post('/auth/login')
             .type('form')
