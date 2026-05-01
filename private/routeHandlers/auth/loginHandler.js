@@ -8,14 +8,15 @@ import bcrypt from 'bcrypt';
  * @async
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
+ * @param {string} [templateName='login.html'] - Argument for template to find (introduced primarily for unit testing).
  */
-export async function handleLoginGet(req, res) {
+export async function handleLoginGet(req, res, templateName = 'login.html') {
     try {
-        const template = await loadHtml('login.html');
+        const template = await loadHtml(templateName);
         sendWebResponse(res, 200, 'text/html', template);
     } catch (error) {
         console.error('Login GET error:', error);
-        sendWebResponse(res);
+        sendWebResponse(res, 500, 'text/plain', 'Internal Server Error');
     }
 }
 
@@ -36,10 +37,14 @@ export function createLoginPostHandler(db) {
      * @param {import('express').Response} res - Output from browser; ex: text/html.
      */
     return async function handleLoginPost(req, res) {
-        const { username, password } = req.body; // Form data.
+        const body = req.body; // Ensuring object deconstruction works for username & passsword.
+        if (!body) {
+            return sendWebResponse(res, 400, 'text/plain', 'Invalid request body');
+        }
 
+        const { username, password } = body;
         if (!username || !password) {
-            let message = !username ? 'Username required!' : 'Password required!';
+            const message = !username ? 'Username required!' : 'Password required!';
             return sendWebResponse(res, 400, 'text/plain', message);
         }
 
