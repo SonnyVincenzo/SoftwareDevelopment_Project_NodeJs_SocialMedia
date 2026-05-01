@@ -3,9 +3,6 @@ import { loadHtml } from "../methods/utilsMethods.js";
 
 //function to make mysql queries compatible 
 //with the rest of the repository, this function is important for my sanity
-
-//function to make mysql queries compatible 
-//with the rest of the repository, this function is important for my sanity
 function mysqlQueryFix(db, sql, params = []) {
     //if the db has .execute, do mysql2/promise
     if (typeof db.execute === "function") {
@@ -19,6 +16,47 @@ function mysqlQueryFix(db, sql, params = []) {
         });
     });
 }
+
+//gets the post id from the database and returns it
+function getPostId(req){
+    const plainPostId = req.body?.postId ?? req.body?.id ?? req.query?.id ?? req.params?.id;
+    const postId = Number(plainPostId);
+
+    if(!Number.isInteger(postId) || postId <= 0){
+        return null;
+    }
+
+    return postId;
+}
+
+//Post input validation so it fits the wanted requirements
+function validatePostInput(body){
+    const plainHeader = body?.postHeader;
+    const plainText = body?.postText;
+
+    let postHeader = "";
+    if(typeof plainHeader === "string"){
+        postHeader = plainHeader.trim();
+    }
+
+    let postText = "";
+    if(typeof plainText === "string"){
+        postText = plainText.trim();
+    }
+
+    if(!postHeader || !postText){
+        return {error : "Title and content is required"};
+    }
+    if(postHeader.length > 80){
+        return {error: "Title has to be max 80 characters"};
+    }
+    if(postText.length > 500){
+        return {error: "Post has to be max 500 characters"};
+    }
+
+    return {postHeader, postText};
+}
+
 
 /**
  * Checks if provided commentText contains any letters.
@@ -105,6 +143,13 @@ export function createPostPostHandler(db) {
             }
             const username = req.session.userId;
 
+
+            const validation = validatePostInput(req.body);
+            if(validation.error){
+                return sendWebResponse(res, 400, "text/plain", validation.error);
+            }
+
+            /*
             //Trim post header and post text 
             const plainHeader = req.body.postHeader;
             const plainText = req.body.postText;
@@ -129,15 +174,99 @@ export function createPostPostHandler(db) {
             if (postText.length > 500) {
                 return sendWebResponse(res, 400, "text/plain", "Post has to be max 500 characters");
             }
-
+            */
             const result = await mysqlQueryFix(db,
                 `INSERT INTO Posts (username, postHeader, postText, postDate) VALUES (?,?,?,NOW())`,
-                [username, postHeader, postText],
+                [username, validation.postHeader, validation.postText],
             );
             return res.redirect(`/post?id=${result.insertId}`);
         } catch (error) {
             console.error('Post POST error:', error); // Post-ception strikes even more.
             sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
+        }
+            
+    }
+}
+
+//edit handler
+export function createEditPostHandler(db){
+    return async function handleEditPost(req, res){
+        try{
+            if(!req.session || !req.session.userId){
+                return sendWebResponse(res, 401, "text/plain", "You must be logged in");
+            }
+
+            const username = req.session.userId;
+            const postId = getPostId(req);
+
+            if(!postId){
+                return sendWebResponse(res, 400, "text/plain", "valid postid is required");
+            }
+
+            const validation = validatePostInput(req.body);
+            if(validation.error){
+                return sendWebResponse(res, 400, "text/plain", validation.error);
+            }
+
+            const posts = await mysqlQueryFix(db, "SELECT username FROM Posts WHERE id = ?", [postId]);
+
+            if(!posts || posts.length === 0){
+                return sendWebResponse(res, 404, "text/plain", "post not found");
+            }
+
+            if(posts[0].username !== username){
+                return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts dummy XD");
+            }
+
+            await mysqlQueryFix(db, "UPDATE Posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?", 
+                [validation.postHeader, validation.postText, postId, username]
+            );
+
+            return res.redirect(`/post?id=${postId}`);
+        } 
+        catch(error){
+            console.error('Post EDIT error:', error);
+            return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
+        }
+    }
+}
+
+//delete handler
+export function createDeletePostHandler(db){
+    return async function handleDeletePost(req, res){
+        try{
+            if(!req.session || !req.session.userId){
+                return sendWebResponse(res, 401, "text/plain", "you must be logged in");
+            }
+
+            const username = req.session.userId;
+            const postId = getPostId(req);
+
+            if(!postId){
+                return sendWebResponse(res, 400, "text/plain", "valid postid is required");
+            }
+
+            const posts = await mysqlQueryFix(db, "SELECT username FROM Posts WHERE id = ?", [postId]);
+
+            if(!posts || posts.length === 0){
+                return sendWebResponse(res, 404, "text/plain", "post not found");
+            }
+
+            if(posts[0].username !== username){
+                return sendWebResponse(res, 403, "text/plain", "you can only delete your own posts dummy XD");
+            }
+
+            //Delete child table rows first so that foreign keys don't screw up the entire deletion
+            await mysqlQueryFix(db, "DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
+            await mysqlQueryFix(db, "DELETE FROM likesDislikes WHERE id = ?", [postId]);
+            await mysqlQueryFix(db, "DELETE FROM comments WHERE postId = ?", [postId]);
+            await mysqlQueryFix(db, "DELETE FROM Posts WHERE id = ? AND username = ?", [postId,username]);
+
+            return res.redirect(`/user/${encodeURIComponent(username)}`);
+        }
+        catch(error){
+            console.error('Post DELETE error:', error);
+            return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
         }
     }
 }
