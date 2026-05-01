@@ -4,7 +4,7 @@ import 'dotenv/config';
 import bcrypt from 'bcrypt';
 import fs from 'fs/promises';
 import * as utils from '../private/methods/utilsMethods.js'
-import { handleLoginGet, createLoginPostHandler } from '../private/routeHandlers/auth/loginHandler.js';
+import { createLoginGetHandler, createLoginPostHandler } from '../private/routeHandlers/auth/loginHandler.js';
 
 describe('routeHandler: loginHandler.js:', () => {
     let mockDb;
@@ -64,16 +64,20 @@ describe('routeHandler: loginHandler.js:', () => {
     describe('Login GET handler:', () => {
 
         it('should handle error.', async () => {
+            const req = createReq();
             const res = createRes();
 
-            await handleLoginGet({}, res, 'nonexistent.html');
+            const handler = createLoginGetHandler('nonexistent.html');
+            await handler(req, res);
             assert.strictEqual(res.statusCode, 500);
         });
 
         it('should return login page.', async () => {
+            const req = createReq();
             const res = createRes();
 
-            await handleLoginGet({}, res);
+            const handler = createLoginGetHandler();
+            await handler(req, res);
 
             assert.strictEqual(res.statusCode, 200);
             assert.strictEqual(res.headers['Content-Type'], 'text/html');
