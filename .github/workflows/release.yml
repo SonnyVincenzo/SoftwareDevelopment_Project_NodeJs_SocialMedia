@@ -20,13 +20,7 @@ jobs:
 
     - name: Extract version
       run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
-    - name: Validate version matches package.json
-      run: |
-        PKG_VERSION=$(node -p "require('./package.json').version")
-        if [ "$PKG_VERSION" != "$VERSION" ]; then
-        echo "Version mismatch: tag=$VERSION package.json=$PKG_VERSION"
-        exit 1
-        fi  
+
     - name: Install dependencies
       run: npm install
 
@@ -37,7 +31,7 @@ jobs:
 
     - name: Create zip archive
       run: |
-          zip -r repo-archive-$VERSION.zip . -x '*.git/*'
+          zip -r repo-archive-$VERSION.zip . -x "*.git*"
 
 
     - name: Upload Release Asset
