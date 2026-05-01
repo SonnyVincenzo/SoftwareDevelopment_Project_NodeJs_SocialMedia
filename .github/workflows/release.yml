@@ -24,8 +24,7 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: build project 
-      run: npm run build 
+      
     - name: write version files
       run: echo $VERSION > VERSION.txt
 
