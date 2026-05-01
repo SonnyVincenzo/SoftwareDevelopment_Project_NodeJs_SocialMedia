@@ -14,17 +14,21 @@ jobs:
     - name: checkout repository
       uses: actions/checkout@v4
 
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
     - name: Extract version
       run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
     - name: Validate version matches package.json
       run: |
         PKG_VERSION=$(node -p "require('./package.json').version")
-        if["$PKG_VERSION" != $VERSION]; then
+        if [ "$PKG_VERSION" != "$VERSION" ]; then
         echo "Version mismatch: tag=$VERSION package.json=$PKG_VERSION"
         exit 1
         fi  
     - name: Install dependencies
-      run: npm installation
+      run: npm install
 
     - name: build project 
       run: npm run build 
@@ -32,19 +36,17 @@ jobs:
       run: echo $VERSION > VERSION.txt
 
     - name: Create zip archive
-      run: zip -r repo-archive-$VERSION.zip . -x '*.git*'
+      run: |
+          zip -r repo-archive-$VERSION.zip . -x '*.git/*'
 
 
     - name: Upload Release Asset
       uses: softprops/action-gh-release@v2
       with:
-        files: repo-archive-$VERSION.zip
+        files: repo-archive-${{ env.VERSION }}.zip
         name: Release ${{ env.VERSION }}
         tag_name: ${{github.ref_name}}
         body: 
           https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-    
-
