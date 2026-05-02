@@ -214,3 +214,20 @@ main{
   font-size: 16px;
   font-family: Tektur;
 }
+
+.hidden{
+  display: none;
+}
+
+#profilePanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: rgba(20,20,20,0.95);
+  color: white;
+  z-index: 9999;
+  padding: 20px;
+  border-right: 2px solid blueviolet;
+}
