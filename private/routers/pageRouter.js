@@ -8,8 +8,8 @@ import { createHomeGetHandler } from '../routeHandlers/homeHandler.js';
 import { createCommentPostHandler, 
         createPostGetHandler, 
         createPostPostHandler,
-        createEditPostHandler,
-        createDeletePostHandler} from '../routeHandlers/postHandler.js';
+        createPostEditHandler,
+        createPostDeleteHandler} from '../routeHandlers/postHandler.js';
 import { handlePostFeedGet, createPostFeedSnapshotHandler} from '../routeHandlers/postFeedHandler.js';
 
 export default function createPageRouter(db) {
@@ -24,9 +24,9 @@ export default function createPageRouter(db) {
     router.get('/post-feed/snapshot', createPostFeedSnapshotHandler(db));
 
     router.post('/post', createPostPostHandler(db));
+    router.patch('/post/:id', createPostEditHandler(db));
+    router.delete('/post/:id', createPostDeleteHandler(db));
     router.post('/comment', createCommentPostHandler(db));
-    router.post('/post/edit', createEditPostHandler(db));
-    router.post('/post/delete', createDeletePostHandler(db));
     /*router.post('/reactions',reactions(db));*/
    
 

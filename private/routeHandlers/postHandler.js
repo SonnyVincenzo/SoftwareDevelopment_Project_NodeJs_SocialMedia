@@ -1,25 +1,10 @@
 import { sendWebResponse } from "../methods/responseMethods.js";
 import { loadHtml } from "../methods/utilsMethods.js";
 
-//function to make mysql queries compatible 
-//with the rest of the repository, this function is important for my sanity
-function mysqlQueryFix(db, sql, params = []) {
-    //if the db has .execute, do mysql2/promise
-    if (typeof db.execute === "function") {
-        return db.execute(sql, params).then(([rows]) => rows);
-    }
-    //otherwise do db.query
-    return new Promise((resolve, reject) => {
-        db.query(sql, params, (err, rows) => {
-            if (err) return reject(err);
-            resolve(rows);
-        });
-    });
-}
 
 //gets the post id from the database and returns it
 function getPostId(req){
-    const plainPostId = req.body?.postId ?? req.body?.id ?? req.query?.id ?? req.params?.id;
+    const plainPostId = req.params?.id ?? req.body?.postId ?? req.body?.id ?? req.query?.id;
     const postId = Number(plainPostId);
 
     if(!Number.isInteger(postId) || postId <= 0){
@@ -92,7 +77,7 @@ export function createPostGetHandler(db) {
 
             if (postId) {
                 const [rows] = await db.query(
-                    "SELECT * FROM posts WHERE id = ?",
+                    "SELECT * FROM Posts WHERE id = ?",
                     [postId]
                 );
 
@@ -149,33 +134,7 @@ export function createPostPostHandler(db) {
                 return sendWebResponse(res, 400, "text/plain", validation.error);
             }
 
-            /*
-            //Trim post header and post text 
-            const plainHeader = req.body.postHeader;
-            const plainText = req.body.postText;
-
-            let postHeader = "";
-            if (typeof plainHeader === "string") {
-                postHeader = plainHeader.trim();
-            }
-
-            let postText = "";
-            if (typeof plainText === "string") {
-                postText = plainText.trim();
-            }
-
-            //character restrictions for posts
-            if (!postHeader || !postText) {
-                return sendWebResponse(res, 400, "text/plain", "Title and content is required");
-            }
-            if (postHeader.length > 80) {
-                return sendWebResponse(res, 400, "text/plain", "Title has to be max 80 characters");
-            }
-            if (postText.length > 500) {
-                return sendWebResponse(res, 400, "text/plain", "Post has to be max 500 characters");
-            }
-            */
-            const result = await mysqlQueryFix(db,
+            const [result] = await db.query(
                 `INSERT INTO Posts (username, postHeader, postText, postDate) VALUES (?,?,?,NOW())`,
                 [username, validation.postHeader, validation.postText],
             );
@@ -189,8 +148,8 @@ export function createPostPostHandler(db) {
 }
 
 //edit handler
-export function createEditPostHandler(db){
-    return async function handleEditPost(req, res){
+export function createPostEditHandler(db){
+    return async function handlePostEdit(req, res){
         try{
             if(!req.session || !req.session.userId){
                 return sendWebResponse(res, 401, "text/plain", "You must be logged in");
@@ -208,17 +167,17 @@ export function createEditPostHandler(db){
                 return sendWebResponse(res, 400, "text/plain", validation.error);
             }
 
-            const posts = await mysqlQueryFix(db, "SELECT username FROM Posts WHERE id = ?", [postId]);
+            const [posts] = await db.query( "SELECT username FROM Posts WHERE id = ?", [postId]);
 
             if(!posts || posts.length === 0){
                 return sendWebResponse(res, 404, "text/plain", "post not found");
             }
 
             if(posts[0].username !== username){
-                return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts dummy XD");
+                return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts");
             }
 
-            await mysqlQueryFix(db, "UPDATE Posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?", 
+            await db.query( "UPDATE Posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?", 
                 [validation.postHeader, validation.postText, postId, username]
             );
 
@@ -232,7 +191,7 @@ export function createEditPostHandler(db){
 }
 
 //delete handler
-export function createDeletePostHandler(db){
+export function createPostDeleteHandler(db){
     return async function handleDeletePost(req, res){
         try{
             if(!req.session || !req.session.userId){
@@ -246,21 +205,21 @@ export function createDeletePostHandler(db){
                 return sendWebResponse(res, 400, "text/plain", "valid postid is required");
             }
 
-            const posts = await mysqlQueryFix(db, "SELECT username FROM Posts WHERE id = ?", [postId]);
+            const [posts] = await db.query( "SELECT username FROM Posts WHERE id = ?", [postId]);
 
             if(!posts || posts.length === 0){
                 return sendWebResponse(res, 404, "text/plain", "post not found");
             }
 
             if(posts[0].username !== username){
-                return sendWebResponse(res, 403, "text/plain", "you can only delete your own posts dummy XD");
+                return sendWebResponse(res, 403, "text/plain", "you can only delete your own posts");
             }
 
             //Delete child table rows first so that foreign keys don't screw up the entire deletion
-            await mysqlQueryFix(db, "DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
-            await mysqlQueryFix(db, "DELETE FROM likesDislikes WHERE id = ?", [postId]);
-            await mysqlQueryFix(db, "DELETE FROM comments WHERE postId = ?", [postId]);
-            await mysqlQueryFix(db, "DELETE FROM Posts WHERE id = ? AND username = ?", [postId,username]);
+            await db.query( "DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
+            await db.query("DELETE FROM likesDislikes WHERE id = ?", [postId]);
+            await db.query("DELETE FROM Comments WHERE postId = ?", [postId]);
+            await db.query("DELETE FROM Posts WHERE id = ? AND username = ?", [postId,username]);
 
             return res.redirect(`/user/${encodeURIComponent(username)}`);
         }

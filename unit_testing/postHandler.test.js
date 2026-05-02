@@ -1,7 +1,7 @@
 //i will not use a real database for this
 import {describe, it, mock} from 'node:test';
 import assert from 'node:assert';
-import { createDeletePostHandler, createEditPostHandler, createPostPostHandler } from '../private/routeHandlers/postHandler.js'
+import { createPostDeleteHandler, createPostEditHandler, createPostPostHandler } from '../private/routeHandlers/postHandler.js'
 import { create } from 'node:domain';
 
 function createMockResponse(){
@@ -41,8 +41,8 @@ describe ('handlePostPost', () => {
 
         //fake db
         const mockDb = {
-            query: (sql, values, callback) => {
-                callback(null, {insertId: 1}); // simulating db for success
+            query: async() => {
+                return [{insertId: 1}]; // simulating db for success
             }
         }
 
@@ -69,18 +69,18 @@ describe('handlePostEdit', () => {
         const res = createMockResponse();
 
         const mockDb = {
-            query: (sql, values, callback) => {
+            query: async (sql, values) => {
                 queries.push({sql, values});
 
                 if(sql.startsWith('SELECT')){
-                    return callback(null, [{username: 'test'}]);
+                    return [[{username: 'test'}]];
                 }
 
-                callback(null, {affectedRows: 1});
+                return [{affectedRows: 1}];
             }
         };
 
-        const handler = createEditPostHandler(mockDb);
+        const handler = createPostEditHandler(mockDb);
         await handler(req, res);
 
         assert.strictEqual(res.redirectedTo, '/post?id=1');
@@ -99,16 +99,16 @@ describe('handlePostEdit', () => {
         const res = createMockResponse();
 
         const mockDb = {
-            query: (sql, values, callback) => {
-                callback(null, [{username: 'notblob'}]);
+            query: async() => {
+                return [[{username: 'not_test'}]];
             }
         };
 
-        const handler = createEditPostHandler(mockDb);
+        const handler = createPostEditHandler(mockDb);
         await handler(req, res);
 
         assert.strictEqual(res.statusCode, 403);
-        assert.strictEqual(res.body, 'you can only edit your own posts dummy XD');
+        assert.strictEqual(res.body, 'you can only edit your own posts');
     });
 });
 
@@ -123,18 +123,18 @@ describe('handlePostDelete', () => {
         const res = createMockResponse();
 
         const mockDb = {
-            query: (sql, values, callback) => {
+            query: async (sql, values) => {
                 queries.push({sql, values});
 
                 if(sql.startsWith('SELECT')){
-                    return callback(null, [{username: 'test'}]);
+                    return [[{username: 'test'}]];
                 }
 
-                callback(null, {affectedRows: 1});
+                return [{affectedRows: 1}];
             }
         };
 
-        const handler = createDeletePostHandler(mockDb);
+        const handler = createPostDeleteHandler(mockDb);
         await handler(req, res);
 
         assert.strictEqual(res.redirectedTo, '/user/test');
