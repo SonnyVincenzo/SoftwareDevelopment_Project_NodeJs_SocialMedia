@@ -1,37 +1,45 @@
-import fs from "fs/promises";
-import path from "path";
-
+import{ loadHtml } from "../methods/utilsMethods.js"
+import { sendWebResponse } from "../methods/responseMethods.js"
 
 export default function createSearchHandler(db) {
     return async function search(req, res) {
-        const query = req.query.q;
-        if(!query)
+        const query = req.query.q || "";
+        if(!query || query.trim() === "")
         {
-            return res.redirect("/home");
-        }
-        try{
-            //check users
-            const [users] = await db.execute(
-                "SELECT username FROM User WHERE username = ?",
-                [query]
+            const html = await loadHtml("search.html");
+            const result = html.replace(
+                "%%searchResult%%",
+                "<p>Please enter a search term.</p>"
             );
 
-            if (users.length > 0)
-            {
-                return res.redirect(`/user/${query}`);
+            return sendWebResponse(res, 200, "text/html", result);
+        }
+        try{
+            //check users only if query is not empty
+            let users = [];
+            if(query.trim() !== "") {
+                [users] = await db.execute(
+                    "SELECT username FROM User WHERE username = ?",
+                    [query]
+                );
+
+                if (users.length > 0) {
+                    return res.redirect(`/user/${query}`);
+                }
             }
 
-            //search posts
+            //search post 
             const [posts] = await db.execute(
                 `SELECT id, postHeader FROM Posts
                 WHERE postHeader LIKE ? OR postText LIKE ? LIMIT 10`,
                 [`%${query}%`, `%${query}%`]
             );
+
             //build HTML results
-            let resultsHTML = ""
-            if(posts.length === 0)
-            {
-                resultsHTML = "<p>No result found. </p>";
+            let resultsHTML = "";
+
+            if(posts.length === 0) {
+                resultsHTML = "<p>No result found.</p>";
             }
             else {
                 resultsHTML = posts
@@ -40,16 +48,15 @@ export default function createSearchHandler(db) {
                 .join("");
             }
 
-            let html = await fs.readFile(
-                path.resolve("private/templates/search.html"), "utf-8"
-            );
+            let html = await loadHtml("search.html");
             const result = html.replace("%%searchResult%%", resultsHTML);
-            res.send(result);
+
+            return sendWebResponse(res, 200, "text/html", result);
         }
         catch(err)
         {
             console.error(err);
-            res.status(500).send("Search failed");
+            return sendWebResponse(res, 500, "text/plain", "Search failed");
         }
     }
 }
