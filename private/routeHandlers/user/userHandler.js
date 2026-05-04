@@ -2,22 +2,6 @@ import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
 import { replaceDangerousChars, formatPostToHtml } from '../../methods/postMethods.js';
 
-//function to make mysql queries compatible 
-//with the rest of the repository, this function is important for my sanity
-function mysqlQueryFix(db, sql, params = []) {
-    //if the db has .execute, do mysql2/promise
-    if (typeof db.execute === "function") {
-        return db.execute(sql, params).then(([rows]) => rows);
-    }
-    //otherwise do db.query
-    return new Promise((resolve, reject) => {
-        db.query(sql, params, (err, rows) => {
-            if (err) return reject(err);
-            resolve(rows);
-        });
-    });
-}
-
 
 /**
  * Creates User handler for GET.
@@ -40,8 +24,8 @@ export function createUserGetHandler(db) {
 
         try {
             // Find if user actually exists.
-            const users = await mysqlQueryFix(db,
-                'SELECT username, joinDate FROM User WHERE username = ?',
+            const [users] = await db.execute(
+                "SELECT username, joinDate FROM User WHERE username = ?",
                 [username]
             );
             if (!users || users.length === 0) {
@@ -49,8 +33,8 @@ export function createUserGetHandler(db) {
             }
 
             // Get user's posts.
-            const posts = await mysqlQueryFix(db,
-                `SELECT * FROM Posts WHERE username = ? ORDER BY postDate DESC`,
+            const [posts] = await db.execute(
+                "SELECT * FROM Posts WHERE username = ? ORDER BY postDate DESC",
                 [username]
             );
 
@@ -62,7 +46,7 @@ export function createUserGetHandler(db) {
             if (!posts || posts.length === 0) {
                 postHtml = "<p>No posts yet.</p>";
             }
-            postHtml = formatPostToHtml(posts);
+            postHtml = await formatPostToHtml(db, posts);
 
             // Replace backend placeholders with real values.
             template = template.replace("%%fullName%%", replaceDangerousChars(fullName));

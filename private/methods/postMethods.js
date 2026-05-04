@@ -21,59 +21,64 @@ export function replaceDangerousChars(value) {
  * @param {string} [tempSwitchEndpoint='user'] - Temporary endpoint switcher for depending home or user.
  * @returns 
  */
-export function formatPostToHtml(posts, tempSwitchEndpoint = 'user') {
-    let postHtml;
-    if (tempSwitchEndpoint === 'user') {
-        postHtml = posts.map((post) => `
-            <article class="post">
-                <h2 class="title">
-                    ${replaceDangerousChars(post.postHeader)}
-                </h2>
-                <div class="post-info">
-                    <p class="by-line"> By:
-                        <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
-                            ${replaceDangerousChars(post.username)}
-                        </a>
-                    </p>
-                    <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
-                    </p>
-                </div>
-                <p class="text">${replaceDangerousChars(post.postText)}</p>
-                <div class="post-icons">
-                    <button class="like">&#10084;</button>
-                    <p class="likes" value="0"></p>
-                    <button class="dislike">&#10006;</button>
-                    <p class="dislikes" value="0"></p>
-                </div>
-            </article>`)
-            .join("")
+export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
+    let postHtml = "";
+
+    for (const post of posts) {
+        const [rows] = await db.execute(
+            "SELECT type FROM userLikesDislikes WHERE id = ?",
+            [post.id]
+        );
+        const likeCount = rows.filter(res => res.type === "like").length || 0;
+        const dislikeCount = rows.filter(res => res.type === "dislike").length || 0;
+
+        if (tempSwitchEndpoint === 'user') {
+            postHtml += `
+                <article class="post">
+                    <h2 class="title">
+                        ${replaceDangerousChars(post.postHeader)}
+                    </h2>
+                    <div class="post-info">
+                        <p class="by-line"> By:
+                            <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
+                                ${replaceDangerousChars(post.username)}
+                            </a>
+                        </p>
+                        <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
+                        </p>
+                    </div>
+                    <p class="text">${replaceDangerousChars(post.postText)}</p>
+                    <div class="post-icons">
+                        <button class="like" data-post-id="${post.id}">&#10084;</button>
+                        <p class="likes" value="${likeCount}">${likeCount}</p>
+                        <button class="dislike" data-post-id="${post.id}">&#10006;</button>
+                        <p class="dislikes" value="${dislikeCount}">${dislikeCount}</p>
+                    </div>
+                </article>`
             ;
-    } else if (tempSwitchEndpoint === 'home') {
-        postHtml = posts.map((post) => `
-            <article class="post">
-                <p class="title"> ${replaceDangerousChars(post.postHeader)} 
-                </p>
-                <div class="post-info">
-                    <p class="by-line"> By:
-                        <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
-                            ${replaceDangerousChars(post.username)}
-                        </a>
+        } else if (tempSwitchEndpoint === 'home') {
+            postHtml += `
+                <article class="post">
+                    <p class="title"> ${replaceDangerousChars(post.postHeader)} 
                     </p>
-                    <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
-                    </p>
-                </div>
-                <p class="text">
-                    ${replaceDangerousChars(post.postText)}
-                </p>
-                <div class="post-icons">
-                    <button class="like" data-post-id="" data-user-reaction="none">&#10084;</button>
-                    <span class="likes" value="0">0</span>
-                    <button class="dislike" data-post-id="" data-user-reaction="none">&#10006;</button>
-                    <span class="dislikes" value="0">0</span>
-                </div>
-            </article>`)
-            .join("")
+                    <div class="post-info">
+                        <p class="by-line"> By:
+                            <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
+                                ${replaceDangerousChars(post.username)}
+                            </a>
+                        </p>
+                        <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
+                        </p>
+                    </div>
+                    <div class="post-icons">
+                        <button class="like" data-post-id="${post.id}" data-user-reaction="none">&#10084;</button>
+                        <span class="likes" value="${likeCount}">${likeCount}</span>
+                        <button class="dislike" data-post-id="${post.id}" data-user-reaction="none">&#10006;</button>
+                        <span class="dislikes" value="${dislikeCount}">${likeCount}</span>
+                    </div>
+                </article>`
             ;
+        }
     }
     return postHtml;
 }

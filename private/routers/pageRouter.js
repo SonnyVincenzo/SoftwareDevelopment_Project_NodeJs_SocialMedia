@@ -11,6 +11,7 @@ import { createCommentPostHandler,
         createPostEditHandler,
         createPostDeleteHandler} from '../routeHandlers/postHandler.js';
 import { handlePostFeedGet, createPostFeedSnapshotHandler} from '../routeHandlers/postFeedHandler.js';
+import {reactions} from '../routeHandlers/post/reactions.js' ;
 import createSearchHandler from '../routeHandlers/searchHandler.js'
 
 export default function createPageRouter(db) {
@@ -29,7 +30,7 @@ export default function createPageRouter(db) {
     router.patch('/post/:id', createPostEditHandler(db));
     router.delete('/post/:id', createPostDeleteHandler(db));
     router.post('/comment', createCommentPostHandler(db));
-    /*router.post('/reactions',reactions(db));*/
+    router.post('/reactions',reactions(db));
    
 
     return router;
