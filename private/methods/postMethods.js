@@ -74,7 +74,7 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
                         <button class="like" data-post-id="${post.id}" data-user-reaction="none">&#10084;</button>
                         <span class="likes" value="${likeCount}">${likeCount}</span>
                         <button class="dislike" data-post-id="${post.id}" data-user-reaction="none">&#10006;</button>
-                        <span class="dislikes" value="${dislikeCount}">${likeCount}</span>
+                        <span class="dislikes" value="${dislikeCount}">${dislikeCount}</span>
                     </div>
                 </article>`
             ;
