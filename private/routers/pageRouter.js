@@ -5,9 +5,14 @@ import express from 'express';
 import { handleIndexGet } from '../routeHandlers/indexHandler.js';
 import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
 import { createHomeGetHandler } from '../routeHandlers/homeHandler.js';
-import { createCommentPostHandler, createPostGetHandler, createPostPostHandler } from '../routeHandlers/postHandler.js';
+import { createCommentPostHandler, 
+        createPostGetHandler, 
+        createPostPostHandler,
+        createPostEditHandler,
+        createPostDeleteHandler} from '../routeHandlers/postHandler.js';
 import { handlePostFeedGet, createPostFeedSnapshotHandler} from '../routeHandlers/postFeedHandler.js';
 import {reactions} from '../routeHandlers/post/reactions.js' ;
+import createSearchHandler from '../routeHandlers/searchHandler.js'
 
 export default function createPageRouter(db) {
     const router = express.Router();
@@ -19,8 +24,11 @@ export default function createPageRouter(db) {
     router.get('/post', createPostGetHandler(db));
     router.get('/post-feed', handlePostFeedGet);
     router.get('/post-feed/snapshot', createPostFeedSnapshotHandler(db));
+    router.get('/search', createSearchHandler(db));
 
     router.post('/post', createPostPostHandler(db));
+    router.patch('/post/:id', createPostEditHandler(db));
+    router.delete('/post/:id', createPostDeleteHandler(db));
     router.post('/comment', createCommentPostHandler(db));
     router.post('/reactions',reactions(db));
    

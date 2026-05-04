@@ -9,8 +9,11 @@ import createPageRouter from './private/routers/pageRouter.js';
 import createAuthRouter from './private/routers/authRouter.js';
 import createUserRouter from './private/routers/userRouter.js';
 
+
+
 const app = express();
 const port = process.env.SERVER_PORT;
+
 
 app.use(express.json()); // Enables json handling.
 app.use(express.urlencoded({ extended: true })); // Enables url form data.
@@ -37,6 +40,8 @@ app.get('/user/me', (req, res) => {
   });
 })
 app.use('/user', createUserRouter(db)); // Router for nestled endpoints within second order of user (/user/username).
+
+
 
 // 404 status case, possibly a revamp into proper frontend status handling.
 app.use((req, res) => {
