@@ -38,12 +38,15 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
                     <h2 class="title">
                         ${replaceDangerousChars(post.postHeader)}
                     </h2>
-                    <p class="by-line">
-                        By: 
-                        <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
-                            ${replaceDangerousChars(post.username)}
-                        </a>
-                    </p>
+                    <div class="post-info">
+                        <p class="by-line"> By:
+                            <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
+                                ${replaceDangerousChars(post.username)}
+                            </a>
+                        </p>
+                        <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
+                        </p>
+                    </div>
                     <p class="text">${replaceDangerousChars(post.postText)}</p>
                     <div class="post-icons">
                         <button class="like" data-post-id="${post.id}">&#10084;</button>
@@ -58,14 +61,15 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
                 <article class="post">
                     <p class="title"> ${replaceDangerousChars(post.postHeader)} 
                     </p>
-                    <p class="by-line"> By:
-                        <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
-                            ${encodeURIComponent(post.username)}
-                        </a>
-                    </p>
-                    <p class="text">
-                        ${replaceDangerousChars(post.postText)}
-                    </p>
+                    <div class="post-info">
+                        <p class="by-line"> By:
+                            <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
+                                ${replaceDangerousChars(post.username)}
+                            </a>
+                        </p>
+                        <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
+                        </p>
+                    </div>
                     <div class="post-icons">
                         <button class="like" data-post-id="${post.id}" data-user-reaction="none">&#10084;</button>
                         <span class="likes" value="${likeCount}">${likeCount}</span>
