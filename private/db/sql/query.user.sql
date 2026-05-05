@@ -3,5 +3,5 @@ USE `social_test`;
 SELECT  `username`,
         `password`, 
         `joinDate` 
-FROM `User`
+FROM `users`
 WHERE `username` = @queryName;

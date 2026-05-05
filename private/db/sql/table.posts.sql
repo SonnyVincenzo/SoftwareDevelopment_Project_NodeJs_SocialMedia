@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `Posts` (
+CREATE TABLE IF NOT EXISTS `posts` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(30) NOT NULL,
   `postHeader` VARCHAR(80) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `Posts` (
   PRIMARY KEY (`id`),
   -- foreign key rule between user and posts table
   CONSTRAINT `FK_posts_users`
-    FOREIGN KEY (`username`) REFERENCES `User`(`username`)
+    FOREIGN KEY (`username`) REFERENCES `users`(`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 );

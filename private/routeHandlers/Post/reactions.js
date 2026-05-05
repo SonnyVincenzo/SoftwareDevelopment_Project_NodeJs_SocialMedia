@@ -15,7 +15,7 @@ export function reactions(db) {
 			if (!username) return; // Fail case, no update in db (not logged in).
 
 			const [rows] = await db.query(
-				"SELECT type FROM userLikesDislikes WHERE id = ? AND username = ?",
+				"SELECT type FROM user_likes_dislikes WHERE id = ? AND username = ?",
 				[id, username]
 			);
 
@@ -25,31 +25,31 @@ export function reactions(db) {
 
 				if (current === action) { // Unlike, Undislike
 					await db.query(
-						"DELETE FROM userLikesDislikes WHERE id = ? AND username = ?",
+						"DELETE FROM user_likes_dislikes WHERE id = ? AND username = ?",
 						[id, username]
 					);
 					userReaction = "none";
 				} else { //swap like for dislike and vice versa.
 					await db.query(
-						"UPDATE userLikesDislikes SET type = ? WHERE id = ? AND username = ?",
+						"UPDATE user_likes_dislikes SET type = ? WHERE id = ? AND username = ?",
 						[action, id, username]
 					);
 					userReaction = action;
 				}
 			} else { //like, Dislike
 				await db.query(
-					"INSERT INTO userLikesDislikes (id, username, type) VALUES (?, ?, ?)",
+					"INSERT INTO user_likes_dislikes (id, username, type) VALUES (?, ?, ?)",
 					[id, username, action]
 				);
 				userReaction = action;
 			}
 			const [[{ likes }]] = await db.query(
-				"SELECT COUNT(*) AS likes FROM userLikesDislikes WHERE id = ? AND type ='like' ",
+				"SELECT COUNT(*) AS likes FROM user_likes_dislikes WHERE id = ? AND type ='like' ",
 				[id]
 			);
 
 			const [[{ dislikes }]] = await db.query(
-				"SELECT COUNT(*) AS dislikes FROM userLikesDislikes WHERE id = ? AND type ='dislike' ",
+				"SELECT COUNT(*) AS dislikes FROM user_likes_dislikes WHERE id = ? AND type ='dislike' ",
 				[id]
 			);
 			res.json({ likes, dislikes, userReaction });

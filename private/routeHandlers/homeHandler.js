@@ -22,7 +22,7 @@ export function createHomeGetHandler(db) {
         try {
             let template = await loadHtml('home.html');
             let posts = await db.execute(
-                `SELECT * FROM Posts ORDER BY postDate DESC`
+                `SELECT * FROM posts ORDER BY postDate DESC`
             );
             let postHtml = await formatPostToHtml(db, posts[0], 'home'); // 'home' is a workaround until unified frontend.
             template = template.replace("%%posts%%", postHtml);
