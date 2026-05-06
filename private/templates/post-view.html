@@ -12,6 +12,7 @@
     
     <link rel="stylesheet" href="/public/css/post-view.css">
     <script defer src="/public/js/like.js"></script>
+    <script type="module" src="/public/js/detectSwipe.js" defer></script>
 </head>
 <body>
   <header class="topRow">
@@ -21,7 +22,7 @@
 
     <form action="/user/username" method="get">
         <button id="standardButton"> 
-            %%Username%%
+            Username
         </button>
     </form>
 
@@ -57,14 +58,10 @@
           <span class="dislikes" value="0">%%dislikes%%</span>
         </div>
       </article>
-
-      %%posts%%
-      
     </section>
   </main>
 
   <div id="profilePanel" class="hidden"></div>
-  <script type="module" src="/public/js/detectSwipe.js"></script>
 
   <footer class="footer">
     <h2 class="title">Contact</h2>
