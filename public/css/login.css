@@ -89,10 +89,6 @@ label {
     padding-top: 5px;
 }
 
-.hidden {
-    display: none !important;
-}
-
 .popup-overlay {
     position: fixed;
     top: 0;
