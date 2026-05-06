@@ -10,13 +10,16 @@
 export function reactions(db) {
 	return async (req, res) => {
 		try {
-			const { id, action } = req.body;
+			const { id, postId, action } = req.body;
+			const targetId = postId || id;
 			const username = req.session.userId;
-			if (!username) return; // Fail case, no update in db (not logged in).
+			if (!username) {
+				return res.status(401).json({ error: "Not logged in" });
+			} // Fail case, no update in db (not logged in).
 
 			const [rows] = await db.query(
 				"SELECT type FROM userLikesDislikes WHERE id = ? AND username = ?",
-				[id, username]
+				[targetId, username]
 			);
 
 			let userReaction = "none";
@@ -26,31 +29,31 @@ export function reactions(db) {
 				if (current === action) { // Unlike, Undislike
 					await db.query(
 						"DELETE FROM userLikesDislikes WHERE id = ? AND username = ?",
-						[id, username]
+						[targetId, username]
 					);
 					userReaction = "none";
 				} else { //swap like for dislike and vice versa.
 					await db.query(
 						"UPDATE userLikesDislikes SET type = ? WHERE id = ? AND username = ?",
-						[action, id, username]
+						[action, targetId, username]
 					);
 					userReaction = action;
 				}
 			} else { //like, Dislike
 				await db.query(
 					"INSERT INTO userLikesDislikes (id, username, type) VALUES (?, ?, ?)",
-					[id, username, action]
+					[targetId, username, action]
 				);
 				userReaction = action;
 			}
 			const [[{ likes }]] = await db.query(
 				"SELECT COUNT(*) AS likes FROM userLikesDislikes WHERE id = ? AND type ='like' ",
-				[id]
+				[targetId]
 			);
 
 			const [[{ dislikes }]] = await db.query(
 				"SELECT COUNT(*) AS dislikes FROM userLikesDislikes WHERE id = ? AND type ='dislike' ",
-				[id]
+				[targetId]
 			);
 			res.json({ likes, dislikes, userReaction });
 		}
