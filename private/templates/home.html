@@ -10,21 +10,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/home.css">
-    <script defer src="/public/js/like.js"></script>
+    <script defer type="module" src="/public/js/like.js"></script>
     <title>Document</title>
 </head>
 <body>
   <header class="topRow">
     <form action="/search" method="get">
-    <input class="search" name= "q" type="text" spellcheck="true" maxlength="100"
-    placeholder="Search">
-    <form action="/user/username">
-      <button id="standardButton" onclick=""> 
-        %%Username%%
-      </button>
+      <input class="search" name= "q" type="text" spellcheck="true" maxlength="100"
+      placeholder="Search">
+      <form action="/user/username">
+        <button id="standardButton" onclick=""> 
+          %%Username%%
+        </button>
+      </form>
     </form>
-    </form>
-
     <a href="/user/username"> 
       <div class="profile"></div>
     </a>

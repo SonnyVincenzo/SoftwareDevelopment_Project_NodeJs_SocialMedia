@@ -45,8 +45,11 @@ export function createUserGetHandler(db) {
             let postHtml;
             if (!posts || posts.length === 0) {
                 postHtml = "<p>No posts yet.</p>";
+            } else {
+                const currUser = req.user?.username ?? null ;
+                postHtml = await formatPostToHtml(db, posts, currUser);
             }
-            postHtml = await formatPostToHtml(db, posts);
+            
 
             // Replace backend placeholders with real values.
             template = template.replace("%%fullName%%", replaceDangerousChars(fullName));

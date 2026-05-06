@@ -21,20 +21,35 @@ export function replaceDangerousChars(value) {
  * @param {string} [tempSwitchEndpoint='user'] - Temporary endpoint switcher for depending home or user.
  * @returns 
  */
-export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
+export async function formatPostToHtml(db, posts, currUser, tempSwitchEndpoint = 'user') {
     let postHtml = "";
-
+    
+    
     for (const post of posts) {
-        const [rows] = await db.execute(
-            "SELECT type FROM userLikesDislikes WHERE id = ?",
+        const [[reactions]] = await db.execute(
+            `SELECT 
+             COUNT(CASE WHEN type = 'like' THEN 1 END) AS likes,
+             COUNT(CASE WHEN type = 'dislike' THEN 1 END) AS dislikes
+             FROM userLikesDislikes WHERE id = ?`,
             [post.id]
         );
-        const likeCount = rows.filter(res => res.type === "like").length || 0;
-        const dislikeCount = rows.filter(res => res.type === "dislike").length || 0;
+        
+        const likeCount = reactions.likes || 0;
+        const dislikeCount = reactions.dislikes|| 0;
+        
+        let userReaction = "none" ;
+        if (currUser) {
+            const [userReactions] = await db.execute(
+                "SELECT type FROM userLikesDislikes WHERE id = ? AND username = ?",
+                [post.id, currUser]
+            );
+            userReaction = userReactions.length > 0 ? userReactions[0].type : "none" ;
+        }
+        
 
         if (tempSwitchEndpoint === 'user') {
             postHtml += `
-                <article class="post">
+                <article class="post" data-user-reaction="${userReaction}">
                     <h2 class="title">
                         ${replaceDangerousChars(post.postHeader)}
                     </h2>
@@ -49,16 +64,17 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
                     </div>
                     <p class="text">${replaceDangerousChars(post.postText)}</p>
                     <div class="post-icons">
-                        <button class="like" data-post-id="${post.id}">&#10084;</button>
+                        <button class="like" data-post-id="${post.id}" data-user-reaction="${userReaction}">&#10084;</button>
                         <p class="likes" value="${likeCount}">${likeCount}</p>
-                        <button class="dislike" data-post-id="${post.id}">&#10006;</button>
+                        <button class="dislike" data-post-id="${post.id}" data-user-reaction="${userReaction}">&#10006;</button>
                         <p class="dislikes" value="${dislikeCount}">${dislikeCount}</p>
+                        <a class="edit" href="/post?id=${post.id}"> &#9998; </a>
                     </div>
                 </article>`
             ;
         } else if (tempSwitchEndpoint === 'home') {
             postHtml += `
-                <article class="post">
+                <article class="post" data-user-reaction="${userReaction}">
                     <p class="title"> ${replaceDangerousChars(post.postHeader)} 
                     </p>
                     <div class="post-info">
@@ -70,11 +86,13 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
                         <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
                         </p>
                     </div>
+                    <p class="text">${replaceDangerousChars(post.postText)}</p>
                     <div class="post-icons">
-                        <button class="like" data-post-id="${post.id}" data-user-reaction="none">&#10084;</button>
+                        <button class="like" data-post-id="${post.id}" data-user-reaction="${userReaction}">&#10084;</button>
                         <span class="likes" value="${likeCount}">${likeCount}</span>
-                        <button class="dislike" data-post-id="${post.id}" data-user-reaction="none">&#10006;</button>
+                        <button class="dislike" data-post-id="${post.id}" data-user-reaction="${userReaction}">&#10006;</button>
                         <span class="dislikes" value="${dislikeCount}">${dislikeCount}</span>
+                        <a class="edit" href="/post?id=${post.id}">&#x26DB; </a>
                     </div>
                 </article>`
             ;

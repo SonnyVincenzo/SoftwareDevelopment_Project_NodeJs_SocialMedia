@@ -168,3 +168,19 @@ nav {
     font-size: 14px;
     margin: 0;
 }
+
+.edit{
+  display: flex;
+  color: blueviolet;
+  background-color: rgba(43, 42, 43, 0.8);
+  cursor: pointer;
+  font-size: 26px;
+  padding: 0px 10px 0px 10px;
+  border: none;
+  text-decoration: none;
+}
+
+.edit:hover{
+  color: rgba(1, 199, 249, 1);
+   text-decoration: none;
+}
