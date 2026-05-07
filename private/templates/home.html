@@ -15,73 +15,27 @@
 </head>
 <body>
   <header class="topRow">
-    <input class="search" type="text" spellcheck="true" maxlength="100"
+    <form action="/search" method="get">
+    <input class="search" name= "q" type="text" spellcheck="true" maxlength="100"
     placeholder="Search">
     <form action="/user/username">
       <button id="standardButton" onclick=""> 
         %%Username%%
       </button>
     </form>
+    </form>
+
     <a href="/user/username"> 
       <div class="profile"></div>
     </a>
   </header>
   <main>
     <section class="post-board">
-      <article class="post">
-        <p class="title"> Title 
-        </p>
-        <p class="by-line"> By:
-          <a class="by-line" href="/user/username">
-            Username
-          </a>
-        </p>
-        <p class="text">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-          Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
-          natoque penatibus et magnis dis parturient montes, nascetur 
-          ridiculus mus. Donec quam felis, ultricies nec, pellentesque 
-          eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-        </p>
-        <div class="post-icons">
-          <button class="like" data-user-id="" data-user-reaction="none">
-            &#10084;
-          </button>
-          <span class="likes" value="0">0</span>
-          <button class="dislike" data-user-id="" data-user-reaction="none">
-           &#10006;
-          </button>
-          <span class="dislikes" value="0">0</span>
-        </div>
-      </article>
-      <article class="post">
-        <h2 class="title"> Title 
-        </h2>
-        <p class="by-line"> By:
-          <a class="by-line" href="/user/username">
-            Username
-          </a>
-        </p>
-        <p class="text">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-          Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
-          natoque penatibus et magnis dis parturient montes, nascetur 
-          ridiculus mus. Donec quam felis, ultricies nec, pellentesque 
-          eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-        </p>
-        <div class="post-icons">
-          <button class="like" data-user-id="" data-user-reaction="none">
-            &#10084;
-          </button>
-          <span class="likes" value="0">0</span>
-          <button class="dislike" data-user-id="" data-user-reaction="none">
-           &#10006;
-          </button>
-          <span class="dislikes" value="0">0</span>
-        </div>
-      </article>
+      %%posts%%
     </section>
   </main>
+  <div id="profilePanel" class = "hidden"></div>
+  <script type ="module" src="/public/js/detectSwipe.js"></script>
   <footer class="footer">
     <h2 class="title">
       Contact

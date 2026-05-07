@@ -2,14 +2,14 @@
 
 import express from 'express';
 
-import { handleLoginGet, createLoginPostHandler } from '../routeHandlers/auth/loginHandler.js';
+import { createLoginGetHandler, createLoginPostHandler } from '../routeHandlers/auth/loginHandler.js';
 import { handleSignupGet, createSignupPostHandler } from '../routeHandlers/auth/signupHandler.js';
 
 export default function createAuthRouter(db) {
     const router = express.Router();
     
     // Set endpoints.
-    router.get('/login', handleLoginGet);
+    router.get('/login', createLoginGetHandler());
     router.get('/signup', handleSignupGet);
 
     // For form and db:

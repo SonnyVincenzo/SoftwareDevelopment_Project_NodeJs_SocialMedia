@@ -24,8 +24,10 @@
   <main>
     <section class="searchBar">
       <p class="searchText">Search |</p>
-      <input id="searchInput" type="text" spellcheck="true" maxlength="80" placeholder="Post's, Username">
-      <span class="icon" onclick="clearInput()"></span>
+      <form method="GET" action="/search">
+      <input id="searchInput" name ="q" type="text" spellcheck="true" maxlength="80" placeholder="Post's, Username">
+      <span class="clearButton" onclick="clearInput()"></span>
+      </form>
     </section>
     <div class="standardButton">
       <a class="text" href="/auth/login">Login</a>
