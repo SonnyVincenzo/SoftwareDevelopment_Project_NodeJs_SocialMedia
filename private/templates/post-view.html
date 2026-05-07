@@ -16,18 +16,25 @@
 </head>
 <body>
   <header class="topRow">
-    <form action="/search" method="get">
-        <input class="search" name="q" type="text" spellcheck="true" maxlength="100" placeholder="Search">
+    <form action="/home" method="get">
+      <button id="standardButton" onclick=""> 
+        Home
+      </button>
     </form>
 
-    <form action="/user/username" method="get">
-        <button id="standardButton"> 
-            Username
+    <form action="/search" method="get">
+    <input class="search" name= "q" type="text" spellcheck="true" maxlength="100"
+    placeholder="Search">
+    <a>
+      <form action="/user/username">
+        <button id="standardButton" onclick=""> 
+          %%Username%%
         </button>
-    </form>
+      </form>
+    </a>
 
     <a href="/user/username"> 
-        <div class="profile"></div>
+      <div class="profile"></div>
     </a>
   </header>
 
@@ -46,6 +53,7 @@
         </div>
         <p class="text">
             %%content%%
+
         </p>
         <div class="post-icons">
           <button class="like" data-post-id="123" data-user-reaction="none">
@@ -59,6 +67,14 @@
         </div>
       </article>
     </section>
+
+
+    <a class=newpostbutton action="/post" method="get">
+      <button id="standardButton" onclick=""> 
+        New Post
+      </button>
+    </a>
+
   </main>
 
   <div id="profilePanel" class="hidden"></div>
@@ -71,3 +87,4 @@
   </footer>
 </body>
 </html>
+
