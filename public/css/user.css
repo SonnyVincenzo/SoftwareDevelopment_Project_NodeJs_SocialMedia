@@ -141,6 +141,25 @@ nav {
     border-color: white;
 }
 
+.homeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    background-color: rgb(43, 42, 43);
+    color: white;
+    cursor: pointer;
+    font-family: Tektur;
+    font-size: 18px;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+    padding: 15px;
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--secondary-color);
+}
+
 .post-icons {
     display: flex;
     flex-direction: row;
