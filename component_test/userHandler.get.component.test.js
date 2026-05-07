@@ -1,14 +1,12 @@
-import {describe, it} from 'node:test';
+import {beforeEach, describe, it} from 'node:test';
 import assert from 'node:assert';
-import express from 'express';
 import request from 'supertest';
 
 import {createTestApp} from './app.test.js';
-import createUserRouter from '../private/routers/userRouter.js';
 
 
 //creates mock database object for test
-function createMockDb({ userExists = true, posts = [], reactionsByPostId = {} } = {}){
+function createMockDb(getState){
 
     const queries = [];
 
@@ -16,10 +14,17 @@ function createMockDb({ userExists = true, posts = [], reactionsByPostId = {} } 
         queries,
 
         execute: async(sql, params) => {
+
+            const state = getState();
+
             queries.push({sql, params});
 
+            if(state.shouldFail){
+                throw new Error('DB failure');
+            }
+
             if(sql.includes('FROM User')){
-                if(!userExists){
+                if(!state.userExists){
                     return [[]];
                 }
 
@@ -31,12 +36,12 @@ function createMockDb({ userExists = true, posts = [], reactionsByPostId = {} } 
 
             if(sql.includes('FROM Posts')){
                 const username = params[0];
-                return [posts.filter(post => post.username === username)];
+                return [state.posts.filter(post => post.username === username)];
             }
 
             if(sql.includes('FROM userLikesDislikes')){
                 const postId = params[0];
-                return [reactionsByPostId[postId] ?? []];
+                return [state.reactionsByPostId[postId] ?? []];
             }
 
             return [[]];
@@ -46,10 +51,25 @@ function createMockDb({ userExists = true, posts = [], reactionsByPostId = {} } 
 
 //create mock database data
 describe('User GET component:', () => {
-    it('should return 200 and render the user page with posts.', async () => {
-        const mockDb = createMockDb({
+
+    let dbState;
+
+    const mockDb = createMockDb(() => dbState);
+    const app = createTestApp(mockDb);
+
+    beforeEach(() => {
+        mockDb.queries.length = 0;
+
+        dbState = {
             userExists: true,
-            posts: [
+            posts: [],
+            reactionsByPostId: {},
+            shouldFail: false
+        };
+    });
+
+    it('should return 200 and render the user page with posts.', async () => {
+            dbState.posts = [
                 {
                     id: 1,
                     username: 'blob',
@@ -57,20 +77,15 @@ describe('User GET component:', () => {
                     postText: 'Blob demands cookies this instant!',
                     postDate: new Date('2026-04-20')
                 }
-            ],
-            reactionsByPostId:{
+            ];
+            dbState.reactionsByPostId = {
                 1: [
                     {type: 'like'},
                     {type: 'dislike'},
                     {type: 'like'},
                     {type: 'like'}
                 ]
-            }
-        });
-
-        //create fake express app
-        const app = createTestApp(mockDb);
-        app.use('/user', createUserRouter(mockDb));
+            };
 
         //fake http request
         const res = await request(app)
@@ -97,25 +112,18 @@ describe('User GET component:', () => {
         const unsafeHeader = '<script>alert("bad")</script>';
         const unsafeText = 'text with <b>HTML</b>';
 
-        const mockDb = createMockDb({
-            userExists: true,
-            posts: [
+            dbState.posts = [
                 {
                     id: 2,
                     username: 'blob',
                     postHeader: unsafeHeader,
-                    postText: 'text with <b>HTML</b>',
+                    postText: unsafeText,
                     postDate: new Date('2026-04-20')
                 }
-            ],
-            reactionsByPostId:{
+            ];
+            dbState.reactionsByPostId = {
                 2: []
-            }
-        });
-
-        //create test express app
-        const app = createTestApp(mockDb);
-        app.use('/user', createUserRouter(mockDb));
+            };
 
         const res = await request(app)
             .get('/user/blob');
@@ -131,12 +139,9 @@ describe('User GET component:', () => {
     });
 
     it('should return 404 when user doesnt exist', async () => {
-        const mockDb = createMockDb({
-            userExists: false
-        });
 
-        const app = createTestApp(mockDb);
-        app.use('/user', createUserRouter(mockDb));
+        dbState.userExists = false;
+
 
         const res = await request(app)
             .get('/user/missing-user');
@@ -152,14 +157,7 @@ describe('User GET component:', () => {
         console.error = () => {};
 
         try{
-            const failingDb = {
-                execute: async () => {
-                    throw new Error('DB failure');
-                }
-            };
-
-            const app = createTestApp(failingDb);
-            app.use('/user', createUserRouter(failingDb));
+            dbState.shouldFail = true;
 
             const res = await request(app)
                 .get('/user/blob');
