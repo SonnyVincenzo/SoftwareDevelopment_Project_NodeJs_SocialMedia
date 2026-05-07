@@ -3,19 +3,9 @@ import assert from 'node:assert';
 import express from 'express';
 import request from 'supertest';
 
+import {createTestApp} from './app.test.js';
 import createUserRouter from '../private/routers/userRouter.js';
 
-//creates express app for component test
-function createAppWithUserRouter(db){
-    const app = express();
-
-    app.use(express.urlencoded({extended: false}));
-    app.use(express.json());
-
-    app.use('/user', createUserRouter(db));
-
-    return app;
-}
 
 //creates mock database object for test
 function createMockDb({ userExists = true, posts = [], reactionsByPostId = {} } = {}){
@@ -79,7 +69,8 @@ describe('User GET component:', () => {
         });
 
         //create fake express app
-        const app = createAppWithUserRouter(mockDb);
+        const app = createTestApp(mockDb);
+        app.use('/user', createUserRouter(mockDb));
 
         //fake http request
         const res = await request(app)
@@ -123,7 +114,8 @@ describe('User GET component:', () => {
         });
 
         //create test express app
-        const app = createAppWithUserRouter(mockDb);
+        const app = createTestApp(mockDb);
+        app.use('/user', createUserRouter(mockDb));
 
         const res = await request(app)
             .get('/user/blob');
@@ -143,7 +135,8 @@ describe('User GET component:', () => {
             userExists: false
         });
 
-        const app = createAppWithUserRouter(mockDb);
+        const app = createTestApp(mockDb);
+        app.use('/user', createUserRouter(mockDb));
 
         const res = await request(app)
             .get('/user/missing-user');
@@ -165,7 +158,8 @@ describe('User GET component:', () => {
                 }
             };
 
-            const app = createAppWithUserRouter(failingDb);
+            const app = createTestApp(failingDb);
+            app.use('/user', createUserRouter(failingDb));
 
             const res = await request(app)
                 .get('/user/blob');
