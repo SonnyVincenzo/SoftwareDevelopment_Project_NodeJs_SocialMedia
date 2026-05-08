@@ -54,7 +54,7 @@ nav {
 .posts-column {
     flex: 3;
     padding: 20px;
-    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+    background-image: url(/public/assets/img/asfalt-light.png); /*Background Texture found online*/
     overflow-y: auto;
 }
 
