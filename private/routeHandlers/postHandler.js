@@ -92,7 +92,7 @@ export function createPostGetHandler(db) {
                 const [[reactionCounts]] = await db.query(
                      `SELECT 
                         SUM(CASE WHEN type = 'like' THEN 1 ELSE 0 END) AS likes,
-                        SUM(CASE WHEN type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
+                        SUM(CASE WHEN type = 'dislike' THEN 1 ELSE 0 END) AS dislikes
                         FROM userLikesDislikes
                         WHERE id = ? 
                      `,
@@ -111,11 +111,11 @@ export function createPostGetHandler(db) {
                     .replaceAll("%%content%%", replaceDangerousChars(post.postText))
                     .replaceAll("%%date%%", new Date(post.postDate).toLocaleDateString())
                     .replaceAll("%%username%%", replaceDangerousChars(post.username))
-                    .replaceAll("%%username%%", replaceDangerousChars(loggedInUsername))
+                    .replaceAll("%%Username%%", replaceDangerousChars(loggedInUsername))
                     .replaceAll("%%likes%%", String(likes))
                     .replaceAll("%%dislikes%%", String(dislikes))
                     .replaceAll("%%posts%%", "")
-                    .replaceAll('data-post-id="123"', `data-post-id="{post.id}"`);
+                    .replaceAll('data-post-id="123"', `data-post-id="${post.id}"`);
 
                 return sendWebResponse(res, 200, 'text/html', template);
             }
