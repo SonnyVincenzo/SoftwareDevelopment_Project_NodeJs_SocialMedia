@@ -5,7 +5,7 @@
 }
 
 body {
-    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+    background-image: url(/public/assets/img/asfalt-light.png); /*Background Texture found online*/
     background-color: var(--primary-color);
     margin: 0;
     font-family: 'Tektur', sans-serif;
