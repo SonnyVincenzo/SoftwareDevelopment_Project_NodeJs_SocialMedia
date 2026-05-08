@@ -173,6 +173,44 @@ main{
 
 }
 
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.aButton {
+    display: inline-block;
+    background-color: rgb(43, 42, 43);
+    justify-content: center;
+    border: 2px solid violet;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Tektur', sans-serif;
+    font-size: 18px;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.aButton:hover {
+    background: linear-gradient(to right, var(--secondary-color), rgba(1, 199, 249, 0.8));
+    color: black;
+    border-color: white;
+}
+
+.newPost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
 .post-info{
   display: flex;
   flex-direction: row;

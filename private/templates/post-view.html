@@ -16,26 +16,14 @@
 </head>
 <body>
   <header class="topRow">
-    <form action="/home" method="get">
-      <button id="standardButton" onclick=""> 
-        Home
-      </button>
-    </form>
+
+    <a href="/home" class="aButton">Home</a> 
 
     <form action="/search" method="get">
     <input class="search" name= "q" type="text" spellcheck="true" maxlength="100"
     placeholder="Search">
-    <a>
-      <form action="/user/username">
-        <button id="standardButton" onclick=""> 
-          %%Username%%
-        </button>
-      </form>
-    </a>
 
-    <a href="/user/username"> 
-      <div class="profile"></div>
-    </a>
+    <a class="aButton" href="/user/username">%%Username%%</a>
   </header>
 
   <main>
@@ -69,12 +57,9 @@
     </section>
 
 
-    <a class=newpostbutton action="/post" method="get">
-      <button id="standardButton" onclick=""> 
-        New Post
-      </button>
-    </a>
-
+    <div class="newPost">
+      <a class=aButton href="/post">New Post</a>
+    </div>
   </main>
 
   <div id="profilePanel" class="hidden"></div>
