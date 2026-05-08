@@ -54,7 +54,7 @@ nav {
 .posts-column {
     flex: 3;
     padding: 20px;
-    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
+    background-image: url(/public/assets/img/asfalt-light.png); /*Background Texture found online*/
     overflow-y: auto;
 }
 
@@ -141,23 +141,36 @@ nav {
     border-color: white;
 }
 
-.homeButton {
+.header {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    padding: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+
+.aButton {
+    display: inline-block;
     background-color: rgb(43, 42, 43);
+    justify-content: center;
+    border: 2px solid violet;
+    border-radius: 5px;
     color: white;
     cursor: pointer;
-    font-family: Tektur;
+    font-family: 'Tektur', sans-serif;
     font-size: 18px;
     padding: 10px 20px;
     font-weight: bold;
     margin-top: 10px;
+    text-decoration: none;
     text-align: center;
-    padding: 15px;
-    background-color: var(--primary-color);
-    border-bottom: 1px solid var(--secondary-color);
+}
+
+.aButton:hover {
+    background: linear-gradient(to right, var(--secondary-color), rgba(1, 199, 249, 0.8));
+    color: black;
+    border-color: white;
 }
 
 .post-icons {

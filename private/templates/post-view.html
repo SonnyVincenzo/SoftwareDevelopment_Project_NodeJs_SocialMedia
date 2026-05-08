@@ -22,15 +22,13 @@
       <input class="search" name="q" type="text" spellcheck="true" maxlength="100" placeholder="Search">
     </form>
 
-    <form action="/user/username" method="get">
-        <button id="standardButton"> 
-            %%Username%%
-        </button>
+    <a href="/home" class="aButton">Home</a> 
+
+    <form action="/search" method="get">
+      <input class="search" name= "q" type="text" spellcheck="true" maxlength="100" placeholder="Search"></input>     
     </form>
 
-    <a href="/user/username"> 
-        <div class="profile"></div>
-    </a>
+    <a class="aButton" href="/user/username">%%Username%%</a>
   </header>
 
   <main>
@@ -64,6 +62,7 @@
 
         <p class="text">
             %%content%%
+
         </p>
 
         <div class="post-icons">
@@ -77,9 +76,6 @@
           <span class="dislikes" value="0">%%dislikes%%</span>
         </div>
       </article>
-
-      %%posts%%
-      
     </section>
 
     <div class="newPost">
@@ -98,3 +94,4 @@
   
 </body>
 </html>
+
