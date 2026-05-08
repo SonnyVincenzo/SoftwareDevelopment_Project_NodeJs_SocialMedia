@@ -1,6 +1,8 @@
 import { sendWebResponse } from "../methods/responseMethods.js";
 import { loadHtml } from "../methods/utilsMethods.js";
 
+import {replaceDangerousChars} from "../methods/postMethods.js";
+
 
 //gets the post id from the database and returns it
 function getPostId(req){
@@ -86,13 +88,35 @@ export function createPostGetHandler(db) {
                 }
 
                 const post = rows[0];
-                let template = await loadHtml('post-view.html');
-                template = template
-                    .replace('%%username%%', post.username)
-                    .replace('%%postHeader%%', post.postHeader)
-                    .replace('%%postText%%', post.postText)
-                    .replace('%%postDate%%', post.postDate);
-                template = template.replace('%%post%%', 'I found'); // Temp indication of finding.
+
+                const [[reactionCounts]] = await db.query(
+                     `SELECT 
+                        SUM(CASE WHEN type = 'like' THEN 1 ELSE 0 END) AS likes,
+                        SUM(CASE WHEN type = 'dislike' THEN 1 ELSE 0 END) AS dislikes,
+                        FROM userLikesDislikes
+                        WHERE id = ? 
+                     `,
+                     [post.id]
+                );
+
+                const likes = reactionCounts.likes ?? 0;
+                const dislikes = reactionCounts.dislikes ?? 0;
+
+                const loggedInUsername = req.session?.userId ?? post.username;
+
+                let template = await loadHtml("post-view.html");
+
+                template = template 
+                    .replaceAll("%%title%%", replaceDangerousChars(post.postHeader))
+                    .replaceAll("%%content%%", replaceDangerousChars(post.postText))
+                    .replaceAll("%%date%%", new Date(post.postDate).toLocaleDateString())
+                    .replaceAll("%%username%%", replaceDangerousChars(post.username))
+                    .replaceAll("%%username%%", replaceDangerousChars(loggedInUsername))
+                    .replaceAll("%%likes%%", String(likes))
+                    .replaceAll("%%dislikes%%", String(dislikes))
+                    .replaceAll("%%posts%%", "")
+                    .replaceAll('data-post-id="123"', `data-post-id="{post.id}"`);
+
                 return sendWebResponse(res, 200, 'text/html', template);
             }
 
