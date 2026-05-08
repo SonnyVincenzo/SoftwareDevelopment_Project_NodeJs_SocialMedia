@@ -10,13 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="/public/css/postview.css">
+    <link rel="stylesheet" href="/public/css/post-view.css">
     <script defer src="/public/js/like.js"></script>
+    <script type="module" src="/public/js/detectSwipe.js" defer></script>
 </head>
 <body>
   <header class="topRow">
+    <a href="/home" class="aButton">Home</a> 
+
     <form action="/search" method="get">
-        <input class="search" name="q" type="text" spellcheck="true" maxlength="100" placeholder="Search">
+      <input class="search" name="q" type="text" spellcheck="true" maxlength="100" placeholder="Search">
     </form>
 
     <form action="/user/username" method="get">
@@ -37,13 +40,11 @@
         <div class="post-header">
           <p class="title">%%title%%</p>
   
-        <div class="post-actions">
+          <div class="post-actions">
             <button class="editPost" data-post-id="123" aria-label="Edit Post">
               Edit 
               &#9998; 
             </button>
-
-
             
             <button class="deletePost" data-post-id="123" aria-label="Delete Post">
               Delete 
@@ -51,6 +52,7 @@
             </button>
           </div>
         </div>
+
         <div class="post-info">
           <p class="by-line"> By:
             <a class="by-line" href="/user/username">
@@ -59,9 +61,11 @@
           </p>
           <p class="by-line">%%date%%</p>
         </div>
+
         <p class="text">
             %%content%%
         </p>
+
         <div class="post-icons">
           <button class="like" data-post-id="123" data-user-reaction="none">
             &#10084;
@@ -77,10 +81,13 @@
       %%posts%%
       
     </section>
+
+    <div class="newPost">
+      <a class="aButton" href="/post">New Post</a>
+    </div>
   </main>
 
   <div id="profilePanel" class="hidden"></div>
-  <script type="module" src="/public/js/detectSwipe.js"></script>
 
   <footer class="footer">
     <h2 class="title">Contact</h2>
