@@ -41,9 +41,9 @@ main{
   height: 90px;
   border-bottom: 1px rgba(125, 124, 124, 0.933) solid;
   justify-content: right;
-
   gap: 20px;
 }
+
 .search{
   padding-left: 20px;
   padding-right: 20px;
@@ -231,6 +231,7 @@ main{
     padding: 10px 20px;
     font-weight: bold;
     margin-top: 10px;
+    margin-right: 10px;
     text-decoration: none;
     text-align: center;
 }
@@ -261,7 +262,7 @@ main{
   text-decoration: none;
   font-size: 14px;
   margin: 0px;
-  padding-top: 0px;
+  padding-top: 10px;
   padding-left: 5px;
   padding-right: 20px;
 }
