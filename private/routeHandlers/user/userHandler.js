@@ -46,8 +46,10 @@ export function createUserGetHandler(db) {
             if (!posts || posts.length === 0) {
                 postHtml = "<p>No posts yet.</p>";
             }
+            else{
             postHtml = await formatPostToHtml(db, posts);
-
+            }
+            
             // Replace backend placeholders with real values.
             template = template.replace("%%fullName%%", replaceDangerousChars(fullName));
             template = template.replace("%%username%%", `@${replaceDangerousChars(username)}`);
