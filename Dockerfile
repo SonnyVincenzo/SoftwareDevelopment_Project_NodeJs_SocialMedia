@@ -10,7 +10,7 @@ RUN chmod +x setup_MySQL.sh
 
 ENV APP_DIR=/website \
     DB_HOST=localhost \
-    DB_USER=root \
+    DB_USER=user \
     DB_PASSWORD=1234 \
     DB_NAME=website
 
