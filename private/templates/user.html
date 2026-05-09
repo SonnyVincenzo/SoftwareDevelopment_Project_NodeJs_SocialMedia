@@ -13,9 +13,9 @@
 </head>
 
 <body>
-    <nav>
-        <button class="standardButton">Home</button>
-    </nav>
+    <div class="header">
+        <a class="aButton" href="/home">Home</a>
+    </div>
 
     <div class="mainContainer">
         
@@ -39,16 +39,13 @@
         <div class="posts-column">
             <div class="post-header">
                 <h2>Posts</h2>
-                <button class="standardButton">
-                    <a href="/post">New Post</a> <!--Temporart encapsulation to allow link to /post-->
-                </button>
+                <a class="aButton" href="/post">New Post</a>
             </div>
 
             <article class="post-board">
                 %%posts%%
             </article>
         </div>
-
     </div> 
 </body>
 </html>

@@ -5,7 +5,7 @@
         const { postId } = req.body;
 
         await db.execute(
-            "UDATE posts SET likes = likes + 1 WHERE id = ?",
+            "UPDATE posts SET likes = likes + 1 WHERE id = ?",
             [postId]
         );
         const [rows] = await db.execute (
@@ -28,11 +28,11 @@ export async function handlePostDislike(req,res,db)
         const {postId} = req.body;
 
         await db.execute(
-            "UPDATE posts SET disliskes = dislikes + 1 WHERE id = ?",
+            "UPDATE posts SET dislikes = dislikes + 1 WHERE id = ?",
             [postId]
         );
         const [rows] = await db.execute(
-            "SELECT dislike FROM posts WHERE id = ?",
+            "SELECT dislikes FROM posts WHERE id = ?",
             [postId]
         );
         res.json({dislikes: rows[0].dislikes});
