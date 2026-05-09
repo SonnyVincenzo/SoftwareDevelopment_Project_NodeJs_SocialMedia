@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y mysql-Server
 RUN npm install setup
 RUN chmod +x setup_MySQL.sh
 
-ENV APP_DIR=\website \
+ENV APP_DIR=/website \
     DB_HOST=localhost \
     DB_USER=root \
     DB_PASSWORD=1234 \
