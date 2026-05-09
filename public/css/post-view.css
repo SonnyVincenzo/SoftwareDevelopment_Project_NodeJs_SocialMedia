@@ -298,6 +298,74 @@ main{
   display: none;
 }
 
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  font-family: "Tektur", sans-serif;
+}
+
+.popup:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popupContent {
+  background-color: rgb(43, 43, 43);
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  position: center;
+  color :white;
+  font-family: "Tektur", sans-serif;
+}
+
+.closeButton {
+  position: right;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  font-family: "Tektur", sans-serif;
+}
+
+.popupContent h2 {
+  font-family: "Tektur", sans-serif;
+  margin-top: 0;
+}
+
+.popupContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Tektur", sans-serif;
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  font-family: "Tektur", sans-serif;
+}
+
+.popContent input[type="text"],
+.popContent textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
 #profilePanel {
   position: fixed;
   top: 0;

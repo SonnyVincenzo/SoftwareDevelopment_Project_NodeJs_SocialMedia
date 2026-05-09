@@ -31,17 +31,11 @@
       <article class="post">
         <div class="post-header">
           <p class="title">%%title%%</p>
-  
+
           <div class="post-actions">
-            <button class="editPost" data-post-id="123" aria-label="Edit Post">
-              Edit 
-              &#9998; 
-            </button>
-            
-            <button class="deletePost" data-post-id="123" aria-label="Delete Post">
-              Delete 
-              &#10006; 
-            </button>
+            <a href="#editPopup" class="aButton">Edit &#9998;</a>
+
+            <a href="#deletePopup" class="aButton">Delete &#10006;</a>
           </div>
         </div>
 
@@ -79,13 +73,58 @@
 
   <div id="profilePanel" class="hidden"></div>
 
+  <div id="editPopup" class="popup">
+    <div class="popupContent">
+      <h2>Edit Post</h2>
+      <form action="/post" method="POST">
+        <input type="hidden" name="method" value="PUT">
+        <input type="hidden" name="postId" value="%%postId%%">
+
+        <label for="title">New Title:</label>
+        <input type="text" id="editTitle" name="%%title%%"  required>
+
+
+        <label for="content">New Content:</label>
+        <textarea id="editContent" name="%%content%%" required></textarea>
+
+        <div class="popupButtons">
+
+          <button type="submit" class="aButton">Submit</button>
+          <a href="#" class="aButton">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="deletePopup" class="popup">
+    <div class="popupContent">
+      <h2>Delete Post</h2>
+      <form action="/post" method="POST">
+        <input type="hidden" name="method" value="DELETE">
+        <input type="hidden" name="postId" value="%%postId%%">
+
+
+
+
+
+        <span>Are you sure you want to delete this post?</span>
+
+        <div class="popupButtons">
+          <button type="submit" class="aButton">Submit</button>
+          <a href="#" class="aButton">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
   <footer class="footer">
     <h2 class="title">Contact</h2>
     <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
       Github
     </a>
   </footer>
-  
-</body>
 </html>
+
 
