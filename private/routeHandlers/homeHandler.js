@@ -1,6 +1,6 @@
 import { sendWebResponse } from '../methods/responseMethods.js';
 import { loadHtml } from '../methods/utilsMethods.js';
-import { formatPostToHtml } from '../methods/postMethods.js';
+import { formatPostToHtml } from '../methods/post/postMethods.js';
 
 /**
  * Creates Home handler for GET.

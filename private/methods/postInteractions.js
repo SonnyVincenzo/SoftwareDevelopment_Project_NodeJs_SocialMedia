@@ -1,5 +1,5 @@
 
-export async function handlePostLike(req, res,db) {
+/*export async function handlePostLike(req, res,db) {
     try
     {
         const { postId } = req.body;
@@ -42,4 +42,4 @@ export async function handlePostDislike(req,res,db)
         console.error(err);
         res.status(500).json({error: "Dislikes failed"});
     }
-}
+}*/
