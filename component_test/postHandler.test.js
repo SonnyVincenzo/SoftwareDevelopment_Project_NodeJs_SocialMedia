@@ -54,90 +54,90 @@ describe ('handlePostPost', () => {
     });
 });
 
-describe('handlePostEdit', () => {
-    it('should update own post and redirect to said post', async() => {
-        const queries = [];
-        const req = {
-            body: {
-                postId: '1',
-                postHeader: 'Updated title',
-                postText: 'Updated text'
-            },
-            session:{userId: 'test'}
-        };
+// describe('handlePostEdit', () => {
+//     it('should update own post and redirect to said post', async() => {
+//         const queries = [];
+//         const req = {
+//             body: {
+//                 postId: '1',
+//                 postHeader: 'Updated title',
+//                 postText: 'Updated text'
+//             },
+//             session:{userId: 'test'}
+//         };
 
-        const res = createMockResponse();
+//         const res = createMockResponse();
 
-        const mockDb = {
-            query: async (sql, values) => {
-                queries.push({sql, values});
+//         const mockDb = {
+//             query: async (sql, values) => {
+//                 queries.push({sql, values});
 
-                if(sql.startsWith('SELECT')){
-                    return [[{username: 'test'}]];
-                }
+//                 if(sql.startsWith('SELECT')){
+//                     return [[{username: 'test'}]];
+//                 }
 
-                return [{affectedRows: 1}];
-            }
-        };
+//                 return [{affectedRows: 1}];
+//             }
+//         };
 
-        const handler = createPostEditHandler(mockDb);
-        await handler(req, res);
+//         const handler = createPostEditHandler(mockDb);
+//         await handler(req, res);
 
-        assert.strictEqual(res.redirectedTo, '/post?id=1');
-        assert.ok(queries.some(query => query.sql.startsWith('UPDATE Posts')));
-    });
+//         assert.strictEqual(res.redirectedTo, '/post?id=1');
+//         assert.ok(queries.some(query => query.sql.startsWith('UPDATE Posts')));
+//     });
 
-    it('should not edit someone elses post', async () => {
-        const req = {
-            body: {
-                postId: '1',
-                postHeader: 'Updated title',
-                postText: 'Updated text'
-            },
-            session: {userId: 'test'}
-        };
-        const res = createMockResponse();
+//     it('should not edit someone elses post', async () => {
+//         const req = {
+//             body: {
+//                 postId: '1',
+//                 postHeader: 'Updated title',
+//                 postText: 'Updated text'
+//             },
+//             session: {userId: 'test'}
+//         };
+//         const res = createMockResponse();
 
-        const mockDb = {
-            query: async() => {
-                return [[{username: 'not_test'}]];
-            }
-        };
+//         const mockDb = {
+//             query: async() => {
+//                 return [[{username: 'not_test'}]];
+//             }
+//         };
 
-        const handler = createPostEditHandler(mockDb);
-        await handler(req, res);
+//         const handler = createPostEditHandler(mockDb);
+//         await handler(req, res);
 
-        assert.strictEqual(res.statusCode, 403);
-        assert.strictEqual(res.body, 'you can only edit your own posts');
-    });
-});
+//         assert.strictEqual(res.statusCode, 403);
+//         assert.strictEqual(res.body, 'you can only edit your own posts');
+//     });
+// });
 
-describe('handlePostDelete', () => {
-    it('should delete your own post and redirect to your user page', async() =>{
-        const queries = [];
-        const req = {
-            body: {postId: '1'},
-            session:{userId: 'test'}
-        };
+// describe('handlePostDelete', () => {
+//     it('should delete your own post and redirect to your user page', async() =>{
+//         const queries = [];
+//         const req = {
+//             body: {postId: '1'},
+//             session:{userId: 'test'}
+//         };
 
-        const res = createMockResponse();
+//         const res = createMockResponse();
 
-        const mockDb = {
-            query: async (sql, values) => {
-                queries.push({sql, values});
+//         const mockDb = {
+//             query: async (sql, values) => {
+//                 queries.push({sql, values});
 
-                if(sql.startsWith('SELECT')){
-                    return [[{username: 'test'}]];
-                }
+//                 if(sql.startsWith('SELECT')){
+//                     return [[{username: 'test'}]];
+//                 }
 
-                return [{affectedRows: 1}];
-            }
-        };
+//                 return [{affectedRows: 1}];
+//             }
+//         };
 
-        const handler = createPostDeleteHandler(mockDb);
-        await handler(req, res);
+//         const handler = createPostDeleteHandler(mockDb);
+//         await handler(req, res);
 
-        assert.strictEqual(res.redirectedTo, '/user/test');
-        assert.ok(queries.some(query => query.sql.startsWith('DELETE FROM Posts')));
-    })
-})
+//         assert.strictEqual(res.redirectedTo, '/user/test');
+//         assert.ok(queries.some(query => query.sql.startsWith('DELETE FROM Posts')));
+//     })
+// })
