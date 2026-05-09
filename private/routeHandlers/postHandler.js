@@ -1,7 +1,7 @@
 import { sendWebResponse } from "../methods/responseMethods.js";
 import { loadHtml } from "../methods/utilsMethods.js";
 
-import {replaceDangerousChars} from "../methods/postMethods.js";
+import {replaceDangerousChars} from "../methods/post/postMethods.js";
 
 
 //gets the post id from the database and returns it

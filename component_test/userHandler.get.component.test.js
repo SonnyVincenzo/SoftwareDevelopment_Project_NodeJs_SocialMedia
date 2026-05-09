@@ -99,8 +99,8 @@ describe('User GET component:', () => {
         assert.ok(res.text.includes('Blob demands cookies this instant!'));
 
         //three likes and one dislike
-        assert.match(res.text, /class="likes"[^>]*>\s*3\s*<\/p>/);
-        assert.match(res.text, /class="dislikes"[^>]*>\s*1\s*<\/p>/);
+        assert.match(res.text, /class="likes"[^>]*>\s*3\s*<\/span>/);
+        assert.match(res.text, /class="dislikes"[^>]*>\s*1\s*<\/span>/);
 
         assert.ok(mockDb.queries.some(query => query.sql.includes('FROM User')));
         assert.ok(mockDb.queries.some(query => query.sql.includes('FROM Posts')));
