@@ -5,11 +5,11 @@ import { replaceDangerousChars } from "../methods/utilsMethods.js";
 
 
 //gets the post id from the database and returns it
-function getPostId(req){
+function getPostId(req) {
     const plainPostId = req.params?.id ?? req.body?.postId ?? req.body?.id ?? req.query?.id;
     const postId = Number(plainPostId);
 
-    if(!Number.isInteger(postId) || postId <= 0){
+    if (!Number.isInteger(postId) || postId <= 0) {
         return null;
     }
 
@@ -17,31 +17,31 @@ function getPostId(req){
 }
 
 //Post input validation so it fits the wanted requirements
-function validatePostInput(body){
+function validatePostInput(body) {
     const plainHeader = body?.postHeader;
     const plainText = body?.postText;
 
     let postHeader = "";
-    if(typeof plainHeader === "string"){
+    if (typeof plainHeader === "string") {
         postHeader = plainHeader.trim();
     }
 
     let postText = "";
-    if(typeof plainText === "string"){
+    if (typeof plainText === "string") {
         postText = plainText.trim();
     }
 
-    if(!postHeader || !postText){
-        return {error : "Title and content is required"};
+    if (!postHeader || !postText) {
+        return { error: "Title and content is required" };
     }
-    if(postHeader.length > 80){
-        return {error: "Title has to be max 80 characters"};
+    if (postHeader.length > 80) {
+        return { error: "Title has to be max 80 characters" };
     }
-    if(postText.length > 500){
-        return {error: "Post has to be max 500 characters"};
+    if (postText.length > 500) {
+        return { error: "Post has to be max 500 characters" };
     }
 
-    return {postHeader, postText};
+    return { postHeader, postText };
 }
 
 
@@ -90,20 +90,21 @@ export function createPostGetHandler(db) {
                 const post = rows[0];
 
                 const [[reactionCounts]] = await db.query(
-                     `SELECT 
+                    `SELECT 
                         SUM(CASE WHEN type = 'like' THEN 1 ELSE 0 END) AS likes,
                         SUM(CASE WHEN type = 'dislike' THEN 1 ELSE 0 END) AS dislikes
                         FROM userLikesDislikes
                         WHERE id = ? 
                      `,
-                     [post.id]
+                    [post.id]
                 );
 
                 const likes = reactionCounts.likes ?? 0;
                 const dislikes = reactionCounts.dislikes ?? 0;
 
                 let template = await loadHtml("post-view.html");
-                template = template 
+
+                template = template
                     .replaceAll("%%title%%", replaceDangerousChars(post.postHeader))
                     .replaceAll("%%content%%", replaceDangerousChars(post.postText))
                     .replaceAll("%%date%%", new Date(post.postDate).toLocaleDateString())
@@ -112,7 +113,8 @@ export function createPostGetHandler(db) {
                     .replaceAll("%%likes%%", String(likes))
                     .replaceAll("%%dislikes%%", String(dislikes))
                     .replaceAll("%%posts%%", "")
-                    .replaceAll('data-post-id="123"', `data-post-id="${post.id}"`);
+                    .replaceAll('data-post-id="123"', `data-post-id="${post.id}"`)
+                    .replaceAll('%%postId%%', postId);
 
                 return sendWebResponse(res, 200, 'text/html', template);
             }
@@ -149,9 +151,17 @@ export function createPostPostHandler(db) {
             }
             const username = req.session.userId;
 
+            switch (req.body._method) {
+                case 'DELETE':
+                    return await createPostDeleteHandler(db, req, res);
+                case 'PATCH':
+                    return await createPostEditHandler(db, req, res);
+                default:
+                    break;
+            }
 
             const validation = validatePostInput(req.body);
-            if(validation.error){
+            if (validation.error) {
                 return sendWebResponse(res, 400, "text/plain", validation.error);
             }
 
@@ -164,91 +174,85 @@ export function createPostPostHandler(db) {
             console.error('Post POST error:', error); // Post-ception strikes even more.
             sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
         }
-            
+
     }
 }
 
 //edit handler
-export function createPostEditHandler(db){
-    return async function handlePostEdit(req, res){
-        try{
-            console.log('Edit has arrived');
-            if(!req.session || !req.session.userId){
-                return sendWebResponse(res, 401, "text/plain", "You must be logged in");
-            }
-
-            const username = req.session.userId;
-            const postId = getPostId(req);
-
-            if(!postId){
-                return sendWebResponse(res, 400, "text/plain", "valid postid is required");
-            }
-
-            const validation = validatePostInput(req.body);
-            if(validation.error){
-                return sendWebResponse(res, 400, "text/plain", validation.error);
-            }
-
-            const [posts] = await db.query( "SELECT username FROM Posts WHERE id = ?", [postId]);
-
-            if(!posts || posts.length === 0){
-                return sendWebResponse(res, 404, "text/plain", "post not found");
-            }
-
-            if(posts[0].username !== username){
-                return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts");
-            }
-
-            await db.query( "UPDATE Posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?", 
-                [validation.postHeader, validation.postText, postId, username]
-            );
-
-            return res.redirect(`/post?id=${postId}`);
-        } 
-        catch(error){
-            console.error('Post EDIT error:', error);
-            return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
+export async function createPostEditHandler(db, req, res) {
+    try {
+        if (!req.session || !req.session.userId) {
+            return sendWebResponse(res, 401, "text/plain", "You must be logged in");
         }
+
+        const username = req.session.userId;
+        const postId = getPostId(req);
+
+        if (!postId) {
+            return sendWebResponse(res, 400, "text/plain", "valid postid is required");
+        }
+
+        const validation = validatePostInput(req.body);
+        if (validation.error) {
+            return sendWebResponse(res, 400, "text/plain", validation.error);
+        }
+
+        const [posts] = await db.query("SELECT username FROM Posts WHERE id = ?", [postId]);
+
+        if (!posts || posts.length === 0) {
+            return sendWebResponse(res, 404, "text/plain", "post not found");
+        }
+
+        if (posts[0].username !== username) {
+            return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts");
+        }
+
+        await db.query("UPDATE Posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?",
+            [validation.postHeader, validation.postText, postId, username]
+        );
+
+        return res.redirect(`/post?id=${postId}`);
+    }
+    catch (error) {
+        console.error('Post EDIT error:', error);
+        return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
     }
 }
 
 //delete handler
-export function createPostDeleteHandler(db){
-    return async function handleDeletePost(req, res){
-        try{
-            console.log('Delete');
-            if(!req.session || !req.session.userId){
-                return sendWebResponse(res, 401, "text/plain", "you must be logged in");
-            }
-
-            const username = req.session.userId;
-            const postId = getPostId(req);
-
-            if(!postId){
-                return sendWebResponse(res, 400, "text/plain", "valid postid is required");
-            }
-
-            const [posts] = await db.query( "SELECT username FROM Posts WHERE id = ?", [postId]);
-
-            if(!posts || posts.length === 0){
-                return sendWebResponse(res, 404, "text/plain", "post not found");
-            }
-
-            if(posts[0].username !== username){
-                return sendWebResponse(res, 403, "text/plain", "you can only delete your own posts");
-            }
-
-            //Delete child table rows first so that foreign keys don't screw up the entire deletion
-            await db.query("DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
-            await db.query("DELETE FROM Comments WHERE postId = ?", [postId]);
-            await db.query("DELETE FROM Posts WHERE id = ? AND username = ?", [postId,username]);
-
-            return res.redirect(`/user/${encodeURIComponent(username)}`);
+export async function createPostDeleteHandler(db, req, res) {
+    try {
+        if (!req.session || !req.session.userId) {
+            return sendWebResponse(res, 401, "text/plain", "you must be logged in");
         }
-        catch(error){
-            console.error('Post DELETE error:', error);
-            return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
+
+        const username = req.session.userId;
+        const postId = getPostId(req);
+
+        if (!postId) {
+            return sendWebResponse(res, 400, "text/plain", "valid postid is required");
         }
+
+        const [posts] = await db.query("SELECT username FROM Posts WHERE id = ?", [postId]);
+
+        if (!posts || posts.length === 0) {
+            return sendWebResponse(res, 404, "text/plain", "post not found");
+        }
+
+        if (posts[0].username !== username) {
+            return sendWebResponse(res, 403, "text/plain", "you can only delete your own posts");
+        }
+
+        //Delete child table rows first so that foreign keys don't screw up the entire deletion
+        await db.query("DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
+        await db.query("DELETE FROM Comments WHERE postId = ?", [postId]);
+        await db.query("DELETE FROM Posts WHERE id = ? AND username = ?", [postId, username]);
+
+        return res.redirect(`/user/${encodeURIComponent(username)}`);
+    }
+    catch (error) {
+        console.error('Post DELETE error:', error);
+        return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
     }
 }
 

@@ -176,3 +176,22 @@ main {
     font-size: 14px;
     margin: 0;
 }
+
+.footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  margin: 0px;
+  background-color: rgba(53, 52, 53, 0.8);
+  height: 90px;
+  border-top: 1px rgba(125, 124, 124, 0.933) solid;
+}
+
+.github{
+  color: white;
+  font-size: 16px;
+  font-family: Tektur;
+}
