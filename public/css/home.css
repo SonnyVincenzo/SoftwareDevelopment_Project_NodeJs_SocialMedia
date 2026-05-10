@@ -106,6 +106,12 @@ main {
 .like:hover{
   color:  blueviolet;
 }
+
+.dislike:visited{
+  color : rgba(1, 199, 249, 1);
+  -webkit-text-stroke : 2px rgba(1, 199, 249, 1);
+}
+
 .dislikes,
 .likes{
   display: flex;
@@ -148,6 +154,22 @@ main {
   align-items: center;
   justify-content: space-evenly;
   margin:auto;
+}
+
+.edit{
+  display: flex;
+  color: blueviolet;
+  background-color: rgba(43, 42, 43, 0.8);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px 10px 0px 20px;
+  border: none;
+  text-decoration: none;
+}
+
+.edit:hover{
+  color: rgba(1, 199, 249, 1);
+  text-decoration: none;
 }
 
 footer {

@@ -41,7 +41,7 @@ export function createSignupPostHandler(db) {
             const { username, password, dob } = req.body; // Form data.
 
             // check if user already exists
-            let result = await db.query(
+            let result = await db.execute(
                 'SELECT username FROM `User` WHERE username = ?',
                 [username]
             );
@@ -52,7 +52,7 @@ export function createSignupPostHandler(db) {
             // Hash before storing.
             const saltRounds = parseInt(process.env.SALT_ROUNDS, 10) || 10;
             const hash = await bcrypt.hash(password, saltRounds);
-            let insertRes = await db.query(
+            let insertRes = await db.execute(
                 'INSERT INTO User (username, password, joinDate) VALUES (?, ?, NOW())',
                 [username, hash]
             );

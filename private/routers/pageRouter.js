@@ -11,7 +11,7 @@ import { createCommentPostHandler,
         createPostEditHandler,
         createPostDeleteHandler} from '../routeHandlers/postHandler.js';
 import { handlePostFeedGet, createPostFeedSnapshotHandler} from '../routeHandlers/postFeedHandler.js';
-import {reactions} from '../routeHandlers/post/reactions.js' ;
+import {reactions} from '../methods/post/reactions.js' ;
 import createSearchHandler from '../routeHandlers/searchHandler.js'
 
 export default function createPageRouter(db) {

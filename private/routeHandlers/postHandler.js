@@ -1,6 +1,5 @@
 import { sendWebResponse } from "../methods/responseMethods.js";
 import { loadHtml, templateLoggedInUser } from "../methods/utilsMethods.js";
-
 import { replaceDangerousChars } from "../methods/utilsMethods.js";
 
 

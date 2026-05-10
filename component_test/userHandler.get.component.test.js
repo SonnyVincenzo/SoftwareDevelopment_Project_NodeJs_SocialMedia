@@ -39,9 +39,12 @@ function createMockDb(getState){
                 return [state.posts.filter(post => post.username === username)];
             }
 
-            if(sql.includes('FROM userLikesDislikes')){
+           if(sql.includes('FROM userLikesDislikes')){
                 const postId = params[0];
                 return [state.reactionsByPostId[postId] ?? []];
+
+                const likes = reactions.filter(r => r.type ==='like').length;
+                const dislikes = reactions.filter(r => r.type ==='dislike').length;
             }
 
             return [[]];
@@ -80,10 +83,7 @@ describe('User GET component:', () => {
             ];
             dbState.reactionsByPostId = {
                 1: [
-                    {type: 'like'},
-                    {type: 'dislike'},
-                    {type: 'like'},
-                    {type: 'like'}
+                    { likes: 3, dislikes: 1}
                 ]
             };
 
@@ -99,8 +99,8 @@ describe('User GET component:', () => {
         assert.ok(res.text.includes('Blob demands cookies this instant!'));
 
         //three likes and one dislike
-        assert.match(res.text, /class="likes"[^>]*>\s*3\s*<\/p>/);
-        assert.match(res.text, /class="dislikes"[^>]*>\s*1\s*<\/p>/);
+        assert.match(res.text, /class="likes"[^>]*>\s*3\s*<\/span>/);
+        assert.match(res.text, /class="dislikes"[^>]*>\s*1\s*<\/span>/);
 
         assert.ok(mockDb.queries.some(query => query.sql.includes('FROM User')));
         assert.ok(mockDb.queries.some(query => query.sql.includes('FROM Posts')));

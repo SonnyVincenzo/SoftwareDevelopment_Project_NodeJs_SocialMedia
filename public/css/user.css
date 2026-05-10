@@ -177,7 +177,23 @@ main {
     margin: 0;
 }
 
-.footer{
+.edit{
+  display: flex;
+  color: blueviolet;
+  background-color: rgba(43, 42, 43, 0.8);
+  cursor: pointer;
+  font-size: 26px;
+  padding: 0px 10px 0px 10px;
+  border: none;
+  text-decoration: none;
+}
+
+.edit:hover{
+  color: rgba(1, 199, 249, 1);
+   text-decoration: none;
+}
+
+footer{
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,6 +1,6 @@
 import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
-import { formatPostToHtml } from '../../methods/postMethods.js';
+import { formatPostToHtml } from '../../methods/post/postMethods.js';
 import { replaceDangerousChars } from '../../methods/utilsMethods.js';
 
 
@@ -46,11 +46,12 @@ export function createUserGetHandler(db) {
             let postHtml;
             if (!posts || posts.length === 0) {
                 postHtml = "<p>No posts yet.</p>";
-            }
-            else{
-            postHtml = await formatPostToHtml(db, posts);
+            } else {
+                const currUser = req.user?.username ?? null ;
+                postHtml = await formatPostToHtml(db, posts, currUser);
             }
             
+
             // Replace backend placeholders with real values.
             template = template.replace("%%fullName%%", replaceDangerousChars(fullName));
             template = template.replace("%%username%%", `@${replaceDangerousChars(username)}`);
