@@ -21,7 +21,7 @@ describe('createUserGetHandler', () => {
     
         const mock_db = {
             execute: async (sql, params) => {
-                if(sql.includes('FROM user WHERE username = ?')){
+                if(sql.includes('FROM users WHERE username = ?')){
                     return [[
                         {username: 'unitTest_user', joinDate: '2026-01-01 13:37:00'}
                     ]];
