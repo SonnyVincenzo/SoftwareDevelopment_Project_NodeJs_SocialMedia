@@ -9,14 +9,14 @@ describe('initializeDatabase component test', () => {
 
         const executedQueries = [];
 
-        // fake database
+        // mock/fake db
         const mockDb = {
             query: async (sql) => {
                 executedQueries.push(sql);
             }
         };
 
-        // run database initialization
+        // run db init
         await initializeDatabase(mockDb);
 
         // verify all SQL files were executed
