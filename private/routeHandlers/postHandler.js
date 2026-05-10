@@ -157,7 +157,7 @@ export function createPostGetHandler(db) {
                     `SELECT 
                         SUM(CASE WHEN type = 'like' THEN 1 ELSE 0 END) AS likes,
                         SUM(CASE WHEN type = 'dislike' THEN 1 ELSE 0 END) AS dislikes
-                        FROM userLikesDislikes
+                        FROM user_likes_dislikes
                         WHERE id = ? 
                      `,
                     [post.id]
@@ -249,51 +249,10 @@ export function createPostPostHandler(db) {
 }
 
 //edit handler
-<<<<<<< HEAD
-export function createPostEditHandler(db){
-    return async function handlePostEdit(req, res){
-        try{
-            if(!req.session || !req.session.userId){
-                return sendWebResponse(res, 401, "text/plain", "You must be logged in");
-            }
-
-            const username = req.session.userId;
-            const postId = getPostId(req);
-
-            if(!postId){
-                return sendWebResponse(res, 400, "text/plain", "valid postid is required");
-            }
-
-            const validation = validatePostInput(req.body);
-            if(validation.error){
-                return sendWebResponse(res, 400, "text/plain", validation.error);
-            }
-
-            const [posts] = await db.query( "SELECT username FROM posts WHERE id = ?", [postId]);
-
-            if(!posts || posts.length === 0){
-                return sendWebResponse(res, 404, "text/plain", "post not found");
-            }
-
-            if(posts[0].username !== username){
-                return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts");
-            }
-
-            await db.query( "UPDATE posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?", 
-                [validation.postHeader, validation.postText, postId, username]
-            );
-
-            return res.redirect(`/post?id=${postId}`);
-        } 
-        catch(error){
-            console.error('Post EDIT error:', error);
-            return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
-=======
 export async function createPostEditHandler(db, req, res) {
     try {
         if (!req.session || !req.session.userId) {
             return sendWebResponse(res, 401, "text/plain", "You must be logged in");
->>>>>>> origin/main
         }
 
         const username = req.session.userId;
@@ -318,7 +277,7 @@ export async function createPostEditHandler(db, req, res) {
             return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts");
         }
 
-        await db.query("UPDATE Posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?",
+        await db.query("UPDATE posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?",
             [validation.postHeader, validation.postText, postId, username]
         );
 
@@ -331,42 +290,10 @@ export async function createPostEditHandler(db, req, res) {
 }
 
 //delete handler
-<<<<<<< HEAD
-export function createPostDeleteHandler(db){
-    return async function handleDeletePost(req, res){
-        try{
-            if(!req.session || !req.session.userId){
-                return sendWebResponse(res, 401, "text/plain", "you must be logged in");
-            }
-
-            const username = req.session.userId;
-            const postId = getPostId(req);
-
-            if(!postId){
-                return sendWebResponse(res, 400, "text/plain", "valid postid is required");
-            }
-
-            const [posts] = await db.query( "SELECT username FROM posts WHERE id = ?", [postId]);
-
-            if(!posts || posts.length === 0){
-                return sendWebResponse(res, 404, "text/plain", "post not found");
-            }
-
-            if(posts[0].username !== username){
-                return sendWebResponse(res, 403, "text/plain", "you can only delete your own posts");
-            }
-
-            await db.query( "DELETE FROM user_likes_dislikes WHERE id = ?", [postId]);
-            await db.query("DELETE FROM comments WHERE postId = ?", [postId]);
-            await db.query("DELETE FROM posts WHERE id = ? AND username = ?", [postId,username]);
-
-            return res.redirect(`/user/${encodeURIComponent(username)}`);
-=======
 export async function createPostDeleteHandler(db, req, res) {
     try {
         if (!req.session || !req.session.userId) {
             return sendWebResponse(res, 401, "text/plain", "you must be logged in");
->>>>>>> origin/main
         }
 
         const username = req.session.userId;
@@ -387,8 +314,8 @@ export async function createPostDeleteHandler(db, req, res) {
         }
 
         //Delete child table rows first so that foreign keys don't screw up the entire deletion
-        await db.query("DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
-        await db.query("DELETE FROM Comments WHERE postId = ?", [postId]);
+        await db.query("DELETE FROM user_likes_dislikes WHERE id = ?", [postId]);
+        await db.query("DELETE FROM comments WHERE postId = ?", [postId]);
         await db.query("DELETE FROM posts WHERE id = ? AND username = ?", [postId, username]);
 
         return res.redirect(`/user/${encodeURIComponent(username)}`);
