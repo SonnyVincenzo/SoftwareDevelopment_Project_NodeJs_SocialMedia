@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/signup.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/signup-login.css">
     <title>Login</title>
 </head>
 
 <body>
-    <nav>
-        <button class="standardButton">Home</button>
-    </nav>
+    <header>
+        <nav>
+            <a href="/home" class="standardButton">Home</a>
+        </nav>
+    </header>
 
-    <div class="signup-container">
+    <main>
         <form method="post" action="/auth/login">
-            <div class="username">
+            <div class="username-container user-input">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
             </div>
-            
-            <div class="password">
+
+            <div class="password-container user-input">
                 <label for="password">Password</label>
                 <input type="text" id="password" name="password" required>
             </div>
 
             <button class="standardButton" type="submit">Login</button>
-
+            <a href="/auth/signup">Sign Up</a>
         </form>
-    </div>
+    </main>
 </body>
+
 </html>

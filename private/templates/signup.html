@@ -9,41 +9,44 @@
         rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/signup.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/signup-login.css">
     <title>Signup</title>
 </head>
 
 <body>
-    <nav>
-        <button class="standardButton">Home</button>
-    </nav>
+    <header>
+        <nav>
+            <a href="/home" class="standardButton">Home</a>
+        </nav>
+    </header>
 
-    <div class="signup-container">
+    <main>
         <form method="post" action="/auth/signup">
-            <div class="username">
+            <div class="username-container user-input">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
             </div>
 
-            <div class="password">
+            <div class="password-container user-input">
                 <label for="password">Password</label>
                 <input type="text" id="password" name="password" required>
             </div>
 
-            <div class="dob">
+            <div class="dob-container user-input">
                 <label for="dob">Enter your Date of Birth</label>
                 <input type="date" id="dob" name="dob" required>
             </div>
 
             <div class="tos">
-                <label for="tos">Do you agree to the terms of service?</label>
                 <input type="checkbox" id="tos" name="tos" required>
+                <label for="tos">Do you agree to the terms of service?</label>
             </div>
 
-            <button class="standardButton">Signup</button>
-
+            <button class="standardButton">Sign up</button>
+            <a href="/auth/login">Login</a>
         </form>
-    </div>
+    </main>
 
 </body>
 

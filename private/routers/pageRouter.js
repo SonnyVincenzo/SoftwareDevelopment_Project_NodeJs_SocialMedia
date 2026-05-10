@@ -27,8 +27,8 @@ export default function createPageRouter(db) {
     router.get('/search', createSearchHandler(db));
 
     router.post('/post', createPostPostHandler(db));
-    router.patch('/post/:id', createPostEditHandler(db));
-    router.delete('/post/:id', createPostDeleteHandler(db));
+    router.patch('/post', createPostEditHandler(db));
+    router.delete('/post', createPostDeleteHandler(db));
     router.post('/comment', createCommentPostHandler(db));
     router.post('/reactions',reactions(db));
    

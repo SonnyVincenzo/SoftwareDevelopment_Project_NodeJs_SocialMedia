@@ -1,7 +1,7 @@
 import { sendWebResponse } from "../methods/responseMethods.js";
-import { loadHtml } from "../methods/utilsMethods.js";
+import { loadHtml, templateLoggedInUser } from "../methods/utilsMethods.js";
 
-import {replaceDangerousChars} from "../methods/postMethods.js";
+import { replaceDangerousChars } from "../methods/utilsMethods.js";
 
 
 //gets the post id from the database and returns it
@@ -102,16 +102,13 @@ export function createPostGetHandler(db) {
                 const likes = reactionCounts.likes ?? 0;
                 const dislikes = reactionCounts.dislikes ?? 0;
 
-                const loggedInUsername = req.session?.userId ?? post.username;
-
                 let template = await loadHtml("post-view.html");
-
                 template = template 
                     .replaceAll("%%title%%", replaceDangerousChars(post.postHeader))
                     .replaceAll("%%content%%", replaceDangerousChars(post.postText))
                     .replaceAll("%%date%%", new Date(post.postDate).toLocaleDateString())
                     .replaceAll("%%username%%", replaceDangerousChars(post.username))
-                    .replaceAll("%%Username%%", replaceDangerousChars(loggedInUsername))
+                    .replaceAll("%%usernameButton%%", templateLoggedInUser(req.session.userId))
                     .replaceAll("%%likes%%", String(likes))
                     .replaceAll("%%dislikes%%", String(dislikes))
                     .replaceAll("%%posts%%", "")
@@ -175,6 +172,7 @@ export function createPostPostHandler(db) {
 export function createPostEditHandler(db){
     return async function handlePostEdit(req, res){
         try{
+            console.log('Edit has arrived');
             if(!req.session || !req.session.userId){
                 return sendWebResponse(res, 401, "text/plain", "You must be logged in");
             }
@@ -218,6 +216,7 @@ export function createPostEditHandler(db){
 export function createPostDeleteHandler(db){
     return async function handleDeletePost(req, res){
         try{
+            console.log('Delete');
             if(!req.session || !req.session.userId){
                 return sendWebResponse(res, 401, "text/plain", "you must be logged in");
             }
@@ -240,8 +239,7 @@ export function createPostDeleteHandler(db){
             }
 
             //Delete child table rows first so that foreign keys don't screw up the entire deletion
-            await db.query( "DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
-            await db.query("DELETE FROM likesDislikes WHERE id = ?", [postId]);
+            await db.query("DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
             await db.query("DELETE FROM Comments WHERE postId = ?", [postId]);
             await db.query("DELETE FROM Posts WHERE id = ? AND username = ?", [postId,username]);
 
