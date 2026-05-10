@@ -33,8 +33,6 @@ export async function formatPostToHtml(db, posts, currUser) {
              FROM userLikesDislikes WHERE id = ?`,
             [post.id]
         );
-        console.log("REACTION ROWS:", rows);
-        console.log("POST ID:", post.id);
 
         const reactions = rows?.[0] || {} ;
 
