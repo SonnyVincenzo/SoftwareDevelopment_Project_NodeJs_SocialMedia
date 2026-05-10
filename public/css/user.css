@@ -1,25 +1,6 @@
-:root {
-    --primary-color: rgb(43, 42, 43);
-    --secondary-color: rgb(138, 43, 226);
-    --accent-color: rgb(1, 200, 250); 
-}
-
-body {
-    background-color: var(--primary-color);
-    color: white;
-    margin: 0;
-    font-family: Tektur, sans-serif;
-}
-
-nav {
-    text-align: center;
-    padding: 15px;
-    background-color: var(--primary-color);
-    border-bottom: 1px solid var(--secondary-color);
-}
-
-.mainContainer {
+main {
     display: flex;
+    color: white;
     flex-direction: row;
     width: 100%;
     min-height: 100vh;
@@ -28,7 +9,7 @@ nav {
 .profile-column {
     flex: 1;
     padding: 40px 20px;
-    background-color: var(--primary-color);
+    background-color: var(--primary-bg-color);
     border-right: 1px solid var(--secondary-color);
     display: flex;
     flex-direction: column;
@@ -37,10 +18,6 @@ nav {
 }
 
 .profile {
-    display: inline-block;
-    background: radial-gradient(circle, rgba(1, 200, 250, 0.8), rgba(138, 43, 226, 0.8));
-    background-color: white;
-    border-radius: 25px;
     width: 120px;
     height: 120px;
     margin-bottom: 10px;
@@ -54,7 +31,6 @@ nav {
 .posts-column {
     flex: 3;
     padding: 20px;
-    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png");
     overflow-y: auto;
 }
 
@@ -141,6 +117,38 @@ nav {
     border-color: white;
 }
 
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+
+.aButton {
+    display: inline-block;
+    background-color: rgb(43, 42, 43);
+    justify-content: center;
+    border: 2px solid violet;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Tektur', sans-serif;
+    font-size: 18px;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.aButton:hover {
+    background: linear-gradient(to right, var(--secondary-color), rgba(1, 199, 249, 0.8));
+    color: black;
+    border-color: white;
+}
+
 .post-icons {
     display: flex;
     flex-direction: row;
@@ -167,4 +175,39 @@ nav {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 14px;
     margin: 0;
+}
+
+.edit{
+  display: flex;
+  color: blueviolet;
+  background-color: rgba(43, 42, 43, 0.8);
+  cursor: pointer;
+  font-size: 26px;
+  padding: 0px 10px 0px 10px;
+  border: none;
+  text-decoration: none;
+}
+
+.edit:hover{
+  color: rgba(1, 199, 249, 1);
+   text-decoration: none;
+}
+
+footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  margin: 0px;
+  background-color: rgba(53, 52, 53, 0.8);
+  height: 90px;
+  border-top: 1px rgba(125, 124, 124, 0.933) solid;
+}
+
+.github{
+  color: white;
+  font-size: 16px;
+  font-family: Tektur;
 }

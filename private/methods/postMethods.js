@@ -1,18 +1,4 @@
-
-/**
- * Replacing potentially dangerous chars with their HTML escape code/value.
- * 
- * @param {String} value 
- * @returns Parsed string.
- */
-export function replaceDangerousChars(value) {
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;")
-}
+import { replaceDangerousChars } from "./utilsMethods.js";
 
 /**
  * Singular entry point to format post db content into template.
@@ -70,11 +56,12 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
                         <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
                         </p>
                     </div>
+                    <p class="text">${replaceDangerousChars(post.postText)}</p>
                     <div class="post-icons">
                         <button class="like" data-post-id="${post.id}" data-user-reaction="none">&#10084;</button>
                         <span class="likes" value="${likeCount}">${likeCount}</span>
                         <button class="dislike" data-post-id="${post.id}" data-user-reaction="none">&#10006;</button>
-                        <span class="dislikes" value="${dislikeCount}">${likeCount}</span>
+                        <span class="dislikes" value="${dislikeCount}">${dislikeCount}</span>
                     </div>
                 </article>`
             ;

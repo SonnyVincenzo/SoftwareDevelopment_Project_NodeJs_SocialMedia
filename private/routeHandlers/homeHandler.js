@@ -1,6 +1,6 @@
 import { sendWebResponse } from '../methods/responseMethods.js';
-import { loadHtml } from '../methods/utilsMethods.js';
-import { formatPostToHtml } from '../methods/postMethods.js';
+import { loadHtml, templateLoggedInUser } from '../methods/utilsMethods.js';
+import { formatPostToHtml } from '../methods/post/postMethods.js';
 
 /**
  * Creates Home handler for GET.
@@ -25,7 +25,9 @@ export function createHomeGetHandler(db) {
                 `SELECT * FROM posts ORDER BY postDate DESC`
             );
             let postHtml = await formatPostToHtml(db, posts[0], 'home'); // 'home' is a workaround until unified frontend.
-            template = template.replace("%%posts%%", postHtml);
+            template = template
+                .replace("%%posts%%", postHtml)
+                .replace('%%usernameButton%%', templateLoggedInUser(req.session.userId));
             sendWebResponse(res, 200, 'text/html', template);
         } catch (error) {
             console.error('Home GET error:', error);

@@ -1,0 +1,391 @@
+html, body {
+  height: 100% ;
+  margin: 0px
+}
+
+
+main{
+  flex: 1;
+}
+.josefin-sans-mainTextFont {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.tektur-titleFont {
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+
+.topRow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 5px;
+  margin: 0px;
+  background-color: rgba(53, 52, 53, 0.8);
+  height: 90px;
+  border-bottom: var(--header-footer-border-divider);
+  justify-content: right;
+  gap: 20px;
+}
+
+.search{
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 16px;
+  width: 200px;
+  height: 45px;
+  border-width: 1px;
+  border-color: rgba(1, 199, 249, 1);
+  box-shadow: 1px 1px 2px rgba(1, 199, 249, 1);
+  border-radius: 10px;
+}
+.search:focus{
+  border-color: blueviolet;
+  box-shadow: 2px 4px 6px blueviolet ;
+  outline:none;
+}
+
+.standardButton{
+  display: inline-block;
+  background-color: var(--primary-bg-color);
+  border-width: 3px;
+  border-color: blueviolet;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: Tektur;
+  font-size: 18px;
+  
+  /* margin-right: 20px;
+  margin-left: 110px; */
+  margin-top: 0px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: bold;
+}
+  
+.standardButton:hover{
+  background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 199, 249, 0.8));
+  background-color: white;
+  border-width: 3px;
+  color:  black;
+  border-color: rgb(255, 255, 255);
+  opacity: 0.8
+}
+
+.profile{
+  display: inline-block;
+  background: radial-gradient(circle, rgba(1, 200, 250, 0.8), rgba(138, 43, 226, 0.8));
+  background-color: white;
+  border-radius: 25px;
+  margin: 10px;
+  margin-left: 0px;
+  width: 80px;
+  height: 80px;
+}
+.post-board{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin:auto;
+  width: 60%;
+  padding-top: 40px;
+}
+
+.post{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 10px;
+  margin: 5px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(1, 199, 249, 1);
+  border-radius: 10px;
+  background-color:var(--primary-bg-color);
+  width: 100%;
+}
+
+
+
+.title{
+  color: white;
+  font-family: Tektur;
+  text-decoration: none;
+  padding-bottom: 0px;
+  font-weight: 600;
+  font-size:24px ;
+  margin-bottom: 0px ;
+  padding-left: 5px;
+  margin-top: 10px;
+}
+
+.dislike,
+.like{
+  display: flex ;
+  color: var(--primary-bg-color);
+  background-color:var(--primary-bg-color);
+  font-size: 28px;
+  border: none;
+  -webkit-text-stroke: 2px blueviolet;
+}
+
+.dislike:hover,
+.like:hover{
+  color:  blueviolet;
+}
+.dislikes,
+.likes{
+  display: flex;
+  color: white;
+  font-family: Josefin Sans;
+  font-size: 14px;
+  margin: 5px;
+  padding-top: 5px;
+}
+
+.post-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  padding-right: 10px;
+  gap: 10px;
+}
+
+.editPost {
+  background-color: var(--primary-color);
+  border: white solid 2px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Tektur', sans-serif;
+  padding: 5px 15px;
+}
+
+.deletePost {
+  background-color: var(--primary-color);
+  border: 2px solid red;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Tektur', sans-serif;
+  padding: 5px 15px;
+}
+
+.text{
+  color: white;
+  font-family: Josefin Sans;
+  font-size: 14px;
+  margin: 5px;
+  padding-top: 60px;
+  padding-bottom: 10px;
+
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.aButton {
+    display: inline-block;
+    background-color: var(--primary-bg-color);
+    justify-content: center;
+    border: 2px solid violet;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Tektur', sans-serif;
+    font-size: 18px;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.aButton:hover {
+    background: linear-gradient(to right, var(--secondary-color), rgba(1, 199, 249, 0.8));
+    color: black;
+    border-color: white;
+}
+
+.newPost {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.post-info{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.by-line{
+  color: white;
+  font-family: Josefin Sans;
+  text-decoration: none;
+  font-size: 14px;
+  margin: 0px;
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 20px;
+}
+
+.post-icons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  margin:auto;
+}
+
+.footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  margin: 0px;
+  background-color: rgba(53, 52, 53, 0.8);
+  height: 90px;
+  border-top: var(--header-footer-border-divider);
+}
+
+.github{
+  color: white;
+  font-size: 16px;
+  font-family: Tektur;
+}
+
+.hidden{
+  display: none;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  font-family: "Tektur", sans-serif;
+}
+
+.popup:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popupContent {
+  background-color: rgb(43, 43, 43);
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  position: center;
+  color :white;
+  font-family: "Tektur", sans-serif;
+}
+
+.closeButton {
+  position: right;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  font-family: "Tektur", sans-serif;
+}
+
+.popupContent h2 {
+  font-family: "Tektur", sans-serif;
+  margin-top: 0;
+}
+
+.popupContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Tektur", sans-serif;
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  font-family: "Tektur", sans-serif;
+}
+
+.popContent input[type="text"],
+.popContent textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#profilePanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: rgba(20,20,20,0.95);
+  color: white;
+  z-index: 9999;
+  padding: 20px;
+  border-right: 2px solid blueviolet;
+}
+
+footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  margin: 0px;
+  background-color: rgba(53, 52, 53, 0.8);
+  height: 90px;
+  border-top: 1px rgba(125, 124, 124, 0.933) solid;
+}
+
+.github{
+  color: white;
+  font-size: 16px;
+  font-family: Tektur;
+}

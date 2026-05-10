@@ -1,103 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com"> <!--Font From Google Fonts-->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/home.css">
-    <script defer src="/public/js/like.js"></script>
+    <link rel="stylesheet" href="/public/css/username-button.css">
+    <script defer type="module" src="/public/js/like.js"></script>
+    <script defer type="module" src="/public/js/detectSwipe.js"></script>
     <title>Document</title>
 </head>
-<body>
-  <header class="topRow">
-    <form action="/search" method="get">
-    <input class="search" name= "q" type="text" spellcheck="true" maxlength="100"
-    placeholder="Search">
-    <form action="/user/username">
-      <button id="standardButton" onclick=""> 
-        %%Username%%
-      </button>
-    </form>
-    </form>
 
-    <a href="/user/username"> 
-      <div class="profile"></div>
-    </a>
-  </header>
-  <main>
-    <section class="post-board">
-      <article class="post">
-        <p class="title"> Title 
-        </p>
-        <div class="post-info">
-          <p class="by-line"> By:
-            <a class="by-line" href="/user/username">
-              Username
-            </a>
-          </p>
-          <p class="by-line">28-04-2026</p>
-        </div>
-        <p class="text">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-          Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
-          natoque penatibus et magnis dis parturient montes, nascetur 
-          ridiculus mus. Donec quam felis, ultricies nec, pellentesque 
-          eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-        </p>
-        <div class="post-icons">
-          <button class="like" data-post-id="123" data-user-reaction="none">
-            &#10084;
-          </button>
-          <span class="likes" value="0">0</span>
-          <button class="dislike" data-post-id="123" data-user-reaction="none">
-           &#10006;
-          </button>
-          <span class="dislikes" value="0">0</span>
-        </div>
-      </article>
-      <article class="post">
-        <h2 class="title"> Title 
+<body>
+    <header>
+        <form action="/search" method="get">
+            <input class="search" name="q" type="text" spellcheck="true" maxlength="100" placeholder="Search">
+        </form>
+
+        %%usernameButton%%
+    </header>
+    <main>
+        <section class="post-board">
+            %%posts%%
+        </section>
+    </main>
+    <div id="profilePanel" class="hidden"></div>
+    <footer>
+        <h2 class="title">
+            Contact
         </h2>
-        <p class="by-line"> By:
-          <a class="by-line" href="/user/username">
-            Username
-          </a>
-        </p>
-        <p class="text">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-          Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
-          natoque penatibus et magnis dis parturient montes, nascetur 
-          ridiculus mus. Donec quam felis, ultricies nec, pellentesque 
-          eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.
-        </p>
-        <div class="post-icons">
-          <button class="like" data-post-id="2" data-user-reaction="none">
-            &#10084;
-          </button>
-          <span class="likes" value="0">0</span>
-          <button class="dislike" data-post-id="2" data-user-reaction="none">
-           &#10006;
-          </button>
-          <span class="dislikes" value="0">0</span>
-        </div>
-      </article>
-      %%posts%%
-    </section>
-  </main>
-  <div id="profilePanel" class = "hidden"></div>
-  <script type ="module" src="/public/js/detectSwipe.js"></script>
-  <footer class="footer">
-    <h2 class="title">
-      Contact
-    </h2>
-    <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
-      Github
-    </a>
-  </footer>
+        <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
+            Github
+        </a>
+    </footer>
 </body>
+
 </html>
