@@ -99,12 +99,12 @@ describe('User GET component:', () => {
         assert.ok(res.text.includes('Blob demands cookies this instant!'));
 
         //three likes and one dislike
-        assert.match(res.text, /class="likes"[^>]*>\s*0\s*<\/span>/);
-        assert.match(res.text, /class="dislikes"[^>]*>\s*0\s*<\/span>/);
+        assert.match(res.text, /class="likes"[^>]*>\s*3\s*<\/span>/);
+        assert.match(res.text, /class="dislikes"[^>]*>\s*1\s*<\/span>/);
 
         assert.ok(mockDb.queries.some(query => query.sql.includes('FROM users')));
         assert.ok(mockDb.queries.some(query => query.sql.includes('FROM posts')));
-        assert.ok(mockDb.queries.some(query => query.sql.includes('FROM userLikesDislikes')));
+        assert.ok(mockDb.queries.some(query => query.sql.includes('FROM user_likes_dislikes')));
     });
 
     //unsafe input that should not be rendered as real html
