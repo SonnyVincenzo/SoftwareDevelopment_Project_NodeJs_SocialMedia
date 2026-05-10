@@ -1,75 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post View</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="/public/css/post-view.css">
     <script defer src="/public/js/like.js"></script>
     <script type="module" src="/public/js/detectSwipe.js" defer></script>
 </head>
+
 <body>
-  <header class="topRow">
+    <header class="topRow">
+        <a href="/home" class="aButton">Home</a>
 
-    <a href="/home" class="aButton">Home</a> 
+        <form action="/search" method="get">
+            <input class="search" name="q" type="text" spellcheck="true" maxlength="100" placeholder="Search"></input>
+        </form>
 
-    <form action="/search" method="get">
-      <input class="search" name= "q" type="text" spellcheck="true" maxlength="100" placeholder="Search"></input>     
-    </form>
+        <a class="aButton" href="/user/username">%%Username%%</a>
+    </header>
 
-    <a class="aButton" href="/user/username">%%Username%%</a>
-  </header>
+    <main>
+        <section class="post-board">
 
-  <main>
-    <section class="post-board">
-      
-      <article class="post">
-        <p class="title">%%title%%</p>
-        <div class="post-info">
-          <p class="by-line"> By:
-            <a class="by-line" href="/user/username">
-              %%username%%
-            </a>
-          </p>
-          <p class="by-line">%%date%%</p>
+            <article class="post">
+                <div class="post-header">
+                    <p class="title">%%title%%</p>
+
+                    <div class="post-actions">
+                        <a href="#editPopup" class="aButton">Edit &#9998;</a>
+
+                        <a href="#deletePopup" class="aButton">Delete &#10006;</a>
+                    </div>
+                </div>
+
+                <div class="post-info">
+                    <p class="by-line"> By:
+                        <a class="by-line" href="/user/username">
+                            %%username%%
+                        </a>
+                    </p>
+                    <p class="by-line">%%date%%</p>
+                </div>
+
+                <p class="text">
+                    %%content%%
+
+                </p>
+
+                <div class="post-icons">
+                    <button class="like" data-post-id="123" data-user-reaction="none">
+                        &#10084;
+                    </button>
+                    <span class="likes" value="0">%%likes%%</span>
+                    <button class="dislike" data-post-id="123" data-user-reaction="none">
+                        &#10006;
+                    </button>
+                    <span class="dislikes" value="0">%%dislikes%%</span>
+                </div>
+            </article>
+        </section>
+
+        <div class="newPost">
+            <a class="aButton" href="/post">New Post</a>
         </div>
-        <p class="text">
-            %%content%%
+    </main>
 
-        </p>
-        <div class="post-icons">
-          <button class="like" data-post-id="123" data-user-reaction="none">
-            &#10084;
-          </button>
-          <span class="likes" value="0">%%likes%%</span>
-          <button class="dislike" data-post-id="123" data-user-reaction="none">
-           &#10006;
-          </button>
-          <span class="dislikes" value="0">%%dislikes%%</span>
+    <div id="profilePanel" class="hidden"></div>
+
+    <div id="editPopup" class="popup">
+        <div class="popupContent">
+            <h2>Edit Post</h2>
+            <form action="/post" method="POST">
+                <input type="hidden" name="_method" value="PATCH">
+                <input type="hidden" name="postId" value="%%postId%%">
+
+                <label for="postHeader">New Title:</label>
+                <input type="text" id="editTitle" name="postHeader" required>
+
+
+                <label for="postText">New Content:</label>
+                <textarea id="editContent" name="postText" required></textarea>
+
+                <div class="popupButtons">
+
+                    <button type="submit" class="aButton">Submit</button>
+                    <a href="#" class="aButton">Cancel</a>
+                </div>
+            </form>
         </div>
-      </article>
-    </section>
-
-
-    <div class="newPost">
-      <a class=aButton href="/post">New Post</a>
     </div>
-  </main>
 
-  <div id="profilePanel" class="hidden"></div>
+    <div id="deletePopup" class="popup">
+        <div class="popupContent">
+            <h2>Delete Post</h2>
+            <form action="/post" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="postId" value="%%postId%%">
+                
+                <span>Are you sure you want to delete this post?</span>
 
-  <footer class="footer">
+                <div class="popupButtons">
+                    <button type="submit" class="aButton">Submit</button>
+                    <a href="#" class="aButton">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<footer class="footer">
     <h2 class="title">Contact</h2>
     <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
-      Github
+        Github
     </a>
-  </footer>
-</body>
-</html>
+</footer>
 
+</html>
