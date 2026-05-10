@@ -1,57 +1,30 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert';
+import fs from 'fs/promises'; //Loads SQL files as text
+import path from 'path'; // Sets up file path for files
 
-import initializeDatabase from '../private/db/init.js';
+export default async function initializeDatabase(db) {
+    try {
+        const basePath = path.resolve('private/db/sql');
 
-describe('initializeDatabase component test', () => {
+        // Order matters, cuz of FKs
+        const files = [
+            'table.user.sql',
+            'table.posts.sql',
+            'table.comments.sql',
+            'table.likesDislikes.sql'
+        ];
 
-    it('should execute all SQL files', async () => {
+        for (const file of files) {
+            const filePath = path.join(basePath, file);
+            const sql = await fs.readFile(filePath, 'utf-8');
 
-        const executedQueries = [];
+            await db.query(sql);
 
-        // fake database
-        const mockDb = {
-            query: async (sql) => {
-                executedQueries.push(sql);
-            }
-        };
+            console.log(`Executed ${file}`);
+        }
 
-        // run database initialization
-        await initializeDatabase(mockDb);
-
-        // verify all files were executed
-        assert.strictEqual(
-            executedQueries.length,
-            4,
-            'All SQL schema files should execute'
-        );
-
-        // verify SQL content exists
-        assert.ok(
-            executedQueries.some(query =>
-                query.includes('CREATE TABLE')
-            ),
-            'SQL queries should contain CREATE TABLE statements'
-        );
-
-        console.log('Database initialization component test passed');
-    });
-
-    it('should throw an error if db query fails', async () => {
-
-        const mockDb = {
-            query: async () => {
-                throw new Error('Database query failed');
-            }
-        };
-
-        await assert.rejects(
-            async () => {
-                await initializeDatabase(mockDb);
-            }
-        );
-
-        console.log('Database failure handling test passed');
-    });
-
-});
+        console.log("Database initialized from SQL files");
+    } catch (err) {
+        console.error("Database initialization failed:", err);
+        throw err;
+    }
+}
