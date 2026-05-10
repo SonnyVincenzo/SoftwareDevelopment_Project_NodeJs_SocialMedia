@@ -84,7 +84,7 @@ describe('handlePostEdit', () => {
         await handler(req, res);
 
         assert.strictEqual(res.redirectedTo, '/post?id=1');
-        assert.ok(queries.some(query => query.sql.startsWith('UPDATE Posts')));
+        assert.ok(queries.some(query => query.sql.startsWith('UPDATE posts')));
     });
 
     it('should not edit someone elses post', async () => {
@@ -138,6 +138,6 @@ describe('handlePostDelete', () => {
         await handler(req, res);
 
         assert.strictEqual(res.redirectedTo, '/user/test');
-        assert.ok(queries.some(query => query.sql.startsWith('DELETE FROM Posts')));
+        assert.ok(queries.some(query => query.sql.startsWith('DELETE FROM posts')));
     })
 })
