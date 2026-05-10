@@ -21,21 +21,25 @@ export function replaceDangerousChars(value) {
  * @param {string} [tempSwitchEndpoint='user'] - Temporary endpoint switcher for depending home or user.
  * @returns 
  */
-export async function formatPostToHtml(db, posts, currUser, tempSwitchEndpoint = 'user') {
+export async function formatPostToHtml(db, posts, currUser) {
     let postHtml = "";
     
     
     for (const post of posts) {
-        const [[reactions]] = await db.execute(
+        const [rows] = await db.execute(
             `SELECT 
-             COUNT(CASE WHEN type = 'like' THEN 1 END) AS likes,
-             COUNT(CASE WHEN type = 'dislike' THEN 1 END) AS dislikes
+             SUM(type = 'like') AS likes,
+             SUM(type = 'dislike') AS dislikes
              FROM userLikesDislikes WHERE id = ?`,
             [post.id]
         );
-        
-        const likeCount = reactions.likes || 0;
-        const dislikeCount = reactions.dislikes|| 0;
+        console.log("REACTION ROWS:", rows);
+        console.log("POST ID:", post.id);
+
+        const reactions = rows?.[0] || {} ;
+
+        const likeCount = reactions.likes ?? 0;
+        const dislikeCount = reactions.dislikes ?? 0;
         
         let userReaction = "none" ;
         if (currUser) {

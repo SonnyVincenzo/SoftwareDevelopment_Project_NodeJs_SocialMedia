@@ -39,9 +39,12 @@ function createMockDb(getState){
                 return [state.posts.filter(post => post.username === username)];
             }
 
-            if(sql.includes('FROM userLikesDislikes')){
+           if(sql.includes('FROM userLikesDislikes')){
                 const postId = params[0];
                 return [state.reactionsByPostId[postId] ?? []];
+
+                const likes = reactions.filter(r => r.type ==='like').length;
+                const dislikes = reactions.filter(r => r.type ==='dislike').length;
             }
 
             return [[]];
@@ -80,10 +83,7 @@ describe('User GET component:', () => {
             ];
             dbState.reactionsByPostId = {
                 1: [
-                    {type: 'like'},
-                    {type: 'dislike'},
-                    {type: 'like'},
-                    {type: 'like'}
+                    { likes: 3, dislikes: 1}
                 ]
             };
 
