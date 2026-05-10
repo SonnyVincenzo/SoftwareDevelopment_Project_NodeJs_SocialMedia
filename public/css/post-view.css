@@ -3,15 +3,7 @@ html, body {
   margin: 0px
 }
 
-html{
-    background-color: rgb(43, 42, 43);
-    background-image: url(/public/assets/img/asfalt-light.png); /*Background Texture found online*/
-}
 
-body {
-  display: flex;
-  flex-direction: column;
-}
 main{
   flex: 1;
 }
@@ -39,11 +31,11 @@ main{
   margin: 0px;
   background-color: rgba(53, 52, 53, 0.8);
   height: 90px;
-  border-bottom: 1px rgba(125, 124, 124, 0.933) solid;
+  border-bottom: var(--header-footer-border-divider);
   justify-content: right;
-
   gap: 20px;
 }
+
 .search{
   padding-left: 20px;
   padding-right: 20px;
@@ -61,9 +53,9 @@ main{
   outline:none;
 }
 
-#standardButton{
+.standardButton{
   display: inline-block;
-  background-color: rgb(43, 42, 43);
+  background-color: var(--primary-bg-color);
   border-width: 3px;
   border-color: blueviolet;
   border-radius: 5px;
@@ -121,7 +113,7 @@ main{
   border-width: 2px;
   border-color: rgba(1, 199, 249, 1);
   border-radius: 10px;
-  background-color:rgb(43, 42, 43);
+  background-color:var(--primary-bg-color);
   width: 100%;
 }
 
@@ -142,8 +134,8 @@ main{
 .dislike,
 .like{
   display: flex ;
-  color: rgb(43, 42, 43);
-  background-color:rgb(43, 42, 43);
+  color: var(--primary-bg-color);
+  background-color:var(--primary-bg-color);
   font-size: 28px;
   border: none;
   -webkit-text-stroke: 2px blueviolet;
@@ -161,6 +153,43 @@ main{
   font-size: 14px;
   margin: 5px;
   padding-top: 5px;
+}
+
+.post-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  padding-right: 10px;
+  gap: 10px;
+}
+
+.editPost {
+  background-color: var(--primary-color);
+  border: white solid 2px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Tektur', sans-serif;
+  padding: 5px 15px;
+}
+
+.deletePost {
+  background-color: var(--primary-color);
+  border: 2px solid red;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: 'Tektur', sans-serif;
+  padding: 5px 15px;
 }
 
 .text{
@@ -183,7 +212,7 @@ main{
 
 .aButton {
     display: inline-block;
-    background-color: rgb(43, 42, 43);
+    background-color: var(--primary-bg-color);
     justify-content: center;
     border: 2px solid violet;
     border-radius: 5px;
@@ -194,6 +223,7 @@ main{
     padding: 10px 20px;
     font-weight: bold;
     margin-top: 10px;
+    margin-right: 10px;
     text-decoration: none;
     text-align: center;
 }
@@ -224,7 +254,7 @@ main{
   text-decoration: none;
   font-size: 14px;
   margin: 0px;
-  padding-top: 0px;
+  padding-top: 10px;
   padding-left: 5px;
   padding-right: 20px;
 }
@@ -247,7 +277,7 @@ main{
   margin: 0px;
   background-color: rgba(53, 52, 53, 0.8);
   height: 90px;
-  border-top: 1px rgba(125, 124, 124, 0.933) solid;
+  border-top: var(--header-footer-border-divider);
 }
 
 .github{
@@ -258,6 +288,74 @@ main{
 
 .hidden{
   display: none;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  font-family: "Tektur", sans-serif;
+}
+
+.popup:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popupContent {
+  background-color: rgb(43, 43, 43);
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  position: center;
+  color :white;
+  font-family: "Tektur", sans-serif;
+}
+
+.closeButton {
+  position: right;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  font-family: "Tektur", sans-serif;
+}
+
+.popupContent h2 {
+  font-family: "Tektur", sans-serif;
+  margin-top: 0;
+}
+
+.popupContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Tektur", sans-serif;
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  font-family: "Tektur", sans-serif;
+}
+
+.popContent input[type="text"],
+.popContent textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 #profilePanel {
@@ -273,9 +371,21 @@ main{
   border-right: 2px solid blueviolet;
 }
 
-.newpostbutton{
+footer{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  margin: 0px;
+  background-color: rgba(53, 52, 53, 0.8);
+  height: 90px;
+  border-top: 1px rgba(125, 124, 124, 0.933) solid;
+}
+
+.github{
+  color: white;
+  font-size: 16px;
+  font-family: Tektur;
 }

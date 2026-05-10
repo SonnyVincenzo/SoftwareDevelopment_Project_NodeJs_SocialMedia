@@ -1,17 +1,10 @@
-
-html{
-    background-color: rgb(43, 42, 43);
-    background-image: url("https://www.transparenttextures.com/patterns/asfalt-light.png"); /*Background Texture found online*/
-    /* May need to credit the creator - LJ 
-    org url: https://www.transparenttextures.com/patterns/asfalt-light.png
-    */
-}
 .josefin-sans-mainTextFont {
   font-family: "Josefin Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
 }
+
 .tektur-titleFont {
   font-family: "Tektur", sans-serif;
   font-optical-sizing: auto;
@@ -22,11 +15,11 @@ html{
 }
 
 .container {
-  display:flex;
+  display: flex;
   width: 30%;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(43, 42, 43);
+  background-color: var(--primary-bg-color);
   border-width: 2px;
   border-color: blueviolet;
   border-radius: 5px;
@@ -40,10 +33,10 @@ html{
 }
 
 #title {
-  font-weight: bold ;
+  font-weight: bold;
   font-size: 20px;
   font-family: Tektur;
-  
+
   margin-top: 20px;
   margin-right: 20px;
   margin-left: 20px;
@@ -53,33 +46,34 @@ html{
   padding-right: 20px;
 
 }
-#mainBody{
+
+#mainBody {
   font-size: 18px;
   font-family: Josefin Sans;
-  font-weight: bold ;
+  font-weight: bold;
   width: 300px;
   height: 100px;
-  resize:none;
-  
+  resize: none;
+
   margin-left: 20px;
   margin-top: 20px;
-  margin-right:20px;
+  margin-right: 20px;
   padding-bottom: 10px;
   padding-top: 10px;
-  padding-left:20px;
+  padding-left: 20px;
   padding-right: 20px;
 
 }
 
-#standardButton{
-  background-color: rgb(43, 42, 43);
+.standardButton {
+  background-color: var(--primary-bg-color);
   border-width: 2px;
   border-color: blueviolet;
   border-radius: 5px;
   color: white;
   cursor: pointer;
   font-family: Tektur;
-  
+
   margin-right: 10px;
   margin-top: 20px;
   padding-bottom: 10px;
@@ -89,27 +83,28 @@ html{
   font-weight: bold;
 }
 
-#standardButton:hover{
+.standardButton:hover {
   background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 200, 250, 0.8));
   background-color: white;
   border-width: 2px;
-  color:  black;
+  color: black;
   border-color: rgb(255, 255, 255);
   opacity: 0.8
 }
-.header{
+
+.header {
   display: flex;
   background: linear-gradient(to right, rgba(138, 43, 226, 0.9), rgba(1, 200, 250, 0.8));
   background-color: white;
   border-width: 3px;
   border-radius: 5px;
-  border-color: rgb(43, 42, 43) ;
+  border-color: var(--primary-bg-color);
   padding-bottom: 5px;
   padding-top: 5px;
   align-items: center;
 }
 
-.section{
+.section {
   display: flex;
   width: 94%;
   justify-content: start;
@@ -118,7 +113,7 @@ html{
 }
 
 .newPost,
-.username{
+.username {
   display: flex;
   font-weight: 600;
   font-family: Tektur;
@@ -128,6 +123,7 @@ html{
   padding-top: 0px;
   padding-left: 20px;
 }
+
 #exit {
   display: flex;
   font-weight: bold;
@@ -140,6 +136,6 @@ html{
   justify-content: end;
 }
 
-#exit:hover{
+#exit:hover {
   color: rgb(255, 255, 255);
 }

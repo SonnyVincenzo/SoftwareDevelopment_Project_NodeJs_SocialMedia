@@ -1,20 +1,3 @@
-html, body {
-  height: 100% ;
-  margin: 0px
-}
-
-html{
-    background-color: rgb(43, 42, 43);
-    background-image: url(/public/assets/img/asfalt-light.png); /*Background Texture found online*/
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-main{
-  flex: 1;
-}
 .josefin-sans-mainTextFont {
   font-family: "Josefin Sans", sans-serif;
   font-optical-sizing: auto;
@@ -31,19 +14,19 @@ main{
 }
 
 
-.topRow{
+header {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-top: 5px;
-  margin: 0px;
-  background-color: rgba(53, 52, 53, 0.8);
-  height: 90px;
-  border-bottom: 1px rgba(125, 124, 124, 0.933) solid;
-  justify-content: right;
+  background-color: var(--header-bg-color);
+  height: var(--header-height);
+  border-bottom: var(--header-footer-border-divider);
+  justify-content: flex-end;
 
-  gap: 20px;
+  gap: calc(0.625rem * 2);
 }
+
 .search{
   padding-left: 20px;
   padding-right: 20px;
@@ -61,45 +44,16 @@ main{
   outline:none;
 }
 
-#standardButton{
-  display: inline-block;
-  background-color: rgb(43, 42, 43);
-  border-width: 3px;
-  border-color: blueviolet;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-family: Tektur;
-  font-size: 18px;
-  
-  /* margin-right: 20px;
-  margin-left: 110px; */
-  margin-top: 0px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  font-weight: bold;
-}
-  
-.standardButton:hover{
-  background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 199, 249, 0.8));
-  background-color: white;
-  border-width: 3px;
-  color:  black;
-  border-color: rgb(255, 255, 255);
-  opacity: 0.8
-}
 
 .profile{
-  display: inline-block;
-  background: radial-gradient(circle, rgba(1, 200, 250, 0.8), rgba(138, 43, 226, 0.8));
-  background-color: white;
-  border-radius: 25px;
   margin: 10px;
   margin-left: 0px;
   width: 80px;
   height: 80px;
+}
+
+main {
+  padding: calc(0.625rem * 2) 0;
 }
 .post-board{
   display: flex;
@@ -120,7 +74,7 @@ main{
   border-width: 2px;
   border-color: rgba(1, 199, 249, 1);
   border-radius: 10px;
-  background-color:rgb(43, 42, 43);
+  background-color:var(--primary-bg-color);
   width: 100%;
 }
 
@@ -141,8 +95,8 @@ main{
 .dislike,
 .like{
   display: flex ;
-  color: rgb(43, 42, 43);
-  background-color:rgb(43, 42, 43);
+  color: var(--primary-bg-color);
+  background-color:var(--primary-bg-color);
   font-size: 28px;
   border: none;
   -webkit-text-stroke: 2px blueviolet;
@@ -218,7 +172,7 @@ main{
   text-decoration: none;
 }
 
-.footer{
+footer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -226,9 +180,9 @@ main{
   padding-top: 5px;
   padding-bottom: 20px;
   margin: 0px;
-  background-color: rgba(53, 52, 53, 0.8);
+  background-color: var(--footer-bg-color);
   height: 90px;
-  border-top: 1px rgba(125, 124, 124, 0.933) solid;
+  border-top: var(--header-footer-border-divider);
 }
 
 .github{

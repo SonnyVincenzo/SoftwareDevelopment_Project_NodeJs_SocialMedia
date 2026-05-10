@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Taken from Google Fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/public/css/post.css">
-  <script defer src="/public/js/post.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- Taken from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Tektur:wght@400..900&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/post.css">
+    <script defer src="/public/js/post.js"></script>
     <title>NewPost</title>
 </head>
 
 <body>
-  <header class="header">
-    <section class="section">
-      <h1 class="newPost">New Post </h1>
-      <p class="username">Username</p>
-    </section>
-    <form action="/home">
-      <button id="exit" > 
-        &#10006;
-      </button>
-    </form>
-  </header>
-  <form class="container" method="post" action="/post">
-    <input id="title" type="text" spellcheck="true" maxlength="80"
-    placeholder="Post - Title" name="postHeader">
-    <textarea
-      id="mainBody" type="text" spellcheck="true" name="postText" 
-      placeholder="Post - Text" maxlength="500"></textarea> 
-    <button type="submit" id="standardButton">Share</button>
-  </form>
+    <header class="header">
+        <section class="section">
+            <h1 class="newPost">New Post </h1>
+            <p class="username">Username</p>
+        </section>
+        <form action="/home">
+            <button id="exit">
+                &#10006;
+            </button>
+        </form>
+    </header>
+
+    <main>
+        <form class="container" method="post" action="/post">
+            <input id="title" type="text" spellcheck="true" maxlength="80" placeholder="Post - Title" name="postHeader">
+            <textarea id="mainBody" type="text" spellcheck="true" name="postText" placeholder="Post - Text"
+                maxlength="500"></textarea>
+            <button type="submit" id="standardButton">Share</button>
+        </form>
+    </main>
 </body>
+
 </html>

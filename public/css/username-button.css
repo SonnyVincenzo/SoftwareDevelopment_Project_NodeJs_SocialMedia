@@ -1,0 +1,29 @@
+
+.username-button{
+  display: inline-block;
+  background-color: rgb(43, 42, 43);
+  border-width: 3px;
+  border-color: blueviolet;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-family: Tektur;
+  font-size: 18px;
+
+  margin-top: 0px;
+  padding: 0.625rem calc(0.625rem * 2);
+  font-weight: bold;
+}
+
+.username-button.solo {
+  margin-right: 2rem;
+}
+  
+.username-button:hover{
+  background: linear-gradient(to right, rgba(138, 43, 226, 0.8), rgba(1, 199, 249, 0.8));
+  background-color: white;
+  border-width: 3px;
+  color:  black;
+  border-color: rgb(255, 255, 255);
+  opacity: 0.8
+}

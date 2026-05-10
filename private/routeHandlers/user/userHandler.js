@@ -1,6 +1,7 @@
 import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
-import { replaceDangerousChars, formatPostToHtml } from '../../methods/post/postMethods.js';
+import { formatPostToHtml } from '../../methods/post/postMethods.js';
+import { replaceDangerousChars } from '../../methods/utilsMethods.js';
 
 
 /**

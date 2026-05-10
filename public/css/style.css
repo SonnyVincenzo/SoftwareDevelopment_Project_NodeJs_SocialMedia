@@ -1,2 +1,54 @@
+:root {
+    --secondary-color: rgb(138, 43, 226);
+    --accent-color: rgb(1, 200, 250);
 
-/*Could and should use :root*/
+    --primary-bg-color: rgb(43, 42, 43);
+
+
+    --header-height: calc(0.625rem*9);
+    --header-bg-color: rgba(53, 52, 53, 0.8);
+    --footer-bg-color: rgba(53, 52, 53, 0.8);
+    --header-footer-border-divider: 1px rgba(125, 124, 124, 0.933) solid;
+}
+
+body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--header-height) 1fr auto;
+    grid-template-areas: 
+        "a-header"
+        "a-main"
+        "a-footer"
+    ;
+    background-image: url(/public/assets/img/asfalt-light.png); /*Background Texture found online*/
+    /* May need to credit the creator - LJ 
+    org url: https://www.transparenttextures.com/patterns/asfalt-light.png
+    */
+    background-color: var(--primary-bg-color);
+    font-family: 'Tektur', sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    grid-area: a-header;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-bg-color);
+    border-bottom: 1px solid var(--secondary-color);
+    height: var(--header-height);
+}
+main {
+    grid-area: a-main;
+}
+footer {
+    grid-area: a-footer;
+}
+
+.profile {
+    display: inline-block;
+    background: radial-gradient(circle, rgba(1, 200, 250, 0.8), rgba(138, 43, 226, 0.8));
+    background-color: white;
+    border-radius: 25px;
+}
