@@ -37,7 +37,7 @@ describe('initializeDatabase component test', () => {
         console.log('Database initialization component test passed');
     });
 
-    it('should throw an error if db query fails', async () => {
+    it('should load and execute all SQL files', async () => {
 
         const mockDb = {
             query: async () => {
