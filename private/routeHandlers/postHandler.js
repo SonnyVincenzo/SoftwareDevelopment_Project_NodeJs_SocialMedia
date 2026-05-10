@@ -57,6 +57,70 @@ export function isValidComment(commentText) {
     return true;
 }
 
+/** Get logged in html for template: post actions & forms.
+ * 
+ * @param {string} loggedInUser 
+ * @param {string} postUser 
+ * @returns Array of three elements: postActionsHtml, editFormHtml, deleteFormHtml.
+ */
+function getLoggedInHtml(loggedInUser, postUser) {
+    let postActionsHtml = loggedInUser !== postUser ? ''
+        : `
+            <div class="post-actions">
+                <a href="#editPopup" class="aButton">Edit &#9998;</a>
+
+                <a href="#deletePopup" class="aButton">Delete &#10006;</a>
+            </div>
+            `
+    ;
+
+    let editFormHtml = loggedInUser !== postUser ? ''
+        : `
+            <div id="editPopup" class="popup">
+                <div class="popupContent">
+                    <h2>Edit Post</h2>
+                    <form action="/post" method="POST">
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="postId" value="%%postId%%">
+                                    
+                        <label for="postHeader">New Title:</label>
+                        <input type="text" id="editTitle" name="postHeader" required>
+                                    
+                        <label for="postText">New Content:</label>
+                        <textarea id="editContent" name="postText" required></textarea>
+                                    
+                        <div class="popupButtons">
+                            <button type="submit" class="aButton">Submit</button>
+                            <a href="#" class="aButton">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `
+    ;
+
+    let deleteFormHtml = loggedInUser !== postUser ? ''
+        : `
+            <div id="deletePopup" class="popup">
+                <div class="popupContent">
+                    <h2>Delete Post</h2>
+                    <form action="/post" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="postId" value="%%postId%%">
+                        <span>Are you sure you want to delete this post?</span>
+                        <div class="popupButtons">
+                            <button type="submit" class="aButton">Submit</button>
+                            <a href="#" class="aButton">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `
+    ;
+
+    return [postActionsHtml, editFormHtml, deleteFormHtml];
+}
+
 /**
  * Creates Post handler for GET.
  * Wrapper function to enable db content handling.
@@ -76,6 +140,7 @@ export function createPostGetHandler(db) {
     return async function handlePostGet(req, res) {
         try {
             const postId = req.query.id;
+            let loggedInUser = req.session.userId;
 
             if (postId) {
                 const [rows] = await db.query(
@@ -104,12 +169,18 @@ export function createPostGetHandler(db) {
 
                 let template = await loadHtml("post-view.html");
 
+                let postUser = post.username;
+                let [postActionHtml, editFormHtml, deleteFormHtml] = getLoggedInHtml(loggedInUser, postUser)
+
                 template = template
                     .replaceAll("%%title%%", replaceDangerousChars(post.postHeader))
                     .replaceAll("%%content%%", replaceDangerousChars(post.postText))
                     .replaceAll("%%date%%", new Date(post.postDate).toLocaleDateString())
-                    .replaceAll("%%username%%", replaceDangerousChars(post.username))
-                    .replaceAll("%%usernameButton%%", templateLoggedInUser(req.session.userId))
+                    .replaceAll("%%username%%", replaceDangerousChars(postUser))
+                    .replaceAll("%%usernameButton%%", templateLoggedInUser(loggedInUser))
+                    .replaceAll('%%postActions%%', postActionHtml)
+                    .replaceAll('%%editPopup%%', editFormHtml)
+                    .replaceAll('%%deletePopup%%', deleteFormHtml)
                     .replaceAll("%%likes%%", String(likes))
                     .replaceAll("%%dislikes%%", String(dislikes))
                     .replaceAll("%%posts%%", "")
