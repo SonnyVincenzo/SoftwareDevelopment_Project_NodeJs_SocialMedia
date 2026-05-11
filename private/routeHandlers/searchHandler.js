@@ -31,7 +31,7 @@ export default function createSearchHandler(db) {
 
             //search post 
             const [posts] = await db.execute(
-                `SELECT id, postHeader FROM Posts
+                `SELECT * FROM Posts
                 WHERE postHeader LIKE ? OR postText LIKE ? LIMIT 10`,
                 [`%${query}%`, `%${query}%`]
             );
@@ -40,7 +40,7 @@ export default function createSearchHandler(db) {
             let resultsHTML = '';
 
             if(posts.length === 0) {
-                resultsHTML = "<p>No result found.</p>";
+                resultsHTML = "<p class=title >No result matches your search.</p>";
             }
             else {
                 resultsHTML = await formatPostToHtml(db, posts, null);
