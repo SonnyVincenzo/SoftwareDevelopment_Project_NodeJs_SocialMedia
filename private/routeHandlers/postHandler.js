@@ -183,6 +183,7 @@ export function createPostGetHandler(db) {
                 if (!loggedInUser) {
                     template = template.replace('%%loginPopup%%', templateUnloggedUser());
                 }
+                template = template.replace('%%loginPopup%%', '');
 
                 let postUser = post.username;
                 let [postActionHtml, editFormHtml, deleteFormHtml] = getLoggedInHtml(loggedInUser, postUser)
@@ -208,7 +209,8 @@ export function createPostGetHandler(db) {
             let template = await loadHtml('post.html');
             if (!loggedInUser) {
                 template = template.replace('%%loginPopup%%', templateUnloggedUser());
-            } 
+            }
+            template = template.replace('%%loginPopup%%', '');
             
             template = template.replace('%%username%%', loggedInUser || 'Not Logged In');
             return sendWebResponse(res, 200, 'text/html', template);

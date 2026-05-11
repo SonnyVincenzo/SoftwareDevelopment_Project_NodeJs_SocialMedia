@@ -31,6 +31,7 @@ export function createHomeGetHandler(db) {
             if (!isLoggedIn) {
                 template = template.replace('%%loginPopup%%', templateUnloggedUser());
             }
+            template = template.replace('%%loginPopup%%', '');
 
             template = template
                 .replace("%%posts%%", postHtml)
