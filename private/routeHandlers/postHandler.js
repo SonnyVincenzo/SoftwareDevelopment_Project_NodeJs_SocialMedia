@@ -3,7 +3,13 @@ import { loadHtml, templateLoggedInUser, templateUnloggedUser } from "../methods
 import { replaceDangerousChars } from "../methods/utilsMethods.js";
 
 
-//gets the post id from the database and returns it
+/** 
+ * gets the post id from route parameters, form body or query string
+ * 
+ * @param {import('express').Request} req - requests object that contains post id
+ * @returns {number | null } 
+ * 
+*/
 function getPostId(req) {
     const plainPostId = req.params?.id ?? req.body?.postId ?? req.body?.id ?? req.query?.id;
     const postId = Number(plainPostId);
@@ -15,7 +21,13 @@ function getPostId(req) {
     return postId;
 }
 
-//Post input validation so it fits the wanted requirements
+/**
+ * Post input validation so it fits the wanted requirements
+ * 
+ * @param {{postHeader?: unknown, postText?: unknown} | undefined} body - form body from request
+ * @returns {{postHeader: string, postText: string} | {error: string}} - clean post input
+ * 
+ * */
 function validatePostInput(body) {
     const plainHeader = body?.postHeader;
     const plainText = body?.postText;
@@ -257,7 +269,14 @@ export function createPostPostHandler(db) {
     }
 }
 
-//edit handler
+/**
+ * 
+ * creates edit handler for existing posts
+ * 
+ * @param {import('mysql2').Connection} db - database connection so you can edit posts
+ * @returns {(req: import('express').Request, res: import('express').Response) => Promise<void>} - express request handler
+ * 
+*/
 export async function createPostEditHandler(db, req, res) {
     try {
         if (!req.session || !req.session.userId) {
@@ -298,7 +317,13 @@ export async function createPostEditHandler(db, req, res) {
     }
 }
 
-//delete handler
+/**
+ * creates delete handler for existing posts
+ *  
+ * @param {import('mysql2').Connection} db - database connection so you can delete posts
+ * @returns {(req: import('express').Request, res: import('express').Response) => Promise<void>} - express request handler
+ * 
+*/
 export async function createPostDeleteHandler(db, req, res) {
     try {
         if (!req.session || !req.session.userId) {
