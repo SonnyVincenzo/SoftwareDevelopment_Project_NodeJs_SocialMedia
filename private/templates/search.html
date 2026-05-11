@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
-        <meta charset ="UTF-8">
-        <title>Search Results</title> 
+        <link rel="preconnect" href="https://fonts.googleapis.com"> <!--Font From Google Fonts-->
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+            rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/public/css/style.css">
+        <link rel="stylesheet" href="/public/css/home.css">
+        <link rel="stylesheet" href="/public/css/username-button.css">
+        <script defer type="module" src="/public/js/like.js"></script>
+        <title>SearchResults</title>
     </head>
-    <body>
-        <h2>Search Results</h2>
-        %%searchResult%%
+
+    <body>  
+        
+        <header>
+            <h2 class="title">Search Results</h2>
+            %%usernameButton%%
+        </header>
+        
+            <main>
+                <div class="post-board">
+                    %%searchResult%% 
+                </div>
+                
+            </main>
+        
+        <footer>
+            <div class="footer-container">
+                <h2 class="title">
+                    Contact
+                </h2>
+                <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
+                    Github
+                </a>
+            </div>
+            <div class="footer-container">
+                <h2 class="title">Easter Egg</h2>
+                <a class="github" href="/post-feed">
+                    Post-feed
+                </a>
+            </div>
+        </footer>
     </body>
 </html>

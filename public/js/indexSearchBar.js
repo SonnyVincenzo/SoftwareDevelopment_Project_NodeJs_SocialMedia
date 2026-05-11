@@ -1,5 +1,6 @@
 
 function clearInput() {
-    const search = document.getElementById("searchInput");
+    const search = document.querySelector("input.searchBarInput");
     search.value = "";
+    console.log(search);
 }
