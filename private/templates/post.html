@@ -12,14 +12,17 @@
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/post.css">
     <script defer src="/public/js/post.js"></script>
+    <script defer src="/public/js/loginPopup.js"></script>
     <title>NewPost</title>
 </head>
 
 <body>
+    %%loginPopup%%
+
     <header class="header">
         <section class="section">
             <h1 class="newPost">New Post </h1>
-            <p class="username">Username</p>
+            <p class="username">%%username%%</p>
         </section>
         <form action="/home">
             <button id="exit">

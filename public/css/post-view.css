@@ -210,29 +210,6 @@ main{
     border-bottom: 1px solid var(--secondary-color);
 }
 
-.aButton {
-    display: inline-block;
-    background-color: var(--primary-bg-color);
-    justify-content: center;
-    border: 2px solid violet;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    font-family: 'Tektur', sans-serif;
-    font-size: 18px;
-    padding: 10px 20px;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-right: 10px;
-    text-decoration: none;
-    text-align: center;
-}
-
-.aButton:hover {
-    background: linear-gradient(to right, var(--secondary-color), rgba(1, 199, 249, 0.8));
-    color: black;
-    border-color: white;
-}
 
 .newPost {
   display: flex;
