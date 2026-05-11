@@ -33,25 +33,29 @@ describe('initializeDatabase component test', () => {
             ),
             'SQL queries should contain CREATE TABLE statements'
         );
-
-        console.log('Database initialization component test passed');
     });
 
     it('should load and execute all SQL files', async () => {
 
-        const mockDb = {
-            query: async () => {
-                throw new Error('Database query failed');
-            }
-        };
+        const originalError = console.error;
+        console.error = () => { };
 
-        await assert.rejects(
-            async () => {
-                await initializeDatabase(mockDb);
-            }
-        );
+        try {
+            const mockDb = {
+                query: async () => {
+                    throw new Error('Database query failed');
+                }
+            };
 
-        console.log('Database failure handling test passed');
+            await assert.rejects(
+                async () => {
+                    await initializeDatabase(mockDb);
+                }
+            );
+        } finally {
+            console.error = originalError;
+        }
+
     });
 
 });
