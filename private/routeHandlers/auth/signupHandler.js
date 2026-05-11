@@ -42,7 +42,7 @@ export function createSignupPostHandler(db) {
 
             // check if user already exists
             let result = await db.execute(
-                'SELECT username FROM `User` WHERE username = ?',
+                'SELECT username FROM `users` WHERE username = ?',
                 [username]
             );
             if (result[0].length >= 1) {
@@ -53,7 +53,7 @@ export function createSignupPostHandler(db) {
             const saltRounds = parseInt(process.env.SALT_ROUNDS, 10) || 10;
             const hash = await bcrypt.hash(password, saltRounds);
             let insertRes = await db.execute(
-                'INSERT INTO User (username, password, joinDate) VALUES (?, ?, NOW())',
+                'INSERT INTO users (username, password, joinDate) VALUES (?, ?, NOW())',
                 [username, hash]
             );
 

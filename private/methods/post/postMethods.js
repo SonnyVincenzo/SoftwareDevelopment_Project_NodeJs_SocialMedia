@@ -30,7 +30,7 @@ export async function formatPostToHtml(db, posts, currUser) {
             `SELECT 
              SUM(type = 'like') AS likes,
              SUM(type = 'dislike') AS dislikes
-             FROM userLikesDislikes WHERE id = ?`,
+             FROM user_likes_dislikes WHERE id = ?`,
             [post.id]
         );
 
@@ -42,7 +42,7 @@ export async function formatPostToHtml(db, posts, currUser) {
         let userReaction = "none" ;
         if (currUser) {
             const [userReactions] = await db.execute(
-                "SELECT type FROM userLikesDislikes WHERE id = ? AND username = ?",
+                "SELECT type FROM user_likes_dislikes WHERE id = ? AND username = ?",
                 [post.id, currUser]
             );
             userReaction = userReactions.length > 0 ? userReactions[0].type : "none" ;
