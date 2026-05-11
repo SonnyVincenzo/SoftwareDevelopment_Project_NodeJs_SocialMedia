@@ -5,5 +5,5 @@ SELECT  `id`,
         `postHeader`,
         `postText`,
         `postDate`
-FROM `Posts`
+FROM `posts`
 WHERE `username` = @queryName ;

@@ -20,7 +20,7 @@ export default function createSearchHandler(db) {
             let users = [];
             if(query.trim() !== "") {
                 [users] = await db.execute(
-                    "SELECT username FROM User WHERE username = ?",
+                    "SELECT username FROM users WHERE username = ?",
                     [query]
                 );
 

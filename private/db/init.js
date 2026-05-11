@@ -5,7 +5,7 @@ export default async function initializeDatabase(db) {
     try {
         const basePath = path.resolve('private/db/sql');
 
-        // Order matters, cuz of FKs
+        // SQL exec order matters because of FK constraints
         const files = [
             'table.user.sql',
             'table.posts.sql',
@@ -24,7 +24,7 @@ export default async function initializeDatabase(db) {
 
         console.log("Database initialized from SQL files");
     } catch (err) {
-        console.error("Database initilization failed:", err);
+        console.error("Database initialization failed:", err);
         throw err;
     }
 }

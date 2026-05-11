@@ -52,3 +52,84 @@ footer {
     background-color: white;
     border-radius: 25px;
 }
+
+
+.aButton {
+    display: inline-block;
+    background-color: var(--primary-bg-color);
+    justify-content: center;
+    border: 2px solid violet;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Tektur', sans-serif;
+    font-size: 18px;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-right: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.aButton:hover {
+    background: linear-gradient(to right, var(--secondary-color), rgba(1, 199, 249, 0.8));
+    color: black;
+    border-color: white;
+}
+
+
+#login-popup {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.4);
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    z-index: 1000;
+}
+
+#login-popup>section {
+    height: 20rem;
+    width: 40rem;
+    background-color: var(--primary-bg-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 0.625rem;
+    color: lightgray;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+#login-popup>section>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 1rem;
+}
+
+
+#login-popup>section>h2,
+#login-popup>section>nav>a {
+    color: white;
+}
+
+
+#login-popup>section>nav {
+    display: flex;
+    gap: 1rem;
+}
+
+#login-popup>section>nav>a {
+    font-size: 1.2rem;
+}
+
+#login-popup>section>nav>a:hover {
+    color: var(--accent-color);
+}
