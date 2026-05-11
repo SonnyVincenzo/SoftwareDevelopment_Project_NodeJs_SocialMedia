@@ -349,7 +349,6 @@ export async function createPostDeleteHandler(db, req, res) {
 
         //Delete child table rows first so that foreign keys don't screw up the entire deletion
         await db.query("DELETE FROM user_likes_dislikes WHERE id = ?", [postId]);
-        await db.query("DELETE FROM comments WHERE postId = ?", [postId]);
         await db.query("DELETE FROM posts WHERE id = ? AND username = ?", [postId, username]);
 
         return res.redirect(`/user/${encodeURIComponent(username)}`);
@@ -357,34 +356,5 @@ export async function createPostDeleteHandler(db, req, res) {
     catch (error) {
         console.error('Post DELETE error:', error);
         return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
-    }
-}
-
-// Questioning use, may be best as a seperate function inside /methods. - LJ.
-export function createCommentPostHandler(db) {
-    return async function handleCommentPost(req, res) {
-        try {
-            const { postId, commentText } = req.body;
-
-            if (!isValidComment(commentText)) {
-                return sendWebResponse(res, 400, 'text/plain', 'Invalid comment');
-            }
-
-            db.query(
-                "INSERT INTO comments (postId, content) VALUES (?, ?)",
-                [postId, commentText],
-                (err) => {
-                    if (err) {
-                        console.error('Comment POST error:', err);
-                        return sendWebResponse(res, 500, 'text/plain', 'Database error');
-                    }
-
-                    res.redirect(`/post?id=${postId}`);
-                }
-            );
-        } catch (error) {
-            console.error('Comment POST error:', error);
-            sendWebResponse(res, 500, 'text/plain', 'Server error');
-        }
     }
 }

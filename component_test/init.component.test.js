@@ -22,7 +22,7 @@ describe('initializeDatabase component test', () => {
         // verify all SQL files were executed
         assert.strictEqual(
             executedQueries.length,
-            4,
+            3,
             'All SQL schema files should execute'
         );
 

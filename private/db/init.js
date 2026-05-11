@@ -9,7 +9,6 @@ export default async function initializeDatabase(db) {
         const files = [
             'table.user.sql',
             'table.posts.sql',
-            'table.comments.sql',
             'table.likesDislikes.sql'
         ];
 

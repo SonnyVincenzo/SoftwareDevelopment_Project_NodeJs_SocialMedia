@@ -6,16 +6,7 @@ const t_x = 234 + 100 * Math.random();
 const t_y = 6754 + 100 * Math.random();
 const t_z = 854 + 100 * Math.random();
 const t_w = 112 + 100 * Math.random();
-/*
-describe("what", ()=>{
-    it("should",()=>{
-        assert.strictEqual(1, 1);
-    });
-    it("should",()=>{
-        assert.strictEqual(2, 2);
-    });
-});
-*/
+
 describe("Vec2", () => {
     const v1 = new Vec2(t_x, t_y);
     const v2 = new Vec2(t_z, t_w);

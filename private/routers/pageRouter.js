@@ -5,8 +5,7 @@ import express from 'express';
 import { handleIndexGet } from '../routeHandlers/indexHandler.js';
 import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
 import { createHomeGetHandler } from '../routeHandlers/homeHandler.js';
-import { createCommentPostHandler, 
-        createPostGetHandler, 
+import { createPostGetHandler, 
         createPostPostHandler,
         createPostEditHandler,
         createPostDeleteHandler} from '../routeHandlers/postHandler.js';
@@ -27,7 +26,6 @@ export default function createPageRouter(db) {
     router.get('/search', createSearchHandler(db));
 
     router.post('/post', createPostPostHandler(db));
-    router.post('/comment', createCommentPostHandler(db));
     router.post('/reactions',reactions(db));
 
     return router;
