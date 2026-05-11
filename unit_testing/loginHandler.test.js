@@ -19,7 +19,7 @@ describe('routeHandler: loginHandler.js:', () => {
         mockDb = {
             end: () => Promise.resolve(),
             execute: (query, params) => {
-                if (query === 'SELECT username, password FROM User WHERE username = ?') {
+                if (query === 'SELECT username, password FROM users WHERE username = ?') {
                     if (params[0] === '123') {
                         return Promise.resolve([[{ username: '123', password: passHash }]]);
                     }

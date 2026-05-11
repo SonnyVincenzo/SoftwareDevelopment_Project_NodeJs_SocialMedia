@@ -12,7 +12,7 @@ export async function formatPostToHtml(db, posts, tempSwitchEndpoint = 'user') {
 
     for (const post of posts) {
         const [rows] = await db.execute(
-            "SELECT type FROM userLikesDislikes WHERE id = ?",
+            "SELECT type FROM user_likes_dislikes WHERE id = ?",
             [post.id]
         );
         const likeCount = rows.filter(res => res.type === "like").length || 0;

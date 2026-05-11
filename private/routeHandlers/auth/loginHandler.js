@@ -59,7 +59,7 @@ export function createLoginPostHandler(db) {
 
         try {
             const [rows] = await db.execute(
-                'SELECT username, password FROM User WHERE username = ?',
+                'SELECT username, password FROM users WHERE username = ?',
                 [username]
             );
 

@@ -143,7 +143,7 @@ export function createPostGetHandler(db) {
 
             if (postId) {
                 const [rows] = await db.query(
-                    "SELECT * FROM Posts WHERE id = ?",
+                    "SELECT * FROM posts WHERE id = ?",
                     [postId]
                 );
 
@@ -157,7 +157,7 @@ export function createPostGetHandler(db) {
                     `SELECT 
                         SUM(CASE WHEN type = 'like' THEN 1 ELSE 0 END) AS likes,
                         SUM(CASE WHEN type = 'dislike' THEN 1 ELSE 0 END) AS dislikes
-                        FROM userLikesDislikes
+                        FROM user_likes_dislikes
                         WHERE id = ? 
                      `,
                     [post.id]
@@ -236,7 +236,7 @@ export function createPostPostHandler(db) {
             }
 
             const [result] = await db.query(
-                `INSERT INTO Posts (username, postHeader, postText, postDate) VALUES (?,?,?,NOW())`,
+                `INSERT INTO posts (username, postHeader, postText, postDate) VALUES (?,?,?,NOW())`,
                 [username, validation.postHeader, validation.postText],
             );
             return res.redirect(`/post?id=${result.insertId}`);
@@ -267,7 +267,7 @@ export async function createPostEditHandler(db, req, res) {
             return sendWebResponse(res, 400, "text/plain", validation.error);
         }
 
-        const [posts] = await db.query("SELECT username FROM Posts WHERE id = ?", [postId]);
+        const [posts] = await db.query("SELECT username FROM posts WHERE id = ?", [postId]);
 
         if (!posts || posts.length === 0) {
             return sendWebResponse(res, 404, "text/plain", "post not found");
@@ -277,7 +277,7 @@ export async function createPostEditHandler(db, req, res) {
             return sendWebResponse(res, 403, "text/plain", "you can only edit your own posts");
         }
 
-        await db.query("UPDATE Posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?",
+        await db.query("UPDATE posts SET postHeader = ?, postText = ? WHERE id = ? AND username = ?",
             [validation.postHeader, validation.postText, postId, username]
         );
 
@@ -303,7 +303,7 @@ export async function createPostDeleteHandler(db, req, res) {
             return sendWebResponse(res, 400, "text/plain", "valid postid is required");
         }
 
-        const [posts] = await db.query("SELECT username FROM Posts WHERE id = ?", [postId]);
+        const [posts] = await db.query("SELECT username FROM posts WHERE id = ?", [postId]);
 
         if (!posts || posts.length === 0) {
             return sendWebResponse(res, 404, "text/plain", "post not found");
@@ -314,9 +314,9 @@ export async function createPostDeleteHandler(db, req, res) {
         }
 
         //Delete child table rows first so that foreign keys don't screw up the entire deletion
-        await db.query("DELETE FROM userLikesDislikes WHERE id = ?", [postId]);
-        await db.query("DELETE FROM Comments WHERE postId = ?", [postId]);
-        await db.query("DELETE FROM Posts WHERE id = ? AND username = ?", [postId, username]);
+        await db.query("DELETE FROM user_likes_dislikes WHERE id = ?", [postId]);
+        await db.query("DELETE FROM comments WHERE postId = ?", [postId]);
+        await db.query("DELETE FROM posts WHERE id = ? AND username = ?", [postId, username]);
 
         return res.redirect(`/user/${encodeURIComponent(username)}`);
     }
@@ -337,7 +337,7 @@ export function createCommentPostHandler(db) {
             }
 
             db.query(
-                "INSERT INTO comments (post_id, content) VALUES (?, ?)",
+                "INSERT INTO comments (postId, content) VALUES (?, ?)",
                 [postId, commentText],
                 (err) => {
                     if (err) {

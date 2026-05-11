@@ -19,7 +19,7 @@ export default function createSearchHandler(db) {
             let users = [];
             if(query.trim() !== "") {
                 [users] = await db.execute(
-                    "SELECT username FROM User WHERE username = ?",
+                    "SELECT username FROM users WHERE username = ?",
                     [query]
                 );
 
@@ -30,7 +30,7 @@ export default function createSearchHandler(db) {
 
             //search post 
             const [posts] = await db.execute(
-                `SELECT id, postHeader FROM Posts
+                `SELECT id, postHeader FROM posts
                 WHERE postHeader LIKE ? OR postText LIKE ? LIMIT 10`,
                 [`%${query}%`, `%${query}%`]
             );

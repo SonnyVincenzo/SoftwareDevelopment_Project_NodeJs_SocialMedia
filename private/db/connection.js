@@ -19,5 +19,6 @@ await db.changeUser({
     database: process.env.DB_NAME
 });
 
+console.log('Database checked/created successfully');
 console.log(`Connected to MySQL database: "${process.env.DB_NAME}".`);
 export default db;

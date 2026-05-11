@@ -21,13 +21,13 @@ describe('createUserGetHandler', () => {
     
         const mock_db = {
             execute: async (sql, params) => {
-                if(sql.includes('FROM User WHERE username = ?')){
+                if(sql.includes('FROM users WHERE username = ?')){
                     return [[
                         {username: 'unitTest_user', joinDate: '2026-01-01 13:37:00'}
                     ]];
                 }
                 
-                if(sql.includes('FROM Posts')){
+                if(sql.includes('FROM posts')){
                     return [[
                         {
                             id: 1,
