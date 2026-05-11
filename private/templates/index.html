@@ -25,11 +25,12 @@
     <main>
         <section class="searchBar">
             <p class="searchText">Search |</p>
-            <form method="GET" action="/search">
-                <input id="searchInput" name="q" type="text" spellcheck="true" maxlength="80"
+            <form class="searchBarForms" method="GET" action="/search">
+                <input class="searchBarInput" name="q" type="text" spellcheck="true" maxlength="80"
                     placeholder="Posts, Username">
-                <span class="clearButton" onclick="clearInput()"></span>
+                
             </form>
+            <span class="icon" onclick="clearInput()"></span>
         </section>
         <div id="user-options">
             <a class="text" href="/auth/login">Login</a>
@@ -42,18 +43,10 @@
     </main>
 
     <footer>
-        <div class="footer-container">
-            <h2 class="footerTitle">Contact</h2>
-            <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
-                Github
-            </a>
-        </div>
-        <div class="footer-container">
-            <h2 class="footerTitle">Easter Egg</h2>
-            <a class="github" href="/post-feed">
-                post-feed
-            </a>
-        </div>
+        <h2 class="footerTitle">Contact</h2>
+        <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
+            Github
+        </a>
     </footer>
 
 </body>
