@@ -1,5 +1,5 @@
 import { sendWebResponse } from "../methods/responseMethods.js";
-import { loadHtml, templateLoggedInUser } from "../methods/utilsMethods.js";
+import { loadHtml, templateLoggedInUser, templateUnloggedUser } from "../methods/utilsMethods.js";
 import { replaceDangerousChars } from "../methods/utilsMethods.js";
 
 
@@ -71,7 +71,7 @@ function getLoggedInHtml(loggedInUser, postUser) {
                 <a href="#deletePopup" class="aButton">Delete &#10006;</a>
             </div>
             `
-    ;
+        ;
 
     let editFormHtml = loggedInUser !== postUser ? ''
         : `
@@ -96,7 +96,7 @@ function getLoggedInHtml(loggedInUser, postUser) {
                 </div>
             </div>
         `
-    ;
+        ;
 
     let deleteFormHtml = loggedInUser !== postUser ? ''
         : `
@@ -115,7 +115,7 @@ function getLoggedInHtml(loggedInUser, postUser) {
                 </div>
             </div>
         `
-    ;
+        ;
 
     return [postActionsHtml, editFormHtml, deleteFormHtml];
 }
@@ -168,6 +168,10 @@ export function createPostGetHandler(db) {
 
                 let template = await loadHtml("post-view.html");
 
+                if (!loggedInUser) {
+                    template = template.replace('%%loginPopup%%', templateUnloggedUser());
+                }
+
                 let postUser = post.username;
                 let [postActionHtml, editFormHtml, deleteFormHtml] = getLoggedInHtml(loggedInUser, postUser)
 
@@ -189,7 +193,12 @@ export function createPostGetHandler(db) {
                 return sendWebResponse(res, 200, 'text/html', template);
             }
 
-            const template = await loadHtml('post.html');
+            let template = await loadHtml('post.html');
+            if (!loggedInUser) {
+                template = template.replace('%%loginPopup%%', templateUnloggedUser());
+            } 
+            
+            template = template.replace('%%username%%', loggedInUser || 'Not Logged In');
             return sendWebResponse(res, 200, 'text/html', template);
         } catch (error) {
             console.error('Post GET error:', error);

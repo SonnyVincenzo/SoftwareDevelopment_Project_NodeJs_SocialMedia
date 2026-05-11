@@ -44,3 +44,25 @@ export function templateLoggedInUser(username) {
 
     return html;
 }
+
+/** Helper function to enfore a login popup prompt.
+ * 
+ * @returns 
+ */
+export function templateUnloggedUser() {
+    let html = '';
+    html = `
+        <dialogue id="login-popup">
+            <section>
+                <h2>You need to be logged in!</h2>
+                <span>To do additional actions.</span>
+                <nav>
+                    <a href="/auth/login">Login</a>
+                    <a href="/auth/signup">Sign up</a>
+                </nav>
+            </section>
+        </dialogue>
+        `
+    ;
+    return html;
+}

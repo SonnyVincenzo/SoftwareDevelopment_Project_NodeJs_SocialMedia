@@ -1,5 +1,5 @@
 import { sendWebResponse } from '../methods/responseMethods.js';
-import { loadHtml, templateLoggedInUser } from '../methods/utilsMethods.js';
+import { loadHtml, templateLoggedInUser, templateUnloggedUser } from '../methods/utilsMethods.js';
 import { formatPostToHtml } from '../methods/post/postMethods.js';
 
 /**
@@ -20,11 +20,18 @@ export function createHomeGetHandler(db) {
      */
     return async function handleHomeGet(req, res) {
         try {
+
             let template = await loadHtml('home.html');
             let posts = await db.execute(
                 `SELECT * FROM posts ORDER BY postDate DESC`
             );
             let postHtml = await formatPostToHtml(db, posts[0], 'home'); // 'home' is a workaround until unified frontend.
+
+            let isLoggedIn = req.session.userId;
+            if (!isLoggedIn) {
+                template = template.replace('%%loginPopup%%', templateUnloggedUser());
+            }
+
             template = template
                 .replace("%%posts%%", postHtml)
                 .replace('%%usernameButton%%', templateLoggedInUser(req.session.userId));
