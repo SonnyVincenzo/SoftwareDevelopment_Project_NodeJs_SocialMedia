@@ -29,7 +29,6 @@ document.querySelectorAll(".post").forEach(post => {
         currLikes.textContent = likesData.likes;
         currDislikes.textContent = likesData.dislikes;
         btnStatus(post);
-        console.log();
     });
 
     currDislikeButton.addEventListener("click", async () => {
@@ -50,7 +49,6 @@ document.querySelectorAll(".post").forEach(post => {
         currDislikes.textContent = dislikesData.dislikes;
         currLikes.textContent = dislikesData.likes;
         btnStatus(post);
-        console.log(dislikesData.userReaction);
     });
 });
 

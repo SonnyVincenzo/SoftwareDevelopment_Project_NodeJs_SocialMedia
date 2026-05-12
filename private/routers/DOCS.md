@@ -8,7 +8,7 @@ app.use('/auth', authRoutes); // Enables: login and signup endpoints.
 
 ## 1. Router implementation
 Following routers needs:
-- endpointHandler: Inside [routeHandlers](../routeHandlers/) and ```import {func} from 'specific/endpointHandler.js'```;
+- endpointHandler: Inside [routeHandlers](../routeHandlers/) and `import {func} from 'specific/endpointHandler.js'`;
 - constRouter: Create a new router, append HTTP type, specify endpoint and rounter function that should handle it;
 - export constRouter: Create a new router and export it;
 
@@ -52,6 +52,4 @@ Endpoints for user and users:
 - user: [userHandler.js](../routeHandlers/user/userHandler.js);
 
 Having user being a nestled group it enables scalability as if it's a prefix:
-http://127.0.0.1:3000/user/someonesUsername
-
-May potentially change into user?uuid=, or user?username=.
+http://127.0.0.1:3000/user/someones-username

@@ -1,4 +1,5 @@
-import{ loadHtml } from "../methods/utilsMethods.js"
+import{ loadHtml, templateLoggedInUser } from "../methods/utilsMethods.js"
+import  {formatPostToHtml} from '../methods/post/postMethods.js';
 import { sendWebResponse } from "../methods/responseMethods.js"
 
 export default function createSearchHandler(db) {
@@ -7,7 +8,7 @@ export default function createSearchHandler(db) {
         if(!query || query.trim() === "")
         {
             const html = await loadHtml("search.html");
-            const result = html.replace(
+            const result = html.replaceAll(
                 "%%searchResult%%",
                 "<p>Please enter a search term.</p>"
             );
@@ -30,28 +31,26 @@ export default function createSearchHandler(db) {
 
             //search post 
             const [posts] = await db.execute(
-                `SELECT id, postHeader FROM posts
+                `SELECT * FROM Posts
                 WHERE postHeader LIKE ? OR postText LIKE ? LIMIT 10`,
                 [`%${query}%`, `%${query}%`]
             );
 
             //build HTML results
-            let resultsHTML = "";
+            let resultsHTML = '';
 
             if(posts.length === 0) {
-                resultsHTML = "<p>No result found.</p>";
+                resultsHTML = "<p class=title >No result matches your search.</p>";
             }
             else {
-                resultsHTML = posts
-                .map(post => 
-                    `<a href= "/post?id=${post.id}">${post.postHeader}</a><br>`)
-                .join("");
+                resultsHTML = await formatPostToHtml(db, posts, null);
             }
 
             let html = await loadHtml("search.html");
-            const result = html.replace("%%searchResult%%", resultsHTML);
+            html = html.replaceAll("%%searchResult%%", resultsHTML)
+                .replaceAll('%%usernameButton%%', templateLoggedInUser(req.session.userId));
 
-            return sendWebResponse(res, 200, "text/html", result);
+            return sendWebResponse(res, 200, "text/html", html);
         }
         catch(err)
         {

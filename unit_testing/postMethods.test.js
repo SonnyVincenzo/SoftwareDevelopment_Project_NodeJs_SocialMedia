@@ -1,30 +1,31 @@
-/*import { describe, it } from 'node:test';
+import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import * as postMethods from '../private/methods/postMethods.js';
+import * as postMethods from '../private/methods/post/postMethods.js';
 
-describe('Methods Post: postMethods.js:', () => {
-
-    describe('replaceDangerousChars', () => {
-
-        it('should escape HTML special characters correctly.', () => {
-            const input = `Astarion & Cazador <script>"test"</script>'`;
-            const output = postMethods.replaceDangerousChars(input);
-
-            assert.strictEqual(output, 'Astarion &amp; Cazador &lt;script&gt;&quot;test&quot;&lt;/script&gt;&#39;');
-        });
-
-        it('should handle non-string input by converting to string.', () => {
-            const input = 123;
-            const output = postMethods.replaceDangerousChars(input);
-
-            assert.strictEqual(output, '123');
-        });
-    });
+describe('Methods Post: postMethods.js', () => {
 
     describe('formatPostToHtml', () => {
 
+        const mockDb = {
+            execute: async (query, params) => {
+                if (query.includes('SUM(type = \'like\')')) {
+                    return [[{
+                        likes: 5,
+                        dislikes: 2
+                    }]];
+                }
+                if (query.includes('SELECT type FROM user_likes_dislikes')) {
+                    return [[{
+                        type: 'like'
+                    }]];
+                }
+                throw new Error('Unknown query');
+            }
+        };
+
         const mockPosts = [
             {
+                id: 1,
                 postHeader: 'Hello <World>',
                 username: 'john&doe',
                 postDate: '2024-01-01T12:00:00Z',
@@ -32,35 +33,32 @@ describe('Methods Post: postMethods.js:', () => {
             }
         ];
 
-        it('should format posts for user endpoint.', () => {
-            const html = postMethods.formatPostToHtml(mockPosts, 'user');
+        it('should format posts.', async () => {
+            const html = await postMethods.formatPostToHtml(mockDb,mockPosts,'john&doe');
 
-            assert.ok(html.includes('<article class="post">'));
-            assert.ok(html.includes('<h2 class="title">'));
+            assert.ok(html.includes('<article class="post"'));
+            assert.ok(html.includes('<p class="title">'));
+
             assert.ok(html.includes('Hello &lt;World&gt;'));
-            assert.ok(html.includes('/user/john%26doe'));
             assert.ok(html.includes('Text with &lt;b&gt;bold&lt;/b&gt; &amp; special chars'));
+
+            assert.ok(html.includes('/user/john%26doe'));
+
             assert.ok(html.includes('class="like"'));
             assert.ok(html.includes('class="dislike"'));
+
+            assert.ok(html.includes('>5</span>'));
+            assert.ok(html.includes('>2</span>'));
+
+            assert.ok(html.includes('data-user-reaction="like"'));
         });
 
-        it('should format posts for home endpoint.', () => {
-            const html = postMethods.formatPostToHtml(mockPosts, 'home');
+        it('should use "none" when user is not logged in.', async () => {
+            const html = await postMethods.formatPostToHtml(mockDb, mockPosts, null);
 
-            assert.ok(html.includes('<article class="post">'));
-            assert.ok(html.includes('<p class="title">'));
-            assert.ok(html.includes('Hello &lt;World&gt;'));
-            assert.ok(html.includes('/user/john%26doe'));
-            assert.ok(html.includes('Text with &lt;b&gt;bold&lt;/b&gt; &amp; special chars'));
-            assert.ok(html.includes('data-post-id=""'));
-            assert.ok(html.includes('<span class="likes"'));
-            assert.ok(html.includes('<span class="dislikes"'));
+            assert.ok(html.includes('data-user-reaction="none"'));
         });
 
-        it('should return undefined for unknown endpoint.', () => {
-            const html = postMethods.formatPostToHtml(mockPosts, 'unknown');
-            assert.strictEqual(html, undefined);
-        });
     });
 
-});*/
+});

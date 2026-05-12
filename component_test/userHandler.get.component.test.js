@@ -5,13 +5,32 @@ import request from 'supertest';
 import { createTestApp } from './app.test.js';
 
 
-//creates mock database object for test
+/**
+ * 
+ * creates mock database object for test
+ * returned object mimics myslq2 execute() and stores queries so it can verify database
+ * 
+ * @param {() => {
+ *      userExists: boolean,
+ *      posts: Array<object>,
+ *      reactionsByPostId: Record<number, Array<object>>,
+ *      shouldFail: boolean
+ * }} getState - function returns mock database 
+ * @returns {{ queries: Array<{sql: string, params: Array<unknown>}>, execute: Function}} - mock database object
+ * 
+*/
 function createMockDb(getState) {
 
     const queries = [];
 
     return {
         queries,
+        /**
+         * 
+         * @param {string} sql - SQL query sent by handler
+         * @param {Array<unknown>} params - Query parameters sent by handler
+         * @returns {Promise<Array<Array<object>>>}
+         */
 
         execute: async (sql, params) => {
 
@@ -52,7 +71,11 @@ function createMockDb(getState) {
     };
 }
 
-//create mock database data
+/**
+ * create mock database data
+ * 
+ * starts test express app and makes http requests through supertest and replaces real database with a mock one
+*/
 describe('User GET component:', () => {
 
     let dbState;
@@ -60,6 +83,7 @@ describe('User GET component:', () => {
     const mockDb = createMockDb(() => dbState);
     const app = createTestApp(mockDb);
 
+    //resets mock database state before every test case
     beforeEach(() => {
         mockDb.queries.length = 0;
 
@@ -71,6 +95,7 @@ describe('User GET component:', () => {
         };
     });
 
+    //verifies that existing user page renders with user posts
     it('should return 200 and render the user page with posts.', async () => {
         dbState.posts = [
             {
@@ -138,6 +163,7 @@ describe('User GET component:', () => {
         assert.ok(res.text.includes('text with &lt;b&gt;HTML&lt;/b&gt;'));
     });
 
+    //makes sure that missing user returns with 404 response
     it('should return 404 when user doesnt exist', async () => {
 
         dbState.userExists = false;

@@ -287,7 +287,7 @@ if (postData.length === 0){
     const maxHeight = canvas.height;
     const element = document.createElement("span");
     element.style.position = "fixed";
-    element.style.fontSize = "100px";
+    element.style.fontSize = "48px";
     element.style.color = "white";
     element.style.backgroundColor = "transparent";
     element.style.top = 100 + "px";
@@ -295,10 +295,11 @@ if (postData.length === 0){
     element.style.speed = 0.125 + "px";
     element.style.userSelect = "none"; // prevent marking 
     element.style.whiteSpace = "nowrap"; // no warp
-    element.textContent = "Read the console for more informations.";
+    element.textContent = "Inpsect elements or CTRL+SHIFT+C console for more information.";
     posts.push(element);
     document.body.appendChild(element);
-    console.error("please make sure the database contain the table for the user posts and it is not empty, modify the .env-sample for having correct name alias.");
+    console.error("Please make sure the database contain the table for the user posts and it is not empty, modify the .env-sample for having correct name alias.");
+    console.info('May potentially only be: no found posts in posts sql table.');
 }
 
 // MAX_EXISTING_POST not using for the limit
