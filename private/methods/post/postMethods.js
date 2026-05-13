@@ -1,18 +1,4 @@
-
-/**
- * Replacing potentially dangerous chars with their HTML escape code/value.
- * 
- * @param {String} value 
- * @returns Parsed string.
- */
-export function replaceDangerousChars(value) {
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;")
-}
+import * as utils from '../utilsMethods.js';
 
 /**
  * Singular entry point to format post db content into template.
@@ -50,18 +36,18 @@ export async function formatPostToHtml(db, posts, currUser) {
         
         postHtml += 
         `<article class="post" data-user-reaction="${userReaction}">
-                <p class="title"> ${replaceDangerousChars(post.postHeader)} 
+                <p class="title"> ${utils.replaceDangerousChars(post.postHeader)} 
                 </p>
                 <div class="post-info">
                     <p class="by-line"> By:
                         <a class="by-line" href="/user/${encodeURIComponent(post.username)}">
-                            ${replaceDangerousChars(post.username)}
+                            ${utils.replaceDangerousChars(post.username)}
                         </a>
                     </p>
                     <p class="by-line">${new Date(post.postDate).toLocaleDateString()}
                     </p>
                 </div>
-                <p class="text">${replaceDangerousChars(post.postText)}</p>
+                <p class="text">${utils.replaceDangerousChars(post.postText)}</p>
                 <div class="post-icons">
                     <button class="like" data-post-id="${post.id}" data-user-reaction="${userReaction}">&#10084;</button>
                     <span class="likes" value="${likeCount}">${likeCount}</span>

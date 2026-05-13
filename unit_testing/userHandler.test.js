@@ -3,9 +3,23 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { createUserGetHandler } from '../private/routeHandlers/user/userHandler.js';
 
+
+/**
+ * unit tests for user profile get handler
+ * 
+ * test calls the handler function with a fake request and response
+ * with objects so express server doesnt need to restart 
+ * 
+ */
 describe('createUserGetHandler', () => {
     it('should return a user profile page as HTML', async () => {
-        //fake profile page request with testuser
+        /**
+         * 
+         * verifies that existing user receives profile page
+         * 
+         * @returns {Promise<void>} resolves when handler response has been checked
+         * 
+         */
         const req = { params: {username: 'testuser' }};
         
         //variables for handler response
@@ -13,7 +27,14 @@ describe('createUserGetHandler', () => {
         let contentType = null;
         let body = '';
 
-        //fake response by sendWebResponse()
+        /**
+         * fake response by sendWebResponse()
+         * 
+         * @param {number} status - HTTP status code sent by handler
+         * @param {{ 'Content-Type': string }} headers - response headers sent by handler
+         * @returns {void}
+         * 
+         */
         const res = { writeHead: (status, headers) => { statusCode = status; contentType = headers['Content-Type']; },
             write: (chunk) => { body += chunk; },
             end: () => {}

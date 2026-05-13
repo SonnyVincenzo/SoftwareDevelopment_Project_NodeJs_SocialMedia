@@ -3,7 +3,13 @@ import { loadHtml, templateLoggedInUser, templateUnloggedUser } from "../methods
 import { replaceDangerousChars } from "../methods/utilsMethods.js";
 
 
-//gets the post id from the database and returns it
+/** 
+ * gets the post id from route parameters, form body or query string
+ * 
+ * @param {import('express').Request} req - requests object that contains post id
+ * @returns {number | null } 
+ * 
+*/
 function getPostId(req) {
     const plainPostId = req.params?.id ?? req.body?.postId ?? req.body?.id ?? req.query?.id;
     const postId = Number(plainPostId);
@@ -15,7 +21,13 @@ function getPostId(req) {
     return postId;
 }
 
-//Post input validation so it fits the wanted requirements
+/**
+ * Post input validation so it fits the wanted requirements
+ * 
+ * @param {{postHeader?: unknown, postText?: unknown} | undefined} body - form body from request
+ * @returns {{postHeader: string, postText: string} | {error: string}} - clean post input
+ * 
+ * */
 function validatePostInput(body) {
     const plainHeader = body?.postHeader;
     const plainText = body?.postText;
@@ -171,6 +183,7 @@ export function createPostGetHandler(db) {
                 if (!loggedInUser) {
                     template = template.replace('%%loginPopup%%', templateUnloggedUser());
                 }
+                template = template.replace('%%loginPopup%%', '');
 
                 let postUser = post.username;
                 let [postActionHtml, editFormHtml, deleteFormHtml] = getLoggedInHtml(loggedInUser, postUser)
@@ -196,7 +209,8 @@ export function createPostGetHandler(db) {
             let template = await loadHtml('post.html');
             if (!loggedInUser) {
                 template = template.replace('%%loginPopup%%', templateUnloggedUser());
-            } 
+            }
+            template = template.replace('%%loginPopup%%', '');
             
             template = template.replace('%%username%%', loggedInUser || 'Not Logged In');
             return sendWebResponse(res, 200, 'text/html', template);
@@ -257,7 +271,14 @@ export function createPostPostHandler(db) {
     }
 }
 
-//edit handler
+/**
+ * 
+ * creates edit handler for existing posts
+ * 
+ * @param {import('mysql2').Connection} db - database connection so you can edit posts
+ * @returns {(req: import('express').Request, res: import('express').Response) => Promise<void>} - express request handler
+ * 
+*/
 export async function createPostEditHandler(db, req, res) {
     try {
         if (!req.session || !req.session.userId) {
@@ -298,7 +319,13 @@ export async function createPostEditHandler(db, req, res) {
     }
 }
 
-//delete handler
+/**
+ * creates delete handler for existing posts
+ *  
+ * @param {import('mysql2').Connection} db - database connection so you can delete posts
+ * @returns {(req: import('express').Request, res: import('express').Response) => Promise<void>} - express request handler
+ * 
+*/
 export async function createPostDeleteHandler(db, req, res) {
     try {
         if (!req.session || !req.session.userId) {
@@ -324,7 +351,6 @@ export async function createPostDeleteHandler(db, req, res) {
 
         //Delete child table rows first so that foreign keys don't screw up the entire deletion
         await db.query("DELETE FROM user_likes_dislikes WHERE id = ?", [postId]);
-        await db.query("DELETE FROM comments WHERE postId = ?", [postId]);
         await db.query("DELETE FROM posts WHERE id = ? AND username = ?", [postId, username]);
 
         return res.redirect(`/user/${encodeURIComponent(username)}`);
@@ -332,34 +358,5 @@ export async function createPostDeleteHandler(db, req, res) {
     catch (error) {
         console.error('Post DELETE error:', error);
         return sendWebResponse(res, 500, 'text/plain', '500 internal server error');
-    }
-}
-
-// Questioning use, may be best as a seperate function inside /methods. - LJ.
-export function createCommentPostHandler(db) {
-    return async function handleCommentPost(req, res) {
-        try {
-            const { postId, commentText } = req.body;
-
-            if (!isValidComment(commentText)) {
-                return sendWebResponse(res, 400, 'text/plain', 'Invalid comment');
-            }
-
-            db.query(
-                "INSERT INTO comments (postId, content) VALUES (?, ?)",
-                [postId, commentText],
-                (err) => {
-                    if (err) {
-                        console.error('Comment POST error:', err);
-                        return sendWebResponse(res, 500, 'text/plain', 'Database error');
-                    }
-
-                    res.redirect(`/post?id=${postId}`);
-                }
-            );
-        } catch (error) {
-            console.error('Comment POST error:', error);
-            sendWebResponse(res, 500, 'text/plain', 'Server error');
-        }
     }
 }

@@ -68,11 +68,13 @@
 .standardButton {
   background-color: var(--primary-bg-color);
   border-width: 2px;
+  border-style: solid;
   border-color: blueviolet;
   border-radius: 5px;
   color: white;
   cursor: pointer;
   font-family: Tektur;
+  font-size: 18px;
 
   margin-right: 10px;
   margin-top: 20px;

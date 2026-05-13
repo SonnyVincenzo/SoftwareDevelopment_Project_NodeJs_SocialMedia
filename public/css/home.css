@@ -174,15 +174,21 @@ main {
 
 footer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 5px;
-  padding-bottom: 20px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 5px 0px 20px 0px;
   margin: 0px;
   background-color: var(--footer-bg-color);
   height: 90px;
   border-top: var(--header-footer-border-divider);
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .github{

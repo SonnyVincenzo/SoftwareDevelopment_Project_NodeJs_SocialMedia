@@ -25,11 +25,16 @@ Software:
 1. Node.js
 2. MySQL
 
-Dependencies:
+Dependencies (external):
 1. Express
 2. Dotenv
 3. MySQL2
 4. Shx
+5. Jest
+6. Jest-Environment-jsdom
+7. Supertest
+
+For better overview of used (external) dependencies in case of missing dependencies, please refer to [package.json](./package.json).
 
 ### How to install & setup
 
@@ -37,7 +42,9 @@ Dependencies:
 
 ##### Automatic
 Write following command into a terminal where `npm --version` is able to display version:
-`npm run setup`.
+```
+> npm run setup
+```
 
 It installs all dependencies alongside creates a copy of `.env-sample` and renames it into `.env`, thus an automatic setup. 
 **NOTE:** the current manner of copying `.env-sample` and changing name into `.env` replaces all existing content if you already have an `.env` file.
@@ -48,13 +55,26 @@ Write following command into a terminal where `npm --version` is able to display
 - Express: `npm install express`
 - DotEnv: `npm install dotenv`
 - MySQL: `npm install mysql2`
+- Shx: `npm install --save-dev shx`
+- Jest: `npm install --save-dev jest`
+- Jest-Environment-Jsdom: `npm install --save-dev jest-environment-jsdom`
+- Supertest: `npm install --save-dev supertest`
 
 #### Database
-Provided from the [`.env-sample`](./env-sample) we base of that the working database to be called: `social_test`, thus go into your server based MySQL terminal and write: `CREATE DATABASE social_test;`.
+
+##### Automatic
+Be in a working terminal (ex: powershell) and be in the project's root directory. [Run the server](#how-to-run-the-server).
+
+##### Manual
+Provided from the [`.env-sample`](./env-sample) we base of that the working database to be called: `social_test`, thus go into your server based MySQL terminal and write: 
+```
+> CREATE DATABASE social_test;
+```
 
 Once you've created your database please head into [SQL schemas](./private/db/sql/) and copy following file's content into the terminal (CTRL A + CTRL C -> [TERMINAL] CTRL + V):
 - [user.sql](./private/db/sql/table.user.sql)
 - [posts.sql](./private/db/sql/table.posts.sql)
+- [likesDislikes.sql](./private/db/sql/table.likesDislikes.sql)
 
 
 ### How to run the server
@@ -72,14 +92,29 @@ Recommended `SERVER_PORT` is `3000` or `8080`, port 3000 already provided in `.e
 This alternative offers easy support to view the website, but the **full functionailty** lies in the server provided in node.js: [index.js](./index.js) with `node .` method.
 
 ##  Unit Tests
+Native command:
 ```
-node --test
+> node --test
 ```
+
+From additional script inside [package.json](./package.json):
+```
+> npm run test
+```
+
 ## Generating code coverage
-To generate code coverage reports, run:
+To generate code coverage reports.
+
+Native command:
 ```
-node --experimental-test-coverage --test
+> node --experimental-test-coverage --test
 ```
+
+From additional script inside [package.json](./package.json):
+```
+> npm run coverage
+```
+
 ## Participants
 |Name|Github Handle|
 |-|-|

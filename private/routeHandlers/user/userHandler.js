@@ -8,8 +8,8 @@ import { replaceDangerousChars } from '../../methods/utilsMethods.js';
  * Creates User handler for GET.
  * Wrapper function to enable db content handling. 
  * 
- * @param {import('mysql2'.Connection)} db - Database.
- * @returns 
+ * @param {import('mysql2').Connection} db - Database.
+ * @returns {(req: import('express').Request, res: import('express').Respone) => Promise<void>} - express request handler
  */
 export function createUserGetHandler(db) {
 
@@ -19,6 +19,7 @@ export function createUserGetHandler(db) {
      * @async
      * @param {import('express').Request} req - Input from browser; ex: url, query.
      * @param {import('express').Response} res - Output from browser; ex: text/html.
+     * @returns {Promise<void>} - resolves after response has been sent
      */
     return async function handleUserGet(req, res) {
         const { username } = req.params;
